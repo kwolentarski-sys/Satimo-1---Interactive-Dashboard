@@ -2,10 +2,10 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 
-# Updated: Dashboard Title changed to "Satimo 1 Chamber - Interactive Dashboard"
+# App Title: Satimo 1 Chamber - Interactive Dashboard
 st.title("Satimo 1 Chamber - Interactive Dashboard")
 
-# Sub-title color remains #022af2, bold/large
+# Sub-title: Color #022af2, bold/large
 st.markdown('<h3 style="color:#022af2;"><b>Yearly Dipole Validation Measurements</b></h3>', unsafe_allow_html=True)
 
 @st.cache_data
@@ -72,26 +72,26 @@ try:
     # 3. Build Interactive Plotly Graph
     fig = go.Figure()
     
-    # Add Reference Data - NIST Line
+    # Add Reference Data - NIST Line (Updated: Name is now bold)
     fig.add_trace(go.Scatter(
         x=subset['Frequency (MHz)'], 
         y=subset['Reference Efficiency (dB)'],
         mode='lines+markers',
-        name='Reference Data - NIST',
-        line=dict(color='#1f77b4', width=3)
+        name='<b>Reference Data - NIST</b>',
+        line=dict(color='red', width=3, dash='dash')
     ))
     
-    # Add Date Data Line (Showing only the date label)
+    # Add Date Data Line (Updated: Name is now bold)
     fig.add_trace(go.Scatter(
         x=subset['Frequency (MHz)'], 
         y=subset['Date Efficiency (dB)'],
         mode='lines+markers',
-        name=date_label,
+        name=f'<b>{date_label}</b>',
         line=dict(color='#ff7f0e', width=3)
     ))
     
     fig.update_layout(
-        # Updated: Increased the text size of the Dipole title
+        # Graph title size 30
         title=dict(
             text=f"Dipole {selected_dipole}",
             font=dict(size=30)
@@ -101,7 +101,7 @@ try:
         yaxis_title="<b>Efficiency (dB)</b>",
         hovermode="x unified",
         template="plotly_white",
-        # Updated: Moved legend further above (y=1.12) and increased text size
+        # Legend positioned further above (y=1.12) and centered (size 18)
         legend=dict(
             orientation="h",
             yanchor="bottom",
@@ -110,9 +110,9 @@ try:
             x=0.5,
             font=dict(size=18)
         ),
-        # Adjusted top margin to prevent title/legend cutoff
+        # Top margin adjusted for legend
         margin=dict(t=120),
-        # Axis labels (Titles) and Tick Labels
+        # Axis labels (Titles) and Tick Labels with outside border (mirror)
         xaxis=dict(
             title_font=dict(color='black', size=20),
             tickfont=dict(color='black', size=14),
