@@ -6,7 +6,7 @@ import plotly.graph_objects as go
 st.title("Satimo 1 Chamber - Interactive Dashboard")
 
 # Sub-title: Color #022af2, bold/large
-st.markdown('<h3 style="color:#022af2;"><b>Yearly Dipole Validation Measurements</b></h3>', unsafe_allow_html=True)
+st.markdown('<h3 style="color:#022af2;"><b>Yearly - Dipole Passive Validation Measurements</b></h3>', unsafe_allow_html=True)
 
 @st.cache_data
 def load_and_clean_data(file_name):
@@ -77,18 +77,19 @@ try:
     # Metric 2: Maximum Overshoot Above 0 dB[cite: 1]
     above_0_subset = subset[subset['Date Efficiency (dB)'] > 0]
     
-    # Display Result 1: Bold prefix
+    # Frequency Span for Title[cite: 1]
+    min_f = int(subset['Frequency (MHz)'].min())
+    max_f = int(subset['Frequency (MHz)'].max())
+
+    # Display Metrics with conditional coloring
     st.write(f"**Maximum Difference From Reference NIST:** {max_val:.2f} dB at {max_freq} MHz")
     
-    # Updated: Display Result 2 with conditional coloring[cite: 1]
     if not above_0_subset.empty:
         max_above_idx = above_0_subset['Date Efficiency (dB)'].idxmax()
         max_above_val = above_0_subset.loc[max_above_idx, 'Date Efficiency (dB)']
         max_above_freq = above_0_subset.loc[max_above_idx, 'Frequency (MHz)']
-        # Red text for overshoot values[cite: 1]
         st.markdown(f'**Maximum Overshoot Above 0 dB:** <span style="color:red;">{max_above_val:.2f} dB at {max_above_freq} MHz</span>', unsafe_allow_html=True)
     else:
-        # Green text for "None"[cite: 1]
         st.markdown('**Maximum Overshoot Above 0 dB:** <span style="color:green;">None</span>', unsafe_allow_html=True)
     
     # 3. Build Interactive Plotly Graph[cite: 1]
@@ -113,8 +114,9 @@ try:
     ))
     
     fig.update_layout(
+        # Updated: Title includes frequency span in non-bold text[cite: 1]
         title=dict(
-            text=f"Dipole {selected_dipole}",
+            text=f"<b>Dipole {selected_dipole}</b> ({min_f}-{max_f} MHz)",
             font=dict(size=30)
         ),
         xaxis_title="<b>Frequency (MHz)</b>",
@@ -155,8 +157,6 @@ try:
     )
     
     st.plotly_chart(fig, use_container_width=True)
-
-    # Removed: Show Raw Data Table[cite: 1]
 
 except FileNotFoundError:
     st.error(f"Could not find `{file_name}`. Please ensure it is in the same directory as this script.")
