@@ -28,6 +28,7 @@ st.markdown(f'<h3 style="color:#022af2;"><b>{sub_title_text}</b></h3>', unsafe_a
 def load_and_clean_data(file_name):
     """Dynamically finds and parses the Satimo passive trend data."""
     try:
+        # Load raw data without headers
         df_raw = pd.read_csv(file_name, header=None)
         
         # DYNAMIC COLUMN DETECTION: Search for the "Dipoles" header
@@ -40,7 +41,7 @@ def load_and_clean_data(file_name):
             if start_col is not None: break
         
         if start_col is None:
-            return pd.DataFrame() # No data block found
+            return pd.DataFrame() 
 
         # Extract the correct 3 columns (Dipole, Reference, Measured)
         data_cols = df_raw.iloc[:, start_col:start_col+3].copy()
@@ -81,7 +82,7 @@ def load_and_clean_data(file_name):
     except FileNotFoundError:
         return None
 
-# Mapping selections to filenames verbatim
+# Mapping selections to filenames
 files = {
     "Yearly": 'Satimo 1 Chamber - Passive Trend Charts - Satimo 1- Dipoles Yearly (4).csv',
     "Quarterly": 'Satimo 1 Chamber - Passive Trend Charts - Satimo 1- Dipoles Quarterly (1).csv'
@@ -121,16 +122,18 @@ if df is not None and not df.empty:
     # 3. Build Interactive Plotly Graph
     fig = go.Figure()
     
+    # NIST Reference Line (Red/Dashed, Bold Legend)
     fig.add_trace(go.Scatter(
         x=subset['Frequency (MHz)'], y=subset['Reference Efficiency (dB)'],
         mode='lines+markers', name='<b>Reference Data - NIST</b>',
         line=dict(color='red', width=3, dash='dash')
     ))
     
+    # Measured Date Line (Updated: Color changed to #022af2)
     fig.add_trace(go.Scatter(
         x=subset['Frequency (MHz)'], y=subset['Date Efficiency (dB)'],
         mode='lines+markers', name=f'<b>{date_label}</b>',
-        line=dict(color='#ff7f0e', width=3)
+        line=dict(color='#022af2', width=3)
     ))
     
     fig.update_layout(
