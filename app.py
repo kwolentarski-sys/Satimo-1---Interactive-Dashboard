@@ -66,13 +66,23 @@ try:
     selected_dipole = st.sidebar.selectbox("Select a Dipole to View:", dipoles)
     
     # Filter dataset based on selection
-    subset = df[df['Dipole'] == selected_dipole]
+    subset = df[df['Dipole'] == selected_dipole].copy()
     date_label = subset["Date_Label"].iloc[0]
+
+    # --- NEW CALCULATION: Max Difference ---
+    # Calculate the absolute difference between Reference and the Date Data
+    subset['Abs_Diff'] = (subset['Reference Efficiency (dB)'] - subset['Date Efficiency (dB)']).abs()
+    max_diff_idx = subset['Abs_Diff'].idxmax()
+    max_val = subset.loc[max_diff_idx, 'Abs_Diff']
+    max_freq = subset.loc[max_diff_idx, 'Frequency (MHz)']
+
+    # Display calculation result above the graph
+    st.write(f"**Maximum Difference: {max_val:.2f} dB at {max_freq} MHz**")
     
     # 3. Build Interactive Plotly Graph
     fig = go.Figure()
     
-    # Add Reference Data - NIST Line (Updated: Name is now bold)
+    # Add Reference Data - NIST Line (Red and Dashed)
     fig.add_trace(go.Scatter(
         x=subset['Frequency (MHz)'], 
         y=subset['Reference Efficiency (dB)'],
@@ -81,7 +91,7 @@ try:
         line=dict(color='red', width=3, dash='dash')
     ))
     
-    # Add Date Data Line (Updated: Name is now bold)
+    # Add Date Data Line (Bold Legend Label)
     fig.add_trace(go.Scatter(
         x=subset['Frequency (MHz)'], 
         y=subset['Date Efficiency (dB)'],
