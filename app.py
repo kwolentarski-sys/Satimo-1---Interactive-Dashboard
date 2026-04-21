@@ -5,22 +5,22 @@ import plotly.graph_objects as go
 # --- PAGE CONFIGURATION ---
 st.set_page_config(page_title="Satimo 1 Dashboard", layout="wide")
 
-# App Title: Forced to one line using CSS nowrap[cite: 1]
+# App Title: Forced to one line using CSS nowrap
 st.markdown(
     '<h1 style="white-space: nowrap; overflow: hidden; text-overflow: clip;">Satimo 1 Chamber - Interactive Dashboard</h1>', 
     unsafe_allow_html=True
 )
 
-# Updated: Sub-title changed to "Yearly - Passive Dipole Validation Measurements"[cite: 1]
+# Sub-title: Color #022af2, bold/large
 st.markdown('<h3 style="color:#022af2;"><b>Yearly - Passive Dipole Validation Measurements</b></h3>', unsafe_allow_html=True)
 
 @st.cache_data
 def load_and_clean_data(file_name):
     """Parses the specific layout of the Satimo passive trend CSV."""
-    # Load raw data without headers[cite: 1]
+    # Load raw data without headers
     df_raw = pd.read_csv(file_name, header=None)
     
-    # Extract columns 9, 10, 11[cite: 1]
+    # Extract columns 9, 10, 11
     data_cols = df_raw.iloc[:, 9:12].copy()
     data_cols.columns = ['Col9', 'Col10', 'Col11']
 
@@ -33,7 +33,7 @@ def load_and_clean_data(file_name):
         col10 = str(row['Col10']).strip()
         col11 = str(row['Col11']).strip()
         
-        # Identify both SD and WD dipoles to separate their data[cite: 1]
+        # Identify both SD and WD dipoles to separate their data
         is_new_dipole = (col9.startswith('SD') or col9.startswith('WD')) and len(col9) > 2 and col9[2].isdigit()
         
         if is_new_dipole:
@@ -59,14 +59,15 @@ def load_and_clean_data(file_name):
 
     return pd.DataFrame(dipole_data)
 
-# 1. Load the data using the verbatim filename[cite: 1]
+# 1. Load the data using the verbatim filename
 file_name = 'Satimo 1 Chamber - Passive Trend Charts - Satimo 1- Dipoles Yearly (4).csv'
 
 try:
     df = load_and_clean_data(file_name)
     
-    # 2. Sidebar for User Interaction[cite: 1]
-    st.sidebar.header("Dashboard Controls")
+    # 2. Sidebar for User Interaction
+    # Updated: Dashboard Controls text color changed to #022af2
+    st.sidebar.markdown('<h2 style="color:#022af2;">Dashboard Controls</h2>', unsafe_allow_html=True)
     dipoles = df['Dipole'].unique()
     selected_dipole = st.sidebar.selectbox("Select a Dipole to View:", dipoles)
     
@@ -74,36 +75,36 @@ try:
     date_label = subset["Date_Label"].iloc[0]
 
     # --- CALCULATIONS ---
-    # Metric 1: Max Absolute Difference From Reference NIST[cite: 1]
+    # Metric 1: Max Absolute Difference From Reference NIST
     subset['Abs_Diff'] = (subset['Reference Efficiency (dB)'] - subset['Date Efficiency (dB)']).abs()
     max_diff_idx = subset['Abs_Diff'].idxmax()
     max_val = subset.loc[max_diff_idx, 'Abs_Diff']
     max_freq = subset.loc[max_diff_idx, 'Frequency (MHz)']
 
-    # Metric 2: Maximum Overshoot Above 0 dB[cite: 1]
+    # Metric 2: Maximum Overshoot Above 0 dB
     above_0_subset = subset[subset['Date Efficiency (dB)'] > 0]
     
-    # Frequency Span for Title[cite: 1]
+    # Frequency Span for Title
     min_f = int(subset['Frequency (MHz)'].min())
     max_f = int(subset['Frequency (MHz)'].max())
 
-    # Display Metrics with conditional coloring[cite: 1]
+    # Display Metrics with conditional coloring
     st.write(f"**Maximum Difference From Reference NIST:** {max_val:.2f} dB at {max_freq} MHz")
     
     if not above_0_subset.empty:
         max_above_idx = above_0_subset['Date Efficiency (dB)'].idxmax()
         max_above_val = above_0_subset.loc[max_above_idx, 'Date Efficiency (dB)']
         max_above_freq = above_0_subset.loc[max_above_idx, 'Frequency (MHz)']
-        # Red text for overshoot values[cite: 1]
+        # Red text for overshoot values
         st.markdown(f'**Maximum Overshoot Above 0 dB:** <span style="color:red;">{max_above_val:.2f} dB at {max_above_freq} MHz</span>', unsafe_allow_html=True)
     else:
-        # Green text for "None"[cite: 1]
+        # Green text for "None"
         st.markdown('**Maximum Overshoot Above 0 dB:** <span style="color:green;">None</span>', unsafe_allow_html=True)
     
-    # 3. Build Interactive Plotly Graph[cite: 1]
+    # 3. Build Interactive Plotly Graph
     fig = go.Figure()
     
-    # Reference Data - NIST Line (Red/Dashed, Bold Legend)[cite: 1]
+    # Reference Data - NIST Line (Red/Dashed, Bold Legend)
     fig.add_trace(go.Scatter(
         x=subset['Frequency (MHz)'], 
         y=subset['Reference Efficiency (dB)'],
@@ -112,7 +113,7 @@ try:
         line=dict(color='red', width=3, dash='dash')
     ))
     
-    # Date Data Line (Bold Legend Label)[cite: 1]
+    # Date Data Line (Bold Legend Label)
     fig.add_trace(go.Scatter(
         x=subset['Frequency (MHz)'], 
         y=subset['Date Efficiency (dB)'],
@@ -122,7 +123,7 @@ try:
     ))
     
     fig.update_layout(
-        # Dipole ID is bold and size 30; Frequency span is size 20 and not bold[cite: 1]
+        # Dipole ID is bold and size 30; Frequency span is size 20 and not bold
         title=dict(
             text=f"<b>Dipole {selected_dipole}</b> <span style='font-size: 20px;'>({min_f}-{max_f} MHz)</span>",
             font=dict(size=30)
@@ -131,7 +132,7 @@ try:
         yaxis_title="<b>Efficiency (dB)</b>",
         hovermode="x unified",
         template="plotly_white",
-        # Height reduced by 20% (700 -> 560)[cite: 1]
+        # Height reduced by 20% (700 -> 560)
         height=560,
         legend=dict(
             orientation="h",
