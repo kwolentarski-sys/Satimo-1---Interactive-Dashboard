@@ -26,13 +26,24 @@ st.markdown(f'<h3 style="color:#022af2;"><b>{sub_title_text}</b></h3>', unsafe_a
 
 @st.cache_data
 def load_and_clean_data(file_name):
-    """Parses the specific layout of the Satimo passive trend CSV."""
+    """Dynamically finds and parses the Satimo passive trend data."""
     try:
-        # Load raw data without headers
         df_raw = pd.read_csv(file_name, header=None)
         
-        # Extract columns 9, 10, 11 which contain Dipole, Reference, and Date data
-        data_cols = df_raw.iloc[:, 9:12].copy()
+        # DYNAMIC COLUMN DETECTION: Search for the "Dipoles" header
+        start_col = None
+        for r in range(min(15, len(df_raw))):
+            for c in range(len(df_raw.columns)):
+                if str(df_raw.iloc[r, c]).strip() == "Dipoles":
+                    start_col = c
+                    break
+            if start_col is not None: break
+        
+        if start_col is None:
+            return pd.DataFrame() # No data block found
+
+        # Extract the correct 3 columns (Dipole, Reference, Measured)
+        data_cols = df_raw.iloc[:, start_col:start_col+3].copy()
         data_cols.columns = ['Col9', 'Col10', 'Col11']
 
         dipole_data = []
@@ -44,7 +55,7 @@ def load_and_clean_data(file_name):
             col10 = str(row['Col10']).strip()
             col11 = str(row['Col11']).strip()
             
-            # Identify both SD and WD dipoles to separate data blocks
+            # Identify SD or WD dipoles
             is_new_header = (col9.startswith('SD') or col9.startswith('WD')) and len(col9) > 2 and col9[2].isdigit()
             
             if is_new_header:
@@ -70,7 +81,7 @@ def load_and_clean_data(file_name):
     except FileNotFoundError:
         return None
 
-# Updated: Mapping selections to filenames using the verbatim Quarterly name provided
+# Mapping selections to filenames verbatim
 files = {
     "Yearly": 'Satimo 1 Chamber - Passive Trend Charts - Satimo 1- Dipoles Yearly (4).csv',
     "Quarterly": 'Satimo 1 Chamber - Passive Trend Charts - Satimo 1- Dipoles Quarterly (1).csv'
@@ -80,7 +91,6 @@ file_name = files[validation_type]
 df = load_and_clean_data(file_name)
 
 if df is not None and not df.empty:
-    # 2. Select Dipole within the chosen dataset
     dipoles = df['Dipole'].unique()
     selected_dipole = st.sidebar.selectbox("Select a Dipole to View:", dipoles)
     
@@ -88,43 +98,35 @@ if df is not None and not df.empty:
     date_label = subset["Date_Label"].iloc[0]
 
     # --- CALCULATIONS ---
-    # Metric 1: Max Absolute Difference From Reference NIST
     subset['Abs_Diff'] = (subset['Reference Efficiency (dB)'] - subset['Date Efficiency (dB)']).abs()
     max_diff_idx = subset['Abs_Diff'].idxmax()
     max_val = subset.loc[max_diff_idx, 'Abs_Diff']
     max_freq = subset.loc[max_diff_idx, 'Frequency (MHz)']
 
-    # Metric 2: Maximum Overshoot Above 0 dB
     above_0_subset = subset[subset['Date Efficiency (dB)'] > 0]
     
-    # Frequency Span for Title
     min_f = int(subset['Frequency (MHz)'].min())
     max_f = int(subset['Frequency (MHz)'].max())
 
-    # Display Metrics with established conditional coloring
     st.write(f"**Maximum Difference From Reference NIST:** {max_val:.2f} dB at {max_freq} MHz")
     
     if not above_0_subset.empty:
         max_above_idx = above_0_subset['Date Efficiency (dB)'].idxmax()
         max_above_val = above_0_subset.loc[max_above_idx, 'Date Efficiency (dB)']
         max_above_freq = above_0_subset.loc[max_above_idx, 'Frequency (MHz)']
-        # Red text for overshoot values
         st.markdown(f'**Maximum Overshoot Above 0 dB:** <span style="color:red;">{max_above_val:.2f} dB at {max_above_freq} MHz</span>', unsafe_allow_html=True)
     else:
-        # Green text for "None"
         st.markdown('**Maximum Overshoot Above 0 dB:** <span style="color:green;">None</span>', unsafe_allow_html=True)
     
     # 3. Build Interactive Plotly Graph
     fig = go.Figure()
     
-    # NIST Reference Line (Red/Dashed, Bold Legend)
     fig.add_trace(go.Scatter(
         x=subset['Frequency (MHz)'], y=subset['Reference Efficiency (dB)'],
         mode='lines+markers', name='<b>Reference Data - NIST</b>',
         line=dict(color='red', width=3, dash='dash')
     ))
     
-    # Measured Date Line (Bold Label)
     fig.add_trace(go.Scatter(
         x=subset['Frequency (MHz)'], y=subset['Date Efficiency (dB)'],
         mode='lines+markers', name=f'<b>{date_label}</b>',
@@ -132,7 +134,6 @@ if df is not None and not df.empty:
     ))
     
     fig.update_layout(
-        # Styled Title: Large bold Dipole ID with smaller span
         title=dict(
             text=f"<b>Dipole {selected_dipole}</b> <span style='font-size: 20px;'>({min_f}-{max_f} MHz)</span>",
             font=dict(size=30)
@@ -141,7 +142,7 @@ if df is not None and not df.empty:
         yaxis_title="<b>Efficiency (dB)</b>",
         hovermode="x unified",
         template="plotly_white",
-        height=560, # 20% reduced height for screen fit
+        height=560,
         legend=dict(
             orientation="h", yanchor="bottom", y=1.12,
             xanchor="center", x=0.5, font=dict(size=18)
