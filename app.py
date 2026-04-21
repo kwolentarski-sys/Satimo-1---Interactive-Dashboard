@@ -2,8 +2,14 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 
-# App Title: Satimo 1 Chamber - Interactive Dashboard
-st.title("Satimo 1 Chamber - Interactive Dashboard")
+# --- PAGE CONFIGURATION ---
+st.set_page_config(page_title="Satimo 1 Dashboard", layout="wide")
+
+# Updated: App Title forced to one line using CSS nowrap
+st.markdown(
+    '<h1 style="white-space: nowrap; overflow: hidden; text-overflow: clip;">Satimo 1 Chamber - Interactive Dashboard</h1>', 
+    unsafe_allow_html=True
+)
 
 # Sub-title: Color #022af2, bold/large
 st.markdown('<h3 style="color:#022af2;"><b>Yearly - Dipole Passive Validation Measurements</b></h3>', unsafe_allow_html=True)
@@ -53,13 +59,13 @@ def load_and_clean_data(file_name):
 
     return pd.DataFrame(dipole_data)
 
-# 1. Load the data using the verbatim filename[cite: 1]
+# 1. Load the data using the verbatim filename
 file_name = 'Satimo 1 Chamber - Passive Trend Charts - Satimo 1- Dipoles Yearly (4).csv'
 
 try:
     df = load_and_clean_data(file_name)
     
-    # 2. Sidebar for User Interaction[cite: 1]
+    # 2. Sidebar for User Interaction
     st.sidebar.header("Dashboard Controls")
     dipoles = df['Dipole'].unique()
     selected_dipole = st.sidebar.selectbox("Select a Dipole to View:", dipoles)
@@ -114,7 +120,7 @@ try:
     ))
     
     fig.update_layout(
-        # Updated: Dipole ID is bold and size 30; Frequency span is size 20 and not bold[cite: 1]
+        # Dipole ID is bold and size 30; Frequency span is size 20 and not bold[cite: 1]
         title=dict(
             text=f"<b>Dipole {selected_dipole}</b> <span style='font-size: 20px;'>({min_f}-{max_f} MHz)</span>",
             font=dict(size=30)
@@ -123,6 +129,8 @@ try:
         yaxis_title="<b>Efficiency (dB)</b>",
         hovermode="x unified",
         template="plotly_white",
+        # Updated: Maximum Fit - adjusted height and margins
+        height=700,
         legend=dict(
             orientation="h",
             yanchor="bottom",
@@ -131,7 +139,7 @@ try:
             x=0.5,
             font=dict(size=18)
         ),
-        margin=dict(t=120),
+        margin=dict(t=130, b=50, l=50, r=50),
         xaxis=dict(
             title_font=dict(color='black', size=20),
             tickfont=dict(color='black', size=14),
@@ -156,6 +164,7 @@ try:
         )
     )
     
+    # Render with use_container_width to ensure max fit[cite: 1]
     st.plotly_chart(fig, use_container_width=True)
 
 except FileNotFoundError:
