@@ -2,10 +2,10 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 
-# Dashboard Title
-st.title("Satimo 1 - Interactive Dashboard")
+# Updated: Dashboard Title changed to "Satimo 1 Chamber - Interactive Dashboard"
+st.title("Satimo 1 Chamber - Interactive Dashboard")
 
-# Updated: Sub-title color changed to #022af2 and kept bold/large using HTML
+# Sub-title color remains #022af2, bold/large
 st.markdown('<h3 style="color:#022af2;"><b>Yearly Dipole Validation Measurements</b></h3>', unsafe_allow_html=True)
 
 @st.cache_data
@@ -91,23 +91,28 @@ try:
     ))
     
     fig.update_layout(
-        # Graph title simplified to "Dipole [Name]"
-        title=f"Dipole {selected_dipole}",
-        # Bold Titles
+        # Updated: Increased the text size of the Dipole title
+        title=dict(
+            text=f"Dipole {selected_dipole}",
+            font=dict(size=30)
+        ),
+        # Bold Titles (size 20)
         xaxis_title="<b>Frequency (MHz)</b>",
         yaxis_title="<b>Efficiency (dB)</b>",
         hovermode="x unified",
         template="plotly_white",
-        # Legend positioned above the graph and centered
+        # Updated: Moved legend further above (y=1.12) and increased text size
         legend=dict(
             orientation="h",
             yanchor="bottom",
-            y=1.02,
+            y=1.12,
             xanchor="center",
-            x=0.5
+            x=0.5,
+            font=dict(size=18)
         ),
-        # Larger, Bold Axis Labels (Titles) and Larger Tick Labels
-        # Updated: Added mirror=True and showline=True to create the outside border
+        # Adjusted top margin to prevent title/legend cutoff
+        margin=dict(t=120),
+        # Axis labels (Titles) and Tick Labels
         xaxis=dict(
             title_font=dict(color='black', size=20),
             tickfont=dict(color='black', size=14),
