@@ -4,7 +4,8 @@ import plotly.graph_objects as go
 
 # Dashboard Title
 st.title("Satimo 1 - Interactive Dashboard")
-st.markdown("Yearly Dipole Validation")
+# Sub-title for the dipole measurement graphs
+st.markdown("### **Yearly Dipole Validation Measurements**")
 
 @st.cache_data
 def load_and_clean_data(file_name):
@@ -79,7 +80,7 @@ try:
         line=dict(color='#1f77b4', width=3)
     ))
     
-    # Add Date Data Line (Removed "Date Data" prefix)
+    # Add Date Data Line (Showing only the date label)
     fig.add_trace(go.Scatter(
         x=subset['Frequency (MHz)'], 
         y=subset['Date Efficiency (dB)'],
@@ -89,10 +90,11 @@ try:
     ))
     
     fig.update_layout(
-        # Updated: Graph title simplified to "Dipole [Name]"
+        # Graph title simplified to "Dipole [Name]"
         title=f"Dipole {selected_dipole}",
-        xaxis_title="Frequency (MHz)",
-        yaxis_title="Efficiency (dB)",
+        # Updated: Bold Titles
+        xaxis_title="<b>Frequency (MHz)</b>",
+        yaxis_title="<b>Efficiency (dB)</b>",
         hovermode="x unified",
         template="plotly_white",
         # Legend positioned above the graph and centered
@@ -103,16 +105,20 @@ try:
             xanchor="center",
             x=0.5
         ),
-        # Darkened Axis Labels and Grid Lines
+        # Updated: Larger, Bold Axis Labels (Titles) and Larger Tick Labels
         xaxis=dict(
-            title_font=dict(color='black'),
-            tickfont=dict(color='black'),
-            gridcolor='silver'
+            title_font=dict(color='black', size=20),
+            tickfont=dict(color='black', size=14),
+            showgrid=True,
+            gridcolor='silver',
+            gridwidth=1
         ),
         yaxis=dict(
-            title_font=dict(color='black'),
-            tickfont=dict(color='black'),
-            gridcolor='silver'
+            title_font=dict(color='black', size=20),
+            tickfont=dict(color='black', size=14),
+            showgrid=True,
+            gridcolor='silver',
+            gridwidth=1
         )
     )
     
