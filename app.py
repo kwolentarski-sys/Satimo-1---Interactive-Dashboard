@@ -53,7 +53,7 @@ def load_and_clean_data(file_name):
 
     return pd.DataFrame(dipole_data)
 
-# 1. Load the data using the verbatim filename
+# 1. Load the data using the verbatim filename[cite: 1]
 file_name = 'Satimo 1 Chamber - Passive Trend Charts - Satimo 1- Dipoles Yearly (4).csv'
 
 try:
@@ -114,9 +114,9 @@ try:
     ))
     
     fig.update_layout(
-        # Updated: Title includes frequency span in non-bold text[cite: 1]
+        # Updated: Dipole ID is bold and size 30; Frequency span is size 20 and not bold[cite: 1]
         title=dict(
-            text=f"<b>Dipole {selected_dipole}</b> ({min_f}-{max_f} MHz)",
+            text=f"<b>Dipole {selected_dipole}</b> <span style='font-size: 20px;'>({min_f}-{max_f} MHz)</span>",
             font=dict(size=30)
         ),
         xaxis_title="<b>Frequency (MHz)</b>",
