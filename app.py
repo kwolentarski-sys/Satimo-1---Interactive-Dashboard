@@ -82,7 +82,7 @@ def load_and_clean_data(file_name):
     except FileNotFoundError:
         return None
 
-# Mapping selections to filenames
+# Mapping selections to filenames verbatim
 files = {
     "Yearly": 'Satimo 1 Chamber - Passive Trend Charts - Satimo 1- Dipoles Yearly (4).csv',
     "Quarterly": 'Satimo 1 Chamber - Passive Trend Charts - Satimo 1- Dipoles Quarterly (1).csv'
@@ -152,12 +152,16 @@ if df is not None and not df.empty:
         ),
         margin=dict(t=130, b=50, l=50, r=50),
         xaxis=dict(
-            title_font=dict(color='black', size=20), tickfont=dict(color='black', size=14),
+            title_font=dict(color='black', size=20), 
+            # Updated: Added weight='bold' to make axis numbers bold
+            tickfont=dict(color='black', size=14, weight='bold'),
             showgrid=True, gridcolor='silver', gridwidth=1,
             showline=True, linewidth=1, linecolor='black', mirror=True
         ),
         yaxis=dict(
-            title_font=dict(color='black', size=20), tickfont=dict(color='black', size=14),
+            title_font=dict(color='black', size=20), 
+            # Updated: Added weight='bold' to make axis numbers bold
+            tickfont=dict(color='black', size=14, weight='bold'),
             showgrid=True, gridcolor='silver', gridwidth=1,
             showline=True, linewidth=1, linecolor='black', mirror=True
         )
