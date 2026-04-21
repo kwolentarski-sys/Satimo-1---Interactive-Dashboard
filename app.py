@@ -27,7 +27,7 @@ def load_and_clean_data(file_name):
         col10 = str(row['Col10']).strip()
         col11 = str(row['Col11']).strip()
         
-        # CORRECTED: Identify both SD and WD dipoles to separate their data
+        # Identify both SD and WD dipoles to separate their data
         is_new_dipole = (col9.startswith('SD') or col9.startswith('WD')) and len(col9) > 2 and col9[2].isdigit()
         
         if is_new_dipole:
@@ -53,7 +53,7 @@ def load_and_clean_data(file_name):
 
     return pd.DataFrame(dipole_data)
 
-# 1. Load the data[cite: 1]
+# 1. Load the data using the verbatim filename
 file_name = 'Satimo 1 Chamber - Passive Trend Charts - Satimo 1- Dipoles Yearly (4).csv'
 
 try:
@@ -77,16 +77,19 @@ try:
     # Metric 2: Maximum Overshoot Above 0 dB[cite: 1]
     above_0_subset = subset[subset['Date Efficiency (dB)'] > 0]
     
-    # Display formatted metrics
+    # Display Result 1: Bold prefix
     st.write(f"**Maximum Difference From Reference NIST:** {max_val:.2f} dB at {max_freq} MHz")
     
+    # Updated: Display Result 2 with conditional coloring[cite: 1]
     if not above_0_subset.empty:
         max_above_idx = above_0_subset['Date Efficiency (dB)'].idxmax()
         max_above_val = above_0_subset.loc[max_above_idx, 'Date Efficiency (dB)']
         max_above_freq = above_0_subset.loc[max_above_idx, 'Frequency (MHz)']
-        st.write(f"**Maximum Overshoot Above 0 dB:** {max_above_val:.2f} dB at {max_above_freq} MHz")
+        # Red text for overshoot values[cite: 1]
+        st.markdown(f'**Maximum Overshoot Above 0 dB:** <span style="color:red;">{max_above_val:.2f} dB at {max_above_freq} MHz</span>', unsafe_allow_html=True)
     else:
-        st.write("**Maximum Overshoot Above 0 dB:** None")
+        # Green text for "None"[cite: 1]
+        st.markdown('**Maximum Overshoot Above 0 dB:** <span style="color:green;">None</span>', unsafe_allow_html=True)
     
     # 3. Build Interactive Plotly Graph[cite: 1]
     fig = go.Figure()
@@ -153,8 +156,7 @@ try:
     
     st.plotly_chart(fig, use_container_width=True)
 
-    if st.checkbox("Show Raw Data for this Dipole"):
-        st.dataframe(subset)
+    # Removed: Show Raw Data Table[cite: 1]
 
 except FileNotFoundError:
     st.error(f"Could not find `{file_name}`. Please ensure it is in the same directory as this script.")
