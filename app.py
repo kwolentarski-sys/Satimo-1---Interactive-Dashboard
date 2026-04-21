@@ -69,15 +69,27 @@ try:
     subset = df[df['Dipole'] == selected_dipole].copy()
     date_label = subset["Date_Label"].iloc[0]
 
-    # --- NEW CALCULATION: Max Difference ---
-    # Calculate the absolute difference between Reference and the Date Data
+    # --- CALCULATIONS: Differences ---
+    # Metric 1: Max Absolute Difference From Reference NIST
     subset['Abs_Diff'] = (subset['Reference Efficiency (dB)'] - subset['Date Efficiency (dB)']).abs()
     max_diff_idx = subset['Abs_Diff'].idxmax()
     max_val = subset.loc[max_diff_idx, 'Abs_Diff']
     max_freq = subset.loc[max_diff_idx, 'Frequency (MHz)']
 
-    # Display calculation result above the graph
-    st.write(f"**Maximum Difference: {max_val:.2f} dB at {max_freq} MHz**")
+    # Metric 2: Max Difference Above 0 dB (Measured values exceeding 0 dB)
+    above_0_subset = subset[subset['Date Efficiency (dB)'] > 0]
+    
+    # Display Result 1
+    st.write(f"**Maximum Difference From Reference NIST: {max_val:.2f} dB at {max_freq} MHz**")
+    
+    # NEW Calculation and Display Result 2: Difference Above 0 dB
+    if not above_0_subset.empty:
+        max_above_idx = above_0_subset['Date Efficiency (dB)'].idxmax()
+        max_above_val = above_0_subset.loc[max_above_idx, 'Date Efficiency (dB)']
+        max_above_freq = above_0_subset.loc[max_above_idx, 'Frequency (MHz)']
+        st.write(f"**Maximum Difference Above 0 dB: {max_above_val:.2f} dB at {max_above_freq} MHz**")
+    else:
+        st.write("**Maximum Difference Above 0 dB: None**")
     
     # 3. Build Interactive Plotly Graph
     fig = go.Figure()
@@ -101,17 +113,14 @@ try:
     ))
     
     fig.update_layout(
-        # Graph title size 30
         title=dict(
             text=f"Dipole {selected_dipole}",
             font=dict(size=30)
         ),
-        # Bold Titles (size 20)
         xaxis_title="<b>Frequency (MHz)</b>",
         yaxis_title="<b>Efficiency (dB)</b>",
         hovermode="x unified",
         template="plotly_white",
-        # Legend positioned further above (y=1.12) and centered (size 18)
         legend=dict(
             orientation="h",
             yanchor="bottom",
@@ -120,9 +129,7 @@ try:
             x=0.5,
             font=dict(size=18)
         ),
-        # Top margin adjusted for legend
         margin=dict(t=120),
-        # Axis labels (Titles) and Tick Labels with outside border (mirror)
         xaxis=dict(
             title_font=dict(color='black', size=20),
             tickfont=dict(color='black', size=14),
@@ -147,10 +154,10 @@ try:
         )
     )
     
-    # Render the plot in the dashboard
+    # Render the plot
     st.plotly_chart(fig, use_container_width=True)
 
-    # 4. Show Raw Data Table (Optional)
+    # 4. Show Raw Data Table
     if st.checkbox("Show Raw Data for this Dipole"):
         st.dataframe(subset)
 
