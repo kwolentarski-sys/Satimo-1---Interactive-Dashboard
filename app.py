@@ -122,14 +122,14 @@ if df is not None and not df.empty:
     # 3. Build Interactive Plotly Graph
     fig = go.Figure()
     
-    # NIST Reference Line (Red/Dashed, Bold Legend)
+    # NIST Reference Line: Updated with 3 spaces (&nbsp;) for legend separation
     fig.add_trace(go.Scatter(
         x=subset['Frequency (MHz)'], y=subset['Reference Efficiency (dB)'],
-        mode='lines+markers', name='<b>Reference Data - NIST</b>',
+        mode='lines+markers', name='<b>Reference Data - NIST</b>&nbsp;&nbsp;&nbsp;',
         line=dict(color='red', width=3, dash='dash')
     ))
     
-    # Measured Date Line (Updated: Color changed to #022af2)
+    # Measured Date Line (Color: #022af2)
     fig.add_trace(go.Scatter(
         x=subset['Frequency (MHz)'], y=subset['Date Efficiency (dB)'],
         mode='lines+markers', name=f'<b>{date_label}</b>',
