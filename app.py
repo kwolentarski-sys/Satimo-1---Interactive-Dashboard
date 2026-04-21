@@ -46,6 +46,7 @@ def load_and_clean_data(file_name, is_comparison=False):
             
             if start_row is not None:
                 if not is_comparison:
+                    # Standard 3-column group (ID, Reference, Measured)
                     data_cols = df_raw.iloc[start_row:, c:c+3].copy()
                     data_cols.columns = ['ID_Col', 'Ref_Col', 'Meas_Col']
                     current_unit, current_date = None, None
@@ -59,8 +60,10 @@ def load_and_clean_data(file_name, is_comparison=False):
                                 all_parsed_data.append({'Dipole': current_unit, 'Date_Label': current_date, 'Frequency (MHz)': float(val_id), 'Reference Efficiency (dB)': float(val_ref), 'Date Efficiency (dB)': float(val_meas)})
                             except ValueError: pass
                 else:
+                    # Comparison 2-column format (Frequency, Efficiency)
                     chamber_name = str(df_raw.iloc[start_row+1, c]).strip()
                     if chamber_name == "Satimo1": chamber_name = "Satimo 1"
+                    
                     unit_name = str(df_raw.iloc[0, 0]).split(':')[-1].strip()
                     data_cols = df_raw.iloc[start_row+2:, c:c+2].copy()
                     data_cols.columns = ['Freq_Col', 'Eff_Col']
@@ -71,6 +74,7 @@ def load_and_clean_data(file_name, is_comparison=False):
         return pd.DataFrame(all_parsed_data)
     except Exception: return None
 
+# Mapping files
 files = {
     "Yearly": 'Satimo 1 Chamber - Passive Trend Charts - Satimo 1- Dipoles Yearly (4).csv',
     "Quarterly": 'Satimo 1 Chamber - Passive Trend Charts - Satimo 1- Dipoles Quarterly (1).csv',
@@ -94,6 +98,7 @@ if df is not None and not df.empty:
         date_label, unit_display_name = subset["Date_Label"].iloc[0], selected_unit
 
     if not subset.empty:
+        # Metrics: Calculations only for non-comparison types
         if not is_comp:
             subset['Abs_Diff'] = (subset['Reference Efficiency (dB)'] - subset['Date Efficiency (dB)']).abs()
             max_val = subset['Abs_Diff'].max()
@@ -105,12 +110,14 @@ if df is not None and not df.empty:
             if not above_0_subset.empty:
                 max_above_idx = above_0_subset['Date Efficiency (dB)'].idxmax()
                 st.markdown(f'**Maximum Overshoot Above 0 dB:** <span style="color:red;">{above_0_subset.loc[max_above_idx, "Date Efficiency (dB)"]:.2f} dB at {above_0_subset.loc[max_above_idx, "Frequency (MHz)"]} MHz</span>', unsafe_allow_html=True)
-            else: st.markdown('**Maximum Overshoot Above 0 dB:** <span style="color:green;">None</span>', unsafe_allow_html=True)
+            else: 
+                st.markdown('**Maximum Overshoot Above 0 dB:** <span style="color:green;">None</span>', unsafe_allow_html=True)
         
+        # 3. Build Interactive Plotly Graph
         fig = go.Figure()
         
         if is_comp:
-            # Updated: Satimo 1 dash style changed to "solid"
+            # Satimo 1 is solid red, Satimo 2 blue, Satimo 3 green
             chamber_styles = {
                 "Satimo 1": {"color": "red", "dash": "solid"},
                 "Satimo 2": {"color": "#022af2", "dash": "solid"},
@@ -129,6 +136,7 @@ if df is not None and not df.empty:
                         line=dict(color=style['color'], width=3, dash=style['dash'])
                     ))
         else:
+            # Standard Plot: NIST Reference (Dashed) and Measured Date (Solid Blue)
             fig.add_trace(go.Scatter(
                 x=subset['Frequency (MHz)'], 
                 y=subset['Reference Efficiency (dB)'], 
@@ -156,5 +164,6 @@ if df is not None and not df.empty:
         )
         st.plotly_chart(fig, use_container_width=True)
     else:
-        st.warning("No matching frequency data found.")
+        st.warning("No matching frequency data found for this selection.")
 else:
+    st.error(f"Please ensure the data file for {validation_type} is uploaded to the directory.")
