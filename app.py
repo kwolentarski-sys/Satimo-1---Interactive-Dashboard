@@ -14,9 +14,9 @@ st.markdown(
 # 1. Sidebar - Dashboard Controls
 st.sidebar.markdown('<h2 style="color:#022af2;">Dashboard Controls</h2>', unsafe_allow_html=True)
 
-# Updated: Toggle between Yearly, Quarterly, and Monthly validation
+# Updated: Change label to "Select Passive Validation Type"
 validation_type = st.sidebar.selectbox(
-    "Select Validation Type:",
+    "Select Passive Validation Type:",
     ["Yearly", "Quarterly", "Monthly"]
 )
 
@@ -72,7 +72,7 @@ def load_and_clean_data(file_name):
                             ref_eff = float(val_ref)
                             date_eff = float(val_meas)
                             all_parsed_data.append({
-                                'Dipole': current_unit, # Label used generically for the unit
+                                'Dipole': current_unit, 
                                 'Date_Label': current_date,
                                 'Frequency (MHz)': freq,
                                 'Reference Efficiency (dB)': ref_eff,
@@ -126,14 +126,14 @@ if df is not None and not df.empty:
     # 3. Build Interactive Plotly Graph
     fig = go.Figure()
     
-    # NIST Reference Line with 3 spaces separation for legend
+    # NIST Reference Line
     fig.add_trace(go.Scatter(
         x=subset['Frequency (MHz)'], y=subset['Reference Efficiency (dB)'],
         mode='lines+markers', name='<b>Reference Data - NIST</b>&nbsp;&nbsp;&nbsp;',
         line=dict(color='red', width=3, dash='dash')
     ))
     
-    # Measured Data Line (Color: #022af2)
+    # Measured Data Line
     fig.add_trace(go.Scatter(
         x=subset['Frequency (MHz)'], y=subset['Date Efficiency (dB)'],
         mode='lines+markers', name=f'<b>{date_label}</b>',
@@ -165,6 +165,7 @@ if df is not None and not df.empty:
             title_font=dict(color='black', size=20), 
             tickfont=dict(color='black', size=14, weight='bold'),
             showgrid=True, gridcolor='silver', gridwidth=1,
+            zeroline=True, zerolinewidth=3, zerolinecolor='black',
             showline=True, linewidth=1, linecolor='black', mirror=True
         )
     )
