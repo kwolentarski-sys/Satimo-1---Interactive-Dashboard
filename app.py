@@ -5,7 +5,7 @@ import plotly.graph_objects as go
 # --- PAGE CONFIGURATION ---
 st.set_page_config(page_title="Satimo 1 Dashboard", layout="wide")
 
-# Updated: App Title forced to one line using CSS nowrap
+# App Title: Forced to one line using CSS nowrap
 st.markdown(
     '<h1 style="white-space: nowrap; overflow: hidden; text-overflow: clip;">Satimo 1 Chamber - Interactive Dashboard</h1>', 
     unsafe_allow_html=True
@@ -17,10 +17,8 @@ st.markdown('<h3 style="color:#022af2;"><b>Yearly - Dipole Passive Validation Me
 @st.cache_data
 def load_and_clean_data(file_name):
     """Parses the specific layout of the Satimo passive trend CSV."""
-    # Load raw data without headers
     df_raw = pd.read_csv(file_name, header=None)
     
-    # Extract columns 9, 10, 11
     data_cols = df_raw.iloc[:, 9:12].copy()
     data_cols.columns = ['Col9', 'Col10', 'Col11']
 
@@ -33,7 +31,6 @@ def load_and_clean_data(file_name):
         col10 = str(row['Col10']).strip()
         col11 = str(row['Col11']).strip()
         
-        # Identify both SD and WD dipoles to separate their data
         is_new_dipole = (col9.startswith('SD') or col9.startswith('WD')) and len(col9) > 2 and col9[2].isdigit()
         
         if is_new_dipole:
@@ -74,20 +71,17 @@ try:
     date_label = subset["Date_Label"].iloc[0]
 
     # --- CALCULATIONS ---
-    # Metric 1: Max Absolute Difference From Reference NIST[cite: 1]
     subset['Abs_Diff'] = (subset['Reference Efficiency (dB)'] - subset['Date Efficiency (dB)']).abs()
     max_diff_idx = subset['Abs_Diff'].idxmax()
     max_val = subset.loc[max_diff_idx, 'Abs_Diff']
     max_freq = subset.loc[max_diff_idx, 'Frequency (MHz)']
 
-    # Metric 2: Maximum Overshoot Above 0 dB[cite: 1]
     above_0_subset = subset[subset['Date Efficiency (dB)'] > 0]
     
-    # Frequency Span for Title[cite: 1]
     min_f = int(subset['Frequency (MHz)'].min())
     max_f = int(subset['Frequency (MHz)'].max())
 
-    # Display Metrics with conditional coloring
+    # Display Metrics
     st.write(f"**Maximum Difference From Reference NIST:** {max_val:.2f} dB at {max_freq} MHz")
     
     if not above_0_subset.empty:
@@ -98,10 +92,9 @@ try:
     else:
         st.markdown('**Maximum Overshoot Above 0 dB:** <span style="color:green;">None</span>', unsafe_allow_html=True)
     
-    # 3. Build Interactive Plotly Graph[cite: 1]
+    # 3. Build Interactive Plotly Graph
     fig = go.Figure()
     
-    # Reference Data - NIST Line (Red/Dashed, Bold Legend)[cite: 1]
     fig.add_trace(go.Scatter(
         x=subset['Frequency (MHz)'], 
         y=subset['Reference Efficiency (dB)'],
@@ -110,7 +103,6 @@ try:
         line=dict(color='red', width=3, dash='dash')
     ))
     
-    # Date Data Line (Bold Legend Label)[cite: 1]
     fig.add_trace(go.Scatter(
         x=subset['Frequency (MHz)'], 
         y=subset['Date Efficiency (dB)'],
@@ -120,7 +112,6 @@ try:
     ))
     
     fig.update_layout(
-        # Dipole ID is bold and size 30; Frequency span is size 20 and not bold[cite: 1]
         title=dict(
             text=f"<b>Dipole {selected_dipole}</b> <span style='font-size: 20px;'>({min_f}-{max_f} MHz)</span>",
             font=dict(size=30)
@@ -129,8 +120,8 @@ try:
         yaxis_title="<b>Efficiency (dB)</b>",
         hovermode="x unified",
         template="plotly_white",
-        # Updated: Maximum Fit - adjusted height and margins
-        height=700,
+        # Updated: Height reduced by 20% (700 -> 560)
+        height=560,
         legend=dict(
             orientation="h",
             yanchor="bottom",
@@ -164,7 +155,6 @@ try:
         )
     )
     
-    # Render with use_container_width to ensure max fit[cite: 1]
     st.plotly_chart(fig, use_container_width=True)
 
 except FileNotFoundError:
