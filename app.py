@@ -4,8 +4,9 @@ import plotly.graph_objects as go
 
 # Dashboard Title
 st.title("Satimo 1 - Interactive Dashboard")
-# Sub-title for the dipole measurement graphs
-st.markdown("### **Yearly Dipole Validation Measurements**")
+
+# Updated: Sub-title color changed to #022af2 and kept bold/large using HTML
+st.markdown('<h3 style="color:#022af2;"><b>Yearly Dipole Validation Measurements</b></h3>', unsafe_allow_html=True)
 
 @st.cache_data
 def load_and_clean_data(file_name):
@@ -92,7 +93,7 @@ try:
     fig.update_layout(
         # Graph title simplified to "Dipole [Name]"
         title=f"Dipole {selected_dipole}",
-        # Updated: Bold Titles
+        # Bold Titles
         xaxis_title="<b>Frequency (MHz)</b>",
         yaxis_title="<b>Efficiency (dB)</b>",
         hovermode="x unified",
@@ -105,20 +106,29 @@ try:
             xanchor="center",
             x=0.5
         ),
-        # Updated: Larger, Bold Axis Labels (Titles) and Larger Tick Labels
+        # Larger, Bold Axis Labels (Titles) and Larger Tick Labels
+        # Updated: Added mirror=True and showline=True to create the outside border
         xaxis=dict(
             title_font=dict(color='black', size=20),
             tickfont=dict(color='black', size=14),
             showgrid=True,
             gridcolor='silver',
-            gridwidth=1
+            gridwidth=1,
+            showline=True,
+            linewidth=1,
+            linecolor='black',
+            mirror=True
         ),
         yaxis=dict(
             title_font=dict(color='black', size=20),
             tickfont=dict(color='black', size=14),
             showgrid=True,
             gridcolor='silver',
-            gridwidth=1
+            gridwidth=1,
+            showline=True,
+            linewidth=1,
+            linecolor='black',
+            mirror=True
         )
     )
     
