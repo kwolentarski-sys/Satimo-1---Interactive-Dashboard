@@ -3,8 +3,8 @@ import pandas as pd
 import plotly.graph_objects as go
 
 # Dashboard Title
-st.title("Dipole Efficiency Interactive Dashboard")
-st.markdown("Comparing **Reference Data - NIST** vs. **Date Data** across different dipoles.")
+st.title("Satimo 1 - Interactive Dashboard")
+st.markdown("Yearly Dipole Validation")
 
 @st.cache_data
 def load_and_clean_data(file_name):
@@ -79,22 +79,41 @@ try:
         line=dict(color='#1f77b4', width=3)
     ))
     
-    # Add Date Data Line
+    # Add Date Data Line (Removed "Date Data" prefix)
     fig.add_trace(go.Scatter(
         x=subset['Frequency (MHz)'], 
         y=subset['Date Efficiency (dB)'],
         mode='lines+markers',
-        name=f'Date Data ({date_label})',
+        name=date_label,
         line=dict(color='#ff7f0e', width=3)
     ))
     
     fig.update_layout(
-        title=f"Efficiency Comparison for {selected_dipole}",
+        # Updated: Graph title simplified to "Dipole [Name]"
+        title=f"Dipole {selected_dipole}",
         xaxis_title="Frequency (MHz)",
         yaxis_title="Efficiency (dB)",
         hovermode="x unified",
         template="plotly_white",
-        legend=dict(yanchor="top", y=0.99, xanchor="left", x=0.01)
+        # Legend positioned above the graph and centered
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="center",
+            x=0.5
+        ),
+        # Darkened Axis Labels and Grid Lines
+        xaxis=dict(
+            title_font=dict(color='black'),
+            tickfont=dict(color='black'),
+            gridcolor='silver'
+        ),
+        yaxis=dict(
+            title_font=dict(color='black'),
+            tickfont=dict(color='black'),
+            gridcolor='silver'
+        )
     )
     
     # Render the plot in the dashboard
