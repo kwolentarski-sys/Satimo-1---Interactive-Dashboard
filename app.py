@@ -11,10 +11,10 @@ st.markdown('<h3 style="color:#022af2;"><b>Yearly Dipole Validation Measurements
 @st.cache_data
 def load_and_clean_data(file_name):
     """Parses the specific layout of the Satimo passive trend CSV."""
-    # Load raw data without headers to navigate the multi-level layout
+    # Load raw data without headers
     df_raw = pd.read_csv(file_name, header=None)
     
-    # Extract columns 9, 10, 11 which contain Dipole, Reference, and Date data
+    # Extract columns 9, 10, 11
     data_cols = df_raw.iloc[:, 9:12].copy()
     data_cols.columns = ['Col9', 'Col10', 'Col11']
 
@@ -22,19 +22,16 @@ def load_and_clean_data(file_name):
     current_dipole = None
     current_date = None
 
-    # Loop through rows to associate frequencies and efficiencies with the correct Dipole
     for index, row in data_cols.iterrows():
         col9 = str(row['Col9']).strip()
         col10 = str(row['Col10']).strip()
         col11 = str(row['Col11']).strip()
         
-        # Identify the start of a new dipole section (e.g., "SD665")
         if col9.startswith('SD') and len(col9) > 2 and col9[2].isdigit():
             current_dipole = col9
             current_date = col11 if col11 != 'nan' else 'Current Date'
             continue
                 
-        # If we are under a dipole, attempt to parse the numerical values
         if current_dipole:
             try:
                 freq = float(col9)
@@ -49,52 +46,49 @@ def load_and_clean_data(file_name):
                     'Date Efficiency (dB)': date_eff
                 })
             except ValueError:
-                # Skip header rows like "Frequency", "(Mhz)", or empty rows
                 pass
 
     return pd.DataFrame(dipole_data)
 
-# 1. Load the data using the verbatim filename
+# 1. Load the data[cite: 1]
 file_name = 'Satimo 1 Chamber - Passive Trend Charts - Satimo 1- Dipoles Yearly (4).csv'
 
 try:
     df = load_and_clean_data(file_name)
     
-    # 2. Sidebar for User Interaction
+    # 2. Sidebar for User Interaction[cite: 1]
     st.sidebar.header("Dashboard Controls")
     dipoles = df['Dipole'].unique()
     selected_dipole = st.sidebar.selectbox("Select a Dipole to View:", dipoles)
     
-    # Filter dataset based on selection
     subset = df[df['Dipole'] == selected_dipole].copy()
     date_label = subset["Date_Label"].iloc[0]
 
-    # --- CALCULATIONS: Differences ---
-    # Metric 1: Max Absolute Difference From Reference NIST
+    # --- CALCULATIONS ---
+    # Metric 1: Max Absolute Difference From Reference NIST[cite: 1]
     subset['Abs_Diff'] = (subset['Reference Efficiency (dB)'] - subset['Date Efficiency (dB)']).abs()
     max_diff_idx = subset['Abs_Diff'].idxmax()
     max_val = subset.loc[max_diff_idx, 'Abs_Diff']
     max_freq = subset.loc[max_diff_idx, 'Frequency (MHz)']
 
-    # Metric 2: Max Difference Above 0 dB (Measured values exceeding 0 dB)
+    # Metric 2: Maximum Overshoot Above 0 dB[cite: 1]
     above_0_subset = subset[subset['Date Efficiency (dB)'] > 0]
     
-    # Display Result 1
-    st.write(f"**Maximum Difference From Reference NIST: {max_val:.2f} dB at {max_freq} MHz**")
+    # Updated: Bold labels and new text "Maximum Overshoot Above 0 dB"
+    st.write(f"**Maximum Difference From Reference NIST:** {max_val:.2f} dB at {max_freq} MHz")
     
-    # NEW Calculation and Display Result 2: Difference Above 0 dB
     if not above_0_subset.empty:
         max_above_idx = above_0_subset['Date Efficiency (dB)'].idxmax()
         max_above_val = above_0_subset.loc[max_above_idx, 'Date Efficiency (dB)']
         max_above_freq = above_0_subset.loc[max_above_idx, 'Frequency (MHz)']
-        st.write(f"**Maximum Difference Above 0 dB: {max_above_val:.2f} dB at {max_above_freq} MHz**")
+        st.write(f"**Maximum Overshoot Above 0 dB:** {max_above_val:.2f} dB at {max_above_freq} MHz")
     else:
-        st.write("**Maximum Difference Above 0 dB: None**")
+        st.write("**Maximum Overshoot Above 0 dB:** None")
     
-    # 3. Build Interactive Plotly Graph
+    # 3. Build Interactive Plotly Graph[cite: 1]
     fig = go.Figure()
     
-    # Add Reference Data - NIST Line (Red and Dashed)
+    # Reference Data - NIST Line (Red/Dashed, Bold Legend)[cite: 1]
     fig.add_trace(go.Scatter(
         x=subset['Frequency (MHz)'], 
         y=subset['Reference Efficiency (dB)'],
@@ -103,7 +97,7 @@ try:
         line=dict(color='red', width=3, dash='dash')
     ))
     
-    # Add Date Data Line (Bold Legend Label)
+    # Date Data Line (Bold Legend Label)[cite: 1]
     fig.add_trace(go.Scatter(
         x=subset['Frequency (MHz)'], 
         y=subset['Date Efficiency (dB)'],
@@ -154,10 +148,8 @@ try:
         )
     )
     
-    # Render the plot
     st.plotly_chart(fig, use_container_width=True)
 
-    # 4. Show Raw Data Table
     if st.checkbox("Show Raw Data for this Dipole"):
         st.dataframe(subset)
 
