@@ -62,6 +62,7 @@ def load_and_clean_data(file_name, is_comparison=False):
                 else:
                     # Comparison 2-column format (Frequency, Efficiency)
                     chamber_name = str(df_raw.iloc[start_row+1, c]).strip()
+                    chamber_date = str(df_raw.iloc[start_row+1, c+1]).strip() # Extract date
                     if chamber_name == "Satimo1": chamber_name = "Satimo 1"
                     
                     unit_name = str(df_raw.iloc[0, 0]).split(':')[-1].strip()
@@ -69,7 +70,13 @@ def load_and_clean_data(file_name, is_comparison=False):
                     data_cols.columns = ['Freq_Col', 'Eff_Col']
                     for _, row in data_cols.iterrows():
                         try:
-                            all_parsed_data.append({'Dipole': unit_name, 'Chamber': chamber_name, 'Frequency (MHz)': float(row['Freq_Col']), 'Efficiency': float(row['Eff_Col'])})
+                            all_parsed_data.append({
+                                'Dipole': unit_name, 
+                                'Chamber': chamber_name, 
+                                'Chamber_Date': chamber_date, # Save date per chamber
+                                'Frequency (MHz)': float(row['Freq_Col']), 
+                                'Efficiency': float(row['Eff_Col'])
+                            })
                         except ValueError: pass
         return pd.DataFrame(all_parsed_data)
     except Exception: return None
@@ -117,7 +124,7 @@ if df is not None and not df.empty:
         fig = go.Figure()
         
         if is_comp:
-            # Satimo 1 is solid red, Satimo 2 blue, Satimo 3 green
+            # All chambers solid: Satimo 1 red, Satimo 2 blue, Satimo 3 green
             chamber_styles = {
                 "Satimo 1": {"color": "red", "dash": "solid"},
                 "Satimo 2": {"color": "#022af2", "dash": "solid"},
@@ -127,12 +134,15 @@ if df is not None and not df.empty:
             for chamber in ["Satimo 1", "Satimo 2", "Satimo 3"]:
                 ch_data = subset[subset['Chamber'] == chamber]
                 if not ch_data.empty:
+                    # Retrieve the specific date for this chamber
+                    ch_date = ch_data['Chamber_Date'].iloc[0]
                     style = chamber_styles.get(chamber, {"color": "gray", "dash": "solid"})
                     fig.add_trace(go.Scatter(
                         x=ch_data['Frequency (MHz)'], 
                         y=ch_data['Efficiency'],
                         mode='lines+markers',
-                        name=f"<b>{chamber}</b>&nbsp;&nbsp;&nbsp;",
+                        # Updated Legend: includes date in parentheses
+                        name=f"<b>{chamber} ({ch_date})</b>&nbsp;&nbsp;&nbsp;",
                         line=dict(color=style['color'], width=3, dash=style['dash'])
                     ))
         else:
