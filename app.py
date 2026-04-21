@@ -27,7 +27,10 @@ def load_and_clean_data(file_name):
         col10 = str(row['Col10']).strip()
         col11 = str(row['Col11']).strip()
         
-        if col9.startswith('SD') and len(col9) > 2 and col9[2].isdigit():
+        # CORRECTED: Identify both SD and WD dipoles to separate their data
+        is_new_dipole = (col9.startswith('SD') or col9.startswith('WD')) and len(col9) > 2 and col9[2].isdigit()
+        
+        if is_new_dipole:
             current_dipole = col9
             current_date = col11 if col11 != 'nan' else 'Current Date'
             continue
@@ -74,7 +77,7 @@ try:
     # Metric 2: Maximum Overshoot Above 0 dB[cite: 1]
     above_0_subset = subset[subset['Date Efficiency (dB)'] > 0]
     
-    # Updated: Bold labels and new text "Maximum Overshoot Above 0 dB"
+    # Display formatted metrics
     st.write(f"**Maximum Difference From Reference NIST:** {max_val:.2f} dB at {max_freq} MHz")
     
     if not above_0_subset.empty:
