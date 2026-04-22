@@ -5,13 +5,13 @@ import plotly.graph_objects as go
 # --- PAGE CONFIGURATION ---
 st.set_page_config(page_title="Satimo 1 Dashboard", layout="wide")
 
-# App Title: Forced to one line using CSS nowrap
+# App Title: Forced to one line using CSS nowrap[cite: 1]
 st.markdown(
     '<h1 style="white-space: nowrap; overflow: hidden; text-overflow: clip;">Satimo 1 Chamber - Interactive Dashboard</h1>', 
     unsafe_allow_html=True
 )
 
-# 1. Sidebar - Dashboard Controls
+# 1. Sidebar - Dashboard Controls[cite: 1]
 st.sidebar.markdown('<h2 style="color:#022af2;">Dashboard Controls</h2>', unsafe_allow_html=True)
 
 validation_type = st.sidebar.selectbox(
@@ -19,7 +19,7 @@ validation_type = st.sidebar.selectbox(
     ["Yearly", "Quarterly", "Monthly", "Wideband Dipole - Chamber Comparison"]
 )
 
-# Dynamic Sub-title based on selection
+# Dynamic Sub-title based on selection[cite: 1]
 title_map = {
     "Yearly": "Yearly - Passive Dipole Validation Measurements",
     "Quarterly": "Quarterly - Passive Dipole Validation Measurements",
@@ -30,7 +30,7 @@ st.markdown(f'<h3 style="color:#022af2;"><b>{title_map[validation_type]}</b></h3
 
 @st.cache_data
 def load_and_clean_data(file_name, is_comparison=False):
-    """Dynamically finds and parses Satimo data. Handles standard 3-col and comparison 2-col formats."""
+    """Dynamically finds and parses Satimo data. Handles standard 3-col and comparison 2-col formats."""[cite: 1]
     try:
         df_raw = pd.read_csv(file_name, header=None)
         all_parsed_data = []
@@ -46,7 +46,7 @@ def load_and_clean_data(file_name, is_comparison=False):
             
             if start_row is not None:
                 if not is_comparison:
-                    # Standard 3-column group (ID, Reference, Measured)
+                    # Standard 3-column group (ID, Reference, Measured)[cite: 1]
                     data_cols = df_raw.iloc[start_row:, c:c+3].copy()
                     data_cols.columns = ['ID_Col', 'Ref_Col', 'Meas_Col']
                     current_unit, current_date = None, None
@@ -66,12 +66,12 @@ def load_and_clean_data(file_name, is_comparison=False):
                                 })
                             except ValueError: pass
                 else:
-                    # Comparison 2-column format (Frequency, Efficiency)
+                    # Comparison 2-column format (Frequency, Efficiency)[cite: 1]
                     chamber_name = str(df_raw.iloc[start_row+1, c]).strip()
                     chamber_date = str(df_raw.iloc[start_row+1, c+1]).strip()
                     if chamber_name == "Satimo1": chamber_name = "Satimo 1"
                     
-                    # Extraction and rename for Proxicast Dipole #4
+                    # Extraction and rename for Proxicast Dipole #4[cite: 1]
                     unit_name = str(df_raw.iloc[0, 0]).split(':')[-1].strip()
                     unit_name = unit_name.replace("Proxicast #4", "Proxicast Dipole #4")
                     
@@ -90,7 +90,7 @@ def load_and_clean_data(file_name, is_comparison=False):
         return pd.DataFrame(all_parsed_data)
     except Exception: return None
 
-# Mapping files
+# Mapping files[cite: 1]
 files = {
     "Yearly": 'Satimo 1 Chamber - Passive Trend Charts - Satimo 1- Dipoles Yearly (4).csv',
     "Quarterly": 'Satimo 1 Chamber - Passive Trend Charts - Satimo 1- Dipoles Quarterly (1).csv',
@@ -114,7 +114,7 @@ if df is not None and not df.empty:
         date_label, unit_display_name = subset["Date_Label"].iloc[0], selected_unit
 
     if not subset.empty:
-        # Metrics: Calculations only for non-comparison types
+        # Metrics: Calculations only for non-comparison types[cite: 1]
         if not is_comp:
             subset['Abs_Diff'] = (subset['Reference Efficiency (dB)'] - subset['Date Efficiency (dB)']).abs()
             max_val = subset['Abs_Diff'].max()
@@ -132,6 +132,7 @@ if df is not None and not df.empty:
         fig = go.Figure()
         
         if is_comp:
+            # Chamber comparison trace settings[cite: 1]
             chamber_styles = {
                 "Satimo 1": {"color": "red", "dash": "solid"},
                 "Satimo 2": {"color": "#022af2", "dash": "solid"},
@@ -151,6 +152,7 @@ if df is not None and not df.empty:
                         line=dict(color=style['color'], width=2, dash=style['dash'])
                     ))
         else:
+            # Passive validation trace settings[cite: 1]
             fig.add_trace(go.Scatter(
                 x=subset['Frequency (MHz)'], 
                 y=subset['Reference Efficiency (dB)'], 
@@ -167,10 +169,17 @@ if df is not None and not df.empty:
             ))
         
         min_f, max_f = int(subset['Frequency (MHz)'].min()), int(subset['Frequency (MHz)'].max())
+        
+        # Define background color based on selection
+        bg_color = "#e9f1ff" if not is_comp else "white"
+
         fig.update_layout(
             title=dict(text=f"<b>{unit_display_name}</b> <span style='font-size: 20px;'>({min_f}-{max_f} MHz)</span>", font=dict(size=30)),
             xaxis_title="<b>Frequency (MHz)</b>", yaxis_title="<b>Efficiency (dB)</b>",
             hovermode="x unified", template="plotly_white", height=560,
+            # Set background color
+            plot_bgcolor=bg_color,
+            paper_bgcolor=bg_color,
             legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02, font=dict(size=16)),
             margin=dict(t=100, b=50, l=50, r=150),
             xaxis=dict(title_font=dict(color='black', size=20), tickfont=dict(color='black', size=14, weight='bold'), showgrid=True, gridcolor='silver', gridwidth=1, showline=True, linewidth=1, linecolor='black', mirror=True),
