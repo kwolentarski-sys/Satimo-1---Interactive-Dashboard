@@ -19,16 +19,16 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# App Title: Forced to one line using CSS nowrap[cite: 1]
+# App Title: Forced to one line using CSS nowrap
 st.markdown(
     '<h1 style="white-space: nowrap; overflow: hidden; text-overflow: clip; font-size: 34px;">Satimo 1 Chamber Performance - Interactive Dashboard</h1>', 
     unsafe_allow_html=True
 )
 
-# 1. Sidebar - Dashboard Controls[cite: 1]
+# 1. Sidebar - Dashboard Controls
 st.sidebar.markdown('<h2 style="color:#022af2;">Dashboard Controls</h2>', unsafe_allow_html=True)
 
-# Bold Label for Passive Validation Type[cite: 1]
+# Bold Label for Passive Validation Type
 st.sidebar.markdown("**Select Passive Validation Type:**")
 validation_type = st.sidebar.selectbox(
     "Select Passive Validation Type:",
@@ -36,7 +36,7 @@ validation_type = st.sidebar.selectbox(
     label_visibility="collapsed"
 )
 
-# NEW: Bold Label for Active Validation Type[cite: 1]
+# Bold Label for Active Validation Type
 st.sidebar.markdown("**Select Active Validation Type:**")
 active_validation_type = st.sidebar.selectbox(
     "Select Active Validation Type:",
@@ -44,10 +44,10 @@ active_validation_type = st.sidebar.selectbox(
     label_visibility="collapsed"
 )
 
-# --- PASSIVE DATA LOADING (Baseline) ---
+# --- PASSIVE DATA LOADING (Baseline - Locked) ---
 @st.cache_data
 def load_and_clean_data(file_name, is_comparison=False):
-    """Dynamically finds and parses Satimo data. Handles standard 3-col and comparison 2-col formats."""[cite: 1]
+    """Dynamically finds and parses Satimo data. Handles standard 3-col and comparison 2-col formats."""
     if not os.path.exists(file_name):
         return None
     
@@ -110,7 +110,7 @@ def load_and_clean_data(file_name, is_comparison=False):
         return pd.DataFrame(all_parsed_data)
     except Exception: return None
 
-# --- NEW: ACTIVE DATA LOADING ---[cite: 1]
+# --- ACTIVE DATA LOADING ---
 @st.cache_data
 def load_active_trp_data(file_name):
     """Parses Active LTE TRP data file."""
@@ -124,42 +124,67 @@ def load_active_trp_data(file_name):
         data = data.dropna()
         data['Frequency (Mhz)'] = pd.to_numeric(data['Frequency (Mhz)'], errors='coerce')
         data['TRP (dBm)'] = pd.to_numeric(data['TRP (dBm)'], errors='coerce')
-        return data.dropna()
-    except Exception: return None
+        
+        # Get date from row 4, column 4
+        try:
+            date_val = str(df_raw.iloc[4, 4]).strip()
+        except:
+            date_val = "Unknown Date"
+            
+        return data.dropna(), date_val
+    except Exception: return None, None
 
 # --- MAIN DASHBOARD LOGIC ---
 
-# 1. Handle Active Selection First[cite: 1]
+# 1. Handle Active Selection First
 if active_validation_type == "LTE TRP":
     st.markdown('<h3 style="color:#022af2;"><b>Active Reference Quarterly - LTE TRP</b></h3>', unsafe_allow_html=True)
-    # Refer to file verbatim as instructed[cite: 1]
-    active_file = "Satimo 1 Chamber - Active Trend Charts - Satimo1 - Active Reference Quarterly - LTE TRP_2.csv"
-    df_active = load_active_trp_data(active_file)
+    # File name verbatim
+    active_file = "Satimo 1 Chamber - Active Trend Charts - Satimo1 - Active Reference Quarterly - LTE TRP.csv"
+    df_active, active_date = load_active_trp_data(active_file)
     
     if df_active is not None and not df_active.empty:
-        # LTE (Band/Chan) vs TRP[cite: 1]
+        # LTE (Band/Chan) vs TRP
         fig1 = go.Figure()
-        fig1.add_trace(go.Scatter(x=df_active['Band/Chan'], y=df_active['TRP (dBm)'], mode='lines+markers', line=dict(color='#022af2', width=2)))
+        fig1.add_trace(go.Scatter(
+            x=df_active['Band/Chan'], 
+            y=df_active['TRP (dBm)'], 
+            mode='lines+markers', 
+            name=f"LTE TRP ({active_date})",
+            line=dict(color='#022af2', width=2)
+        ))
         fig1.update_layout(
-            title="<b>LTE (Band/Chan) vs TRP</b>", xaxis_title="<b>Band/Chan</b>", yaxis_title="<b>TRP (dBm)</b>",
+            title="<b>LTE (Band/Chan) vs TRP</b>", 
+            xaxis_title="<b>Band/Chan</b>", 
+            yaxis_title="<b>TRP (dBm)</b>",
             template="plotly_white", height=450, margin=dict(t=50, b=50, l=50, r=50),
-            xaxis=dict(tickfont=dict(weight='bold')), yaxis=dict(tickfont=dict(weight='bold'), zeroline=True, zerolinewidth=3, zerolinecolor='black')
+            xaxis=dict(tickfont=dict(weight='bold')), 
+            yaxis=dict(tickfont=dict(weight='bold'), zeroline=True, zerolinewidth=3, zerolinecolor='black')
         )
         st.plotly_chart(fig1, use_container_width=True)
 
-        # LTE (Frequency (Mhz) vs TRP[cite: 1]
+        # LTE (Frequency (Mhz) vs TRP
         fig2 = go.Figure()
-        fig2.add_trace(go.Scatter(x=df_active['Frequency (Mhz)'], y=df_active['TRP (dBm)'], mode='lines+markers', line=dict(color='#022af2', width=2)))
+        fig2.add_trace(go.Scatter(
+            x=df_active['Frequency (Mhz)'], 
+            y=df_active['TRP (dBm)'], 
+            mode='lines+markers', 
+            name=f"LTE TRP ({active_date})",
+            line=dict(color='#022af2', width=2)
+        ))
         fig2.update_layout(
-            title="<b>LTE (Frequency (Mhz) vs TRP</b>", xaxis_title="<b>Frequency (MHz)</b>", yaxis_title="<b>TRP (dBm)</b>",
+            title="<b>LTE (Frequency (Mhz) vs TRP</b>", 
+            xaxis_title="<b>Frequency (MHz)</b>", 
+            yaxis_title="<b>TRP (dBm)</b>",
             template="plotly_white", height=450, margin=dict(t=50, b=50, l=50, r=50),
-            xaxis=dict(tickfont=dict(weight='bold')), yaxis=dict(tickfont=dict(weight='bold'), zeroline=True, zerolinewidth=3, zerolinecolor='black')
+            xaxis=dict(tickfont=dict(weight='bold')), 
+            yaxis=dict(tickfont=dict(weight='bold'), zeroline=True, zerolinewidth=3, zerolinecolor='black')
         )
         st.plotly_chart(fig2, use_container_width=True)
     else:
         st.error(f"Please ensure '{active_file}' is uploaded.")
 
-# 2. Handle Passive Selection[cite: 1]
+# 2. Handle Passive Selection
 if validation_type != "None":
     title_map = {
         "Yearly": "Yearly - Passive Dipole Validation Measurements",
@@ -191,7 +216,7 @@ if validation_type != "None":
             st.sidebar.markdown(f"**{label_text}**")
             selected_unit = st.sidebar.selectbox(label_text, units, label_visibility="collapsed")
             subset = df[df['Dipole'] == selected_unit].copy()
-            unit_display_name = selected_unit if subset.empty else selected_unit
+            unit_display_name = selected_unit
             date_label = "" if subset.empty else subset["Date_Label"].iloc[0]
 
         if not subset.empty:
