@@ -3,11 +3,11 @@ import pandas as pd
 import plotly.graph_objects as go
 
 # --- PAGE CONFIGURATION ---
-st.set_page_config(page_title="Satimo 1 Dashboard", layout="wide")
+st.set_page_config(page_title="Satimo 1 Performance Dashboard", layout="wide")
 
-# App Title: Forced to one line using CSS nowrap
+# App Title: Updated text and reduced font-size to maintain single-line layout
 st.markdown(
-    '<h1 style="white-space: nowrap; overflow: hidden; text-overflow: clip;">Satimo 1 Chamber - Interactive Dashboard</h1>', 
+    '<h1 style="white-space: nowrap; overflow: hidden; text-overflow: clip; font-size: 34px;">Satimo 1 Chamber Performance - Interactive Dashboard</h1>', 
     unsafe_allow_html=True
 )
 
