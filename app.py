@@ -19,35 +19,35 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# App Title: Forced to one line using CSS nowrap
+# App Title: Forced to one line using CSS nowrap[cite: 1]
 st.markdown(
     '<h1 style="white-space: nowrap; overflow: hidden; text-overflow: clip; font-size: 34px;">Satimo 1 Chamber Performance - Interactive Dashboard</h1>', 
     unsafe_allow_html=True
 )
 
-# 1. Sidebar - Dashboard Controls
+# 1. Sidebar - Dashboard Controls[cite: 1]
 st.sidebar.markdown('<h2 style="color:#022af2;">Dashboard Controls</h2>', unsafe_allow_html=True)
 
-# Bold Label for Passive Validation Type
+# Bold Label for Passive Validation Type[cite: 1]
 st.sidebar.markdown("**Select Passive Validation Type:**")
 validation_type = st.sidebar.selectbox(
     "Select Passive Validation Type:",
-    ["Yearly", "Quarterly", "Monthly", "Wideband Dipole - Chamber Comparison"],
+    ["None", "Yearly", "Quarterly", "Monthly", "Wideband Dipole - Chamber Comparison"],
     label_visibility="collapsed"
 )
 
-# Dynamic Sub-title based on selection
-title_map = {
-    "Yearly": "Yearly - Passive Dipole Validation Measurements",
-    "Quarterly": "Quarterly - Passive Dipole Validation Measurements",
-    "Monthly": "Monthly - Passive Horn Validation Measurements",
-    "Wideband Dipole - Chamber Comparison": "Wideband Dipole - Chamber Comparison"
-}
-st.markdown(f'<h3 style="color:#022af2;"><b>{title_map[validation_type]}</b></h3>', unsafe_allow_html=True)
+# NEW: Bold Label for Active Validation Type[cite: 1]
+st.sidebar.markdown("**Select Active Validation Type:**")
+active_validation_type = st.sidebar.selectbox(
+    "Select Active Validation Type:",
+    ["None", "LTE TRP"],
+    label_visibility="collapsed"
+)
 
+# --- PASSIVE DATA LOADING (Baseline) ---
 @st.cache_data
 def load_and_clean_data(file_name, is_comparison=False):
-    """Dynamically finds and parses Satimo data. Handles standard 3-col and comparison 2-col formats."""
+    """Dynamically finds and parses Satimo data. Handles standard 3-col and comparison 2-col formats."""[cite: 1]
     if not os.path.exists(file_name):
         return None
     
@@ -66,7 +66,6 @@ def load_and_clean_data(file_name, is_comparison=False):
             
             if start_row is not None:
                 if not is_comparison:
-                    # Standard 3-column group (ID, Reference, Measured)
                     data_cols = df_raw.iloc[start_row:, c:c+3].copy()
                     data_cols.columns = ['ID_Col', 'Ref_Col', 'Meas_Col']
                     current_unit, current_date = None, None
@@ -89,16 +88,12 @@ def load_and_clean_data(file_name, is_comparison=False):
                                 })
                             except (ValueError, TypeError): continue
                 else:
-                    # Comparison 2-column format (Frequency, Efficiency)
                     try:
                         chamber_name = str(df_raw.iloc[start_row+1, c]).strip()
                         chamber_date = str(df_raw.iloc[start_row+1, c+1]).strip()
                         if chamber_name == "Satimo1": chamber_name = "Satimo 1"
-                        
-                        # Extraction and rename for Proxicast Dipole #4
                         unit_name = str(df_raw.iloc[0, 0]).split(':')[-1].strip()
                         unit_name = unit_name.replace("Proxicast #4", "Proxicast Dipole #4")
-                        
                         data_cols = df_raw.iloc[start_row+2:, c:c+2].copy()
                         data_cols.columns = ['Freq_Col', 'Eff_Col']
                         for _, row in data_cols.iterrows():
@@ -113,114 +108,121 @@ def load_and_clean_data(file_name, is_comparison=False):
                             except (ValueError, TypeError): continue
                     except IndexError: continue
         return pd.DataFrame(all_parsed_data)
-    except Exception as e:
-        st.error(f"Error parsing file: {e}")
+    except Exception: return None
+
+# --- NEW: ACTIVE DATA LOADING ---[cite: 1]
+@st.cache_data
+def load_active_trp_data(file_name):
+    """Parses Active LTE TRP data file."""
+    if not os.path.exists(file_name):
         return None
+    try:
+        df_raw = pd.read_csv(file_name, header=None)
+        # Data starts at row 8, columns 2 (Band), 3 (Freq), 4 (TRP)
+        data = df_raw.iloc[8:, 2:5].copy()
+        data.columns = ['Band/Chan', 'Frequency (Mhz)', 'TRP (dBm)']
+        data = data.dropna()
+        data['Frequency (Mhz)'] = pd.to_numeric(data['Frequency (Mhz)'], errors='coerce')
+        data['TRP (dBm)'] = pd.to_numeric(data['TRP (dBm)'], errors='coerce')
+        return data.dropna()
+    except Exception: return None
 
-# Mapping files
-files = {
-    "Yearly": 'Satimo 1 Chamber - Passive Trend Charts - Satimo 1- Dipoles Yearly (4).csv',
-    "Quarterly": 'Satimo 1 Chamber - Passive Trend Charts - Satimo 1- Dipoles Quarterly (1).csv',
-    "Monthly": 'Satimo 1 Chamber - Passive Trend Charts - Satimo 1 - Horns Monthly (1).csv',
-    "Wideband Dipole - Chamber Comparison": 'Wideband Dipole - Chamber Comparison - Satimo TechEng Wideband Dipole.csv'
-}
+# --- MAIN DASHBOARD LOGIC ---
 
-is_comp = (validation_type == "Wideband Dipole - Chamber Comparison")
-df = load_and_clean_data(files[validation_type], is_comparison=is_comp)
+# 1. Handle Active Selection First[cite: 1]
+if active_validation_type == "LTE TRP":
+    st.markdown('<h3 style="color:#022af2;"><b>Active Reference Quarterly - LTE TRP</b></h3>', unsafe_allow_html=True)
+    # Refer to file verbatim as instructed[cite: 1]
+    active_file = "Satimo 1 Chamber - Active Trend Charts - Satimo1 - Active Reference Quarterly - LTE TRP_2.csv"
+    df_active = load_active_trp_data(active_file)
+    
+    if df_active is not None and not df_active.empty:
+        # LTE (Band/Chan) vs TRP[cite: 1]
+        fig1 = go.Figure()
+        fig1.add_trace(go.Scatter(x=df_active['Band/Chan'], y=df_active['TRP (dBm)'], mode='lines+markers', line=dict(color='#022af2', width=2)))
+        fig1.update_layout(
+            title="<b>LTE (Band/Chan) vs TRP</b>", xaxis_title="<b>Band/Chan</b>", yaxis_title="<b>TRP (dBm)</b>",
+            template="plotly_white", height=450, margin=dict(t=50, b=50, l=50, r=50),
+            xaxis=dict(tickfont=dict(weight='bold')), yaxis=dict(tickfont=dict(weight='bold'), zeroline=True, zerolinewidth=3, zerolinecolor='black')
+        )
+        st.plotly_chart(fig1, use_container_width=True)
 
-if df is not None and not df.empty:
-    if is_comp:
-        # Bold Label for Dipole selection
-        st.sidebar.markdown("**Select Dipole:**")
-        units = df['Dipole'].unique()
-        selected_unit = st.sidebar.selectbox("Select Dipole:", units, label_visibility="collapsed")
-        subset = df[df['Dipole'] == selected_unit].copy()
-        unit_display_name = selected_unit
+        # LTE (Frequency (Mhz) vs TRP[cite: 1]
+        fig2 = go.Figure()
+        fig2.add_trace(go.Scatter(x=df_active['Frequency (Mhz)'], y=df_active['TRP (dBm)'], mode='lines+markers', line=dict(color='#022af2', width=2)))
+        fig2.update_layout(
+            title="<b>LTE (Frequency (Mhz) vs TRP</b>", xaxis_title="<b>Frequency (MHz)</b>", yaxis_title="<b>TRP (dBm)</b>",
+            template="plotly_white", height=450, margin=dict(t=50, b=50, l=50, r=50),
+            xaxis=dict(tickfont=dict(weight='bold')), yaxis=dict(tickfont=dict(weight='bold'), zeroline=True, zerolinewidth=3, zerolinecolor='black')
+        )
+        st.plotly_chart(fig2, use_container_width=True)
     else:
-        # Bold Label for Dynamic selection
-        units = df['Dipole'].unique()
-        label_text = f"Select a {'Horn' if validation_type == 'Monthly' else 'Dipole'}:"
-        st.sidebar.markdown(f"**{label_text}**")
-        selected_unit = st.sidebar.selectbox(label_text, units, label_visibility="collapsed")
-        subset = df[df['Dipole'] == selected_unit].copy()
-        if not subset.empty:
-            date_label = subset["Date_Label"].iloc[0]
+        st.error(f"Please ensure '{active_file}' is uploaded.")
+
+# 2. Handle Passive Selection[cite: 1]
+if validation_type != "None":
+    title_map = {
+        "Yearly": "Yearly - Passive Dipole Validation Measurements",
+        "Quarterly": "Quarterly - Passive Dipole Validation Measurements",
+        "Monthly": "Monthly - Passive Horn Validation Measurements",
+        "Wideband Dipole - Chamber Comparison": "Wideband Dipole - Chamber Comparison"
+    }
+    st.markdown(f'<h3 style="color:#022af2;"><b>{title_map[validation_type]}</b></h3>', unsafe_allow_html=True)
+    
+    files = {
+        "Yearly": 'Satimo 1 Chamber - Passive Trend Charts - Satimo 1- Dipoles Yearly (4).csv',
+        "Quarterly": 'Satimo 1 Chamber - Passive Trend Charts - Satimo 1- Dipoles Quarterly (1).csv',
+        "Monthly": 'Satimo 1 Chamber - Passive Trend Charts - Satimo 1 - Horns Monthly (1).csv',
+        "Wideband Dipole - Chamber Comparison": 'Wideband Dipole - Chamber Comparison - Satimo TechEng Wideband Dipole.csv'
+    }
+    is_comp = (validation_type == "Wideband Dipole - Chamber Comparison")
+    df = load_and_clean_data(files[validation_type], is_comparison=is_comp)
+
+    if df is not None and not df.empty:
+        if is_comp:
+            st.sidebar.markdown("**Select Dipole:**")
+            units = df['Dipole'].unique()
+            selected_unit = st.sidebar.selectbox("Select Dipole:", units, label_visibility="collapsed")
+            subset = df[df['Dipole'] == selected_unit].copy()
             unit_display_name = selected_unit
         else:
-            subset = pd.DataFrame()
+            units = df['Dipole'].unique()
+            label_text = f"Select a {'Horn' if validation_type == 'Monthly' else 'Dipole'}:"
+            st.sidebar.markdown(f"**{label_text}**")
+            selected_unit = st.sidebar.selectbox(label_text, units, label_visibility="collapsed")
+            subset = df[df['Dipole'] == selected_unit].copy()
+            unit_display_name = selected_unit if subset.empty else selected_unit
+            date_label = "" if subset.empty else subset["Date_Label"].iloc[0]
 
-    if not subset.empty:
-        # Metrics: Calculations only for non-comparison types
-        if not is_comp:
-            subset['Abs_Diff'] = (subset['Reference Efficiency (dB)'] - subset['Date Efficiency (dB)']).abs()
-            max_val = subset['Abs_Diff'].max()
-            max_diff_idx = subset['Abs_Diff'].idxmax()
-            max_freq = subset.loc[max_diff_idx, 'Frequency (MHz)']
-            above_0_subset = subset[subset['Date Efficiency (dB)'] > 0]
+        if not subset.empty:
+            if not is_comp:
+                subset['Abs_Diff'] = (subset['Reference Efficiency (dB)'] - subset['Date Efficiency (dB)']).abs()
+                max_val, max_freq = subset['Abs_Diff'].max(), subset.loc[subset['Abs_Diff'].idxmax(), 'Frequency (MHz)']
+                above_0_subset = subset[subset['Date Efficiency (dB)'] > 0]
+                st.write(f"**Maximum Difference From Reference NIST:** {max_val:.2f} dB at {max_freq} MHz")
+                if not above_0_subset.empty:
+                    max_above_idx = above_0_subset['Date Efficiency (dB)'].idxmax()
+                    st.markdown(f'**Maximum Overshoot Above 0 dB:** <span style="color:red;">{above_0_subset.loc[max_above_idx, "Date Efficiency (dB)"]:.2f} dB at {above_0_subset.loc[max_above_idx, "Frequency (MHz)"]} MHz</span>', unsafe_allow_html=True)
+                else: st.markdown('**Maximum Overshoot Above 0 dB:** <span style="color:green;">None</span>', unsafe_allow_html=True)
             
-            st.write(f"**Maximum Difference From Reference NIST:** {max_val:.2f} dB at {max_freq} MHz")
-            if not above_0_subset.empty:
-                max_above_idx = above_0_subset['Date Efficiency (dB)'].idxmax()
-                st.markdown(f'**Maximum Overshoot Above 0 dB:** <span style="color:red;">{above_0_subset.loc[max_above_idx, "Date Efficiency (dB)"]:.2f} dB at {above_0_subset.loc[max_above_idx, "Frequency (MHz)"]} MHz</span>', unsafe_allow_html=True)
-            else: 
-                st.markdown('**Maximum Overshoot Above 0 dB:** <span style="color:green;">None</span>', unsafe_allow_html=True)
-        
-        fig = go.Figure()
-        
-        if is_comp:
-            chamber_styles = {
-                "Satimo 1": {"color": "red", "dash": "solid"},
-                "Satimo 2": {"color": "#022af2", "dash": "solid"},
-                "Satimo 3": {"color": "#2ca02c", "dash": "solid"}
-            }
+            fig = go.Figure()
+            if is_comp:
+                chamber_styles = {"Satimo 1": "red", "Satimo 2": "#022af2", "Satimo 3": "#2ca02c"}
+                for chamber, color in chamber_styles.items():
+                    ch_data = subset[subset['Chamber'] == chamber]
+                    if not ch_data.empty:
+                        fig.add_trace(go.Scatter(x=ch_data['Frequency (MHz)'], y=ch_data['Efficiency'], mode='lines+markers', name=f"<b>{chamber}</b> ({ch_data['Chamber_Date'].iloc[0]})", line=dict(color=color, width=2)))
+            else:
+                fig.add_trace(go.Scatter(x=subset['Frequency (MHz)'], y=subset['Reference Efficiency (dB)'], mode='lines+markers', name="<b>Reference Data - NIST</b>&nbsp;&nbsp;&nbsp;", line=dict(color='red', width=2, dash='dash')))
+                fig.add_trace(go.Scatter(x=subset['Frequency (MHz)'], y=subset['Date Efficiency (dB)'], mode='lines+markers', name=f'<b>{date_label}</b>', line=dict(color='#022af2', width=2)))
             
-            for chamber in ["Satimo 1", "Satimo 2", "Satimo 3"]:
-                ch_data = subset[subset['Chamber'] == chamber]
-                if not ch_data.empty:
-                    ch_date = ch_data['Chamber_Date'].iloc[0]
-                    style = chamber_styles.get(chamber, {"color": "gray", "dash": "solid"})
-                    fig.add_trace(go.Scatter(
-                        x=ch_data['Frequency (MHz)'], 
-                        y=ch_data['Efficiency'],
-                        mode='lines+markers',
-                        name=f"<b>{chamber}</b> ({ch_date})",
-                        line=dict(color=style['color'], width=2, dash=style['dash'])
-                    ))
-        else:
-            fig.add_trace(go.Scatter(
-                x=subset['Frequency (MHz)'], 
-                y=subset['Reference Efficiency (dB)'], 
-                mode='lines+markers', 
-                name="<b>Reference Data - NIST</b>&nbsp;&nbsp;&nbsp;", 
-                line=dict(color='red', width=2, dash='dash')
-            ))
-            fig.add_trace(go.Scatter(
-                x=subset['Frequency (MHz)'], 
-                y=subset['Date Efficiency (dB)'], 
-                mode='lines+markers', 
-                name=f'<b>{date_label}</b>', 
-                line=dict(color='#022af2', width=2)
-            ))
-        
-        min_f = int(subset['Frequency (MHz)'].min())
-        max_f = int(subset['Frequency (MHz)'].max())
-        
-        # Background color for Passive Validation selections
-        bg_color = "#e9f1ff"
-
-        fig.update_layout(
-            title=dict(text=f"<b>{unit_display_name}</b> <span style='font-size: 20px;'>({min_f}-{max_f} MHz)</span>", font=dict(size=30)),
-            xaxis_title="<b>Frequency (MHz)</b>", yaxis_title="<b>Efficiency (dB)</b>",
-            hovermode="x unified", template="plotly_white", height=560,
-            plot_bgcolor=bg_color,
-            paper_bgcolor=bg_color,
-            legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02, font=dict(size=16)),
-            margin=dict(t=100, b=50, l=50, r=150),
-            xaxis=dict(title_font=dict(color='black', size=20), tickfont=dict(color='black', size=14, weight='bold'), showgrid=True, gridcolor='silver', gridwidth=1, showline=True, linewidth=1, linecolor='black', mirror=True),
-            yaxis=dict(title_font=dict(color='black', size=20), tickfont=dict(color='black', size=14, weight='bold'), showgrid=True, gridcolor='silver', gridwidth=1, zeroline=True, zerolinewidth=3, zerolinecolor='black', showline=True, linewidth=1, linecolor='black', mirror=True)
-        )
-        st.plotly_chart(fig, use_container_width=True)
-    else:
-        st.warning("No matching frequency data found for this selection.")
-else:
-    st.error(f"Please ensure the data files are uploaded to the directory.")
+            min_f, max_f = int(subset['Frequency (MHz)'].min()), int(subset['Frequency (MHz)'].max())
+            fig.update_layout(
+                title=dict(text=f"<b>{unit_display_name}</b> <span style='font-size: 20px;'>({min_f}-{max_f} MHz)</span>", font=dict(size=30)),
+                xaxis_title="<b>Frequency (MHz)</b>", yaxis_title="<b>Efficiency (dB)</b>",
+                hovermode="x unified", template="plotly_white", height=560, plot_bgcolor="#e9f1ff", paper_bgcolor="#e9f1ff",
+                legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02, font=dict(size=16)), margin=dict(t=100, b=50, l=50, r=150),
+                xaxis=dict(title_font=dict(color='black', size=20), tickfont=dict(color='black', size=14, weight='bold'), showgrid=True, gridcolor='silver', gridwidth=1, showline=True, linewidth=1, linecolor='black', mirror=True),
+                yaxis=dict(title_font=dict(color='black', size=20), tickfont=dict(color='black', size=14, weight='bold'), showgrid=True, gridcolor='silver', gridwidth=1, zeroline=True, zerolinewidth=3, zerolinecolor='black', showline=True, linewidth=1, linecolor='black', mirror=True)
+            )
+            st.plotly_chart(fig, use_container_width=True)
