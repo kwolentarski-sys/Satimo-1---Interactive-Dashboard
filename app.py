@@ -57,15 +57,24 @@ def load_and_clean_data(file_name, is_comparison=False):
                             continue
                         if current_unit:
                             try:
-                                all_parsed_data.append({'Dipole': current_unit, 'Date_Label': current_date, 'Frequency (MHz)': float(val_id), 'Reference Efficiency (dB)': float(val_ref), 'Date Efficiency (dB)': float(val_meas)})
+                                all_parsed_data.append({
+                                    'Dipole': current_unit, 
+                                    'Date_Label': current_date, 
+                                    'Frequency (MHz)': float(val_id), 
+                                    'Reference Efficiency (dB)': float(val_ref), 
+                                    'Date Efficiency (dB)': float(val_meas)
+                                })
                             except ValueError: pass
                 else:
                     # Comparison 2-column format (Frequency, Efficiency)
                     chamber_name = str(df_raw.iloc[start_row+1, c]).strip()
-                    chamber_date = str(df_raw.iloc[start_row+1, c+1]).strip() # Extract date
+                    chamber_date = str(df_raw.iloc[start_row+1, c+1]).strip()
                     if chamber_name == "Satimo1": chamber_name = "Satimo 1"
                     
+                    # Extraction and rename for Proxicast Dipole #4
                     unit_name = str(df_raw.iloc[0, 0]).split(':')[-1].strip()
+                    unit_name = unit_name.replace("Proxicast #4", "Proxicast Dipole #4")
+                    
                     data_cols = df_raw.iloc[start_row+2:, c:c+2].copy()
                     data_cols.columns = ['Freq_Col', 'Eff_Col']
                     for _, row in data_cols.iterrows():
@@ -123,7 +132,6 @@ if df is not None and not df.empty:
         fig = go.Figure()
         
         if is_comp:
-            # Chamber comparison trace settings
             chamber_styles = {
                 "Satimo 1": {"color": "red", "dash": "solid"},
                 "Satimo 2": {"color": "#022af2", "dash": "solid"},
@@ -139,13 +147,10 @@ if df is not None and not df.empty:
                         x=ch_data['Frequency (MHz)'], 
                         y=ch_data['Efficiency'],
                         mode='lines+markers',
-                        # Updated Legend: Date removed from bold tag
                         name=f"<b>{chamber}</b> ({ch_date})",
-                        # Trace thickness reduced to 2
                         line=dict(color=style['color'], width=2, dash=style['dash'])
                     ))
         else:
-            # Standard Plot: NIST Reference (Dashed) and Measured Date (Solid Blue)
             fig.add_trace(go.Scatter(
                 x=subset['Frequency (MHz)'], 
                 y=subset['Reference Efficiency (dB)'], 
@@ -166,16 +171,8 @@ if df is not None and not df.empty:
             title=dict(text=f"<b>{unit_display_name}</b> <span style='font-size: 20px;'>({min_f}-{max_f} MHz)</span>", font=dict(size=30)),
             xaxis_title="<b>Frequency (MHz)</b>", yaxis_title="<b>Efficiency (dB)</b>",
             hovermode="x unified", template="plotly_white", height=560,
-            # Legend moved to the right side
-            legend=dict(
-                orientation="v", 
-                yanchor="top", 
-                y=1, 
-                xanchor="left", 
-                x=1.02, 
-                font=dict(size=16)
-            ),
-            margin=dict(t=100, b=50, l=50, r=150), # Adjusted right margin for legend
+            legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02, font=dict(size=16)),
+            margin=dict(t=100, b=50, l=50, r=150),
             xaxis=dict(title_font=dict(color='black', size=20), tickfont=dict(color='black', size=14, weight='bold'), showgrid=True, gridcolor='silver', gridwidth=1, showline=True, linewidth=1, linecolor='black', mirror=True),
             yaxis=dict(title_font=dict(color='black', size=20), tickfont=dict(color='black', size=14, weight='bold'), showgrid=True, gridcolor='silver', gridwidth=1, zeroline=True, zerolinewidth=3, zerolinecolor='black', showline=True, linewidth=1, linecolor='black', mirror=True)
         )
