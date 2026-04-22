@@ -119,7 +119,7 @@ validation_type = st.sidebar.selectbox(
     label_visibility="collapsed"
 )
 
-# 2. Dynamic Unit Selection (Moved above Active Validation)[cite: 1]
+# 2. Dynamic Unit Selection
 selected_unit = None
 df_passive = None
 if validation_type != "None":
@@ -138,18 +138,21 @@ if validation_type != "None":
         st.sidebar.markdown(f"**{label_text}**")
         selected_unit = st.sidebar.selectbox(label_text, units, label_visibility="collapsed")
 
-# 3. Active Selection[cite: 1]
+# 3. Active Selection (Disabled unless Passive is "None")[cite: 1]
 st.sidebar.markdown("**Select Active Validation Type:**")
+is_active_disabled = (validation_type != "None")
 active_validation_type = st.sidebar.selectbox(
     "Select Active Validation Type:",
     ["None", "LTE TRP"],
-    label_visibility="collapsed"
+    label_visibility="collapsed",
+    disabled=is_active_disabled,
+    index=0 if is_active_disabled else 0 # Resets to "None" if disabled
 )
 
 # --- MAIN DASHBOARD LOGIC ---
 
 # 1. Handle Active Selection
-if active_validation_type == "LTE TRP":
+if active_validation_type == "LTE TRP" and not is_active_disabled:
     st.markdown('<h3 style="color:#022af2;"><b>Active Reference Quarterly - LTE TRP</b></h3>', unsafe_allow_html=True)
     active_file = "Satimo 1 Chamber - Active Trend Charts - Satimo1 - Active Reference Quarterly - LTE TRP.csv"
     df_active, active_date = load_active_trp_data(active_file)
