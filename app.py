@@ -73,7 +73,7 @@ def load_and_clean_data(file_name, is_comparison=False):
                             all_parsed_data.append({
                                 'Dipole': unit_name, 
                                 'Chamber': chamber_name, 
-                                'Chamber_Date': chamber_date, # Save date per chamber
+                                'Chamber_Date': chamber_date, 
                                 'Frequency (MHz)': float(row['Freq_Col']), 
                                 'Efficiency': float(row['Eff_Col'])
                             })
@@ -120,11 +120,10 @@ if df is not None and not df.empty:
             else: 
                 st.markdown('**Maximum Overshoot Above 0 dB:** <span style="color:green;">None</span>', unsafe_allow_html=True)
         
-        # 3. Build Interactive Plotly Graph
         fig = go.Figure()
         
         if is_comp:
-            # All chambers solid: Satimo 1 red, Satimo 2 blue, Satimo 3 green
+            # Chamber comparison trace settings
             chamber_styles = {
                 "Satimo 1": {"color": "red", "dash": "solid"},
                 "Satimo 2": {"color": "#022af2", "dash": "solid"},
@@ -134,16 +133,16 @@ if df is not None and not df.empty:
             for chamber in ["Satimo 1", "Satimo 2", "Satimo 3"]:
                 ch_data = subset[subset['Chamber'] == chamber]
                 if not ch_data.empty:
-                    # Retrieve the specific date for this chamber
                     ch_date = ch_data['Chamber_Date'].iloc[0]
                     style = chamber_styles.get(chamber, {"color": "gray", "dash": "solid"})
                     fig.add_trace(go.Scatter(
                         x=ch_data['Frequency (MHz)'], 
                         y=ch_data['Efficiency'],
                         mode='lines+markers',
-                        # Updated Legend: includes date in parentheses
-                        name=f"<b>{chamber} ({ch_date})</b>&nbsp;&nbsp;&nbsp;",
-                        line=dict(color=style['color'], width=3, dash=style['dash'])
+                        # Updated Legend: Date removed from bold tag
+                        name=f"<b>{chamber}</b> ({ch_date})",
+                        # Trace thickness reduced to 2
+                        line=dict(color=style['color'], width=2, dash=style['dash'])
                     ))
         else:
             # Standard Plot: NIST Reference (Dashed) and Measured Date (Solid Blue)
@@ -152,14 +151,14 @@ if df is not None and not df.empty:
                 y=subset['Reference Efficiency (dB)'], 
                 mode='lines+markers', 
                 name="<b>Reference Data - NIST</b>&nbsp;&nbsp;&nbsp;", 
-                line=dict(color='red', width=3, dash='dash')
+                line=dict(color='red', width=2, dash='dash')
             ))
             fig.add_trace(go.Scatter(
                 x=subset['Frequency (MHz)'], 
                 y=subset['Date Efficiency (dB)'], 
                 mode='lines+markers', 
                 name=f'<b>{date_label}</b>', 
-                line=dict(color='#022af2', width=3)
+                line=dict(color='#022af2', width=2)
             ))
         
         min_f, max_f = int(subset['Frequency (MHz)'].min()), int(subset['Frequency (MHz)'].max())
@@ -167,8 +166,16 @@ if df is not None and not df.empty:
             title=dict(text=f"<b>{unit_display_name}</b> <span style='font-size: 20px;'>({min_f}-{max_f} MHz)</span>", font=dict(size=30)),
             xaxis_title="<b>Frequency (MHz)</b>", yaxis_title="<b>Efficiency (dB)</b>",
             hovermode="x unified", template="plotly_white", height=560,
-            legend=dict(orientation="h", yanchor="bottom", y=1.12, xanchor="center", x=0.5, font=dict(size=18)),
-            margin=dict(t=130, b=50, l=50, r=50),
+            # Legend moved to the right side
+            legend=dict(
+                orientation="v", 
+                yanchor="top", 
+                y=1, 
+                xanchor="left", 
+                x=1.02, 
+                font=dict(size=16)
+            ),
+            margin=dict(t=100, b=50, l=50, r=150), # Adjusted right margin for legend
             xaxis=dict(title_font=dict(color='black', size=20), tickfont=dict(color='black', size=14, weight='bold'), showgrid=True, gridcolor='silver', gridwidth=1, showline=True, linewidth=1, linecolor='black', mirror=True),
             yaxis=dict(title_font=dict(color='black', size=20), tickfont=dict(color='black', size=14, weight='bold'), showgrid=True, gridcolor='silver', gridwidth=1, zeroline=True, zerolinewidth=3, zerolinecolor='black', showline=True, linewidth=1, linecolor='black', mirror=True)
         )
