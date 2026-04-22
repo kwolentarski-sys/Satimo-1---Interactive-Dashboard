@@ -6,13 +6,13 @@ import os
 # --- PAGE CONFIGURATION ---
 st.set_page_config(page_title="Satimo 1 Dashboard", layout="wide")
 
-# App Title: Forced to one line using CSS nowrap
+# App Title: Forced to one line using CSS nowrap[cite: 1]
 st.markdown(
     '<h1 style="white-space: nowrap; overflow: hidden; text-overflow: clip; font-size: 34px;">Satimo 1 Chamber Performance - Interactive Dashboard</h1>', 
     unsafe_allow_html=True
 )
 
-# 1. Sidebar - Dashboard Controls
+# 1. Sidebar - Dashboard Controls[cite: 1]
 st.sidebar.markdown('<h2 style="color:#022af2;">Dashboard Controls</h2>', unsafe_allow_html=True)
 
 validation_type = st.sidebar.selectbox(
@@ -20,7 +20,7 @@ validation_type = st.sidebar.selectbox(
     ["Yearly", "Quarterly", "Monthly", "Wideband Dipole - Chamber Comparison"]
 )
 
-# Dynamic Sub-title based on selection
+# Dynamic Sub-title based on selection[cite: 1]
 title_map = {
     "Yearly": "Yearly - Passive Dipole Validation Measurements",
     "Quarterly": "Quarterly - Passive Dipole Validation Measurements",
@@ -31,7 +31,7 @@ st.markdown(f'<h3 style="color:#022af2;"><b>{title_map[validation_type]}</b></h3
 
 @st.cache_data
 def load_and_clean_data(file_name, is_comparison=False):
-    """Dynamically finds and parses Satimo data. Handles standard 3-col and comparison 2-col formats."""
+    """Dynamically finds and parses Satimo data. Handles standard 3-col and comparison 2-col formats."""[cite: 1]
     if not os.path.exists(file_name):
         return None
     
@@ -50,7 +50,7 @@ def load_and_clean_data(file_name, is_comparison=False):
             
             if start_row is not None:
                 if not is_comparison:
-                    # Standard 3-column group (ID, Reference, Measured)
+                    # Standard 3-column group (ID, Reference, Measured)[cite: 1]
                     data_cols = df_raw.iloc[start_row:, c:c+3].copy()
                     data_cols.columns = ['ID_Col', 'Ref_Col', 'Meas_Col']
                     current_unit, current_date = None, None
@@ -73,13 +73,13 @@ def load_and_clean_data(file_name, is_comparison=False):
                                 })
                             except (ValueError, TypeError): continue
                 else:
-                    # Comparison 2-column format (Frequency, Efficiency)
+                    # Comparison 2-column format (Frequency, Efficiency)[cite: 1]
                     try:
                         chamber_name = str(df_raw.iloc[start_row+1, c]).strip()
                         chamber_date = str(df_raw.iloc[start_row+1, c+1]).strip()
                         if chamber_name == "Satimo1": chamber_name = "Satimo 1"
                         
-                        # Extraction and rename for Proxicast Dipole #4
+                        # Extraction and rename for Proxicast Dipole #4[cite: 1]
                         unit_name = str(df_raw.iloc[0, 0]).split(':')[-1].strip()
                         unit_name = unit_name.replace("Proxicast #4", "Proxicast Dipole #4")
                         
@@ -101,7 +101,7 @@ def load_and_clean_data(file_name, is_comparison=False):
         st.error(f"Error parsing file: {e}")
         return None
 
-# Mapping files
+# Mapping files[cite: 1]
 files = {
     "Yearly": 'Satimo 1 Chamber - Passive Trend Charts - Satimo 1- Dipoles Yearly (4).csv',
     "Quarterly": 'Satimo 1 Chamber - Passive Trend Charts - Satimo 1- Dipoles Quarterly (1).csv',
@@ -129,7 +129,7 @@ if df is not None and not df.empty:
             subset = pd.DataFrame()
 
     if not subset.empty:
-        # Metrics: Calculations only for non-comparison types
+        # Metrics: Calculations only for non-comparison types[cite: 1]
         if not is_comp:
             subset['Abs_Diff'] = (subset['Reference Efficiency (dB)'] - subset['Date Efficiency (dB)']).abs()
             max_val = subset['Abs_Diff'].max()
@@ -184,8 +184,8 @@ if df is not None and not df.empty:
         min_f = int(subset['Frequency (MHz)'].min())
         max_f = int(subset['Frequency (MHz)'].max())
         
-        # Define background color based on selection
-        bg_color = "#e9f1ff" if not is_comp else "white"
+        # Define background color globally for Passive Validation selections[cite: 1]
+        bg_color = "#e9f1ff"
 
         fig.update_layout(
             title=dict(text=f"<b>{unit_display_name}</b> <span style='font-size: 20px;'>({min_f}-{max_f} MHz)</span>", font=dict(size=30)),
