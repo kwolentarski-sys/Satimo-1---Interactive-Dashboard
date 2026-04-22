@@ -6,21 +6,37 @@ import os
 # --- PAGE CONFIGURATION ---
 st.set_page_config(page_title="Satimo 1 Dashboard", layout="wide")
 
-# App Title: Forced to one line using CSS nowrap
+# Custom CSS for Sidebar Background and Label Styling[cite: 1]
+st.markdown(
+    """
+    <style>
+        /* Change Sidebar Background Color */
+        [data-testid="stSidebar"] {
+            background-color: #cbcbcb;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# App Title: Forced to one line using CSS nowrap[cite: 1]
 st.markdown(
     '<h1 style="white-space: nowrap; overflow: hidden; text-overflow: clip; font-size: 34px;">Satimo 1 Chamber Performance - Interactive Dashboard</h1>', 
     unsafe_allow_html=True
 )
 
-# 1. Sidebar - Dashboard Controls
+# 1. Sidebar - Dashboard Controls[cite: 1]
 st.sidebar.markdown('<h2 style="color:#022af2;">Dashboard Controls</h2>', unsafe_allow_html=True)
 
+# Bold Label for Passive Validation Type[cite: 1]
+st.sidebar.markdown("**Select Passive Validation Type:**")
 validation_type = st.sidebar.selectbox(
     "Select Passive Validation Type:",
-    ["Yearly", "Quarterly", "Monthly", "Wideband Dipole - Chamber Comparison"]
+    ["Yearly", "Quarterly", "Monthly", "Wideband Dipole - Chamber Comparison"],
+    label_visibility="collapsed"
 )
 
-# Dynamic Sub-title based on selection
+# Dynamic Sub-title based on selection[cite: 1]
 title_map = {
     "Yearly": "Yearly - Passive Dipole Validation Measurements",
     "Quarterly": "Quarterly - Passive Dipole Validation Measurements",
@@ -31,7 +47,7 @@ st.markdown(f'<h3 style="color:#022af2;"><b>{title_map[validation_type]}</b></h3
 
 @st.cache_data
 def load_and_clean_data(file_name, is_comparison=False):
-    """Dynamically finds and parses Satimo data. Handles standard 3-col and comparison 2-col formats."""
+    """Dynamically finds and parses Satimo data. Handles standard 3-col and comparison 2-col formats."""[cite: 1]
     if not os.path.exists(file_name):
         return None
     
@@ -50,7 +66,7 @@ def load_and_clean_data(file_name, is_comparison=False):
             
             if start_row is not None:
                 if not is_comparison:
-                    # Standard 3-column group (ID, Reference, Measured)
+                    # Standard 3-column group (ID, Reference, Measured)[cite: 1]
                     data_cols = df_raw.iloc[start_row:, c:c+3].copy()
                     data_cols.columns = ['ID_Col', 'Ref_Col', 'Meas_Col']
                     current_unit, current_date = None, None
@@ -73,13 +89,13 @@ def load_and_clean_data(file_name, is_comparison=False):
                                 })
                             except (ValueError, TypeError): continue
                 else:
-                    # Comparison 2-column format (Frequency, Efficiency)
+                    # Comparison 2-column format (Frequency, Efficiency)[cite: 1]
                     try:
                         chamber_name = str(df_raw.iloc[start_row+1, c]).strip()
                         chamber_date = str(df_raw.iloc[start_row+1, c+1]).strip()
                         if chamber_name == "Satimo1": chamber_name = "Satimo 1"
                         
-                        # Extraction and rename for Proxicast Dipole #4
+                        # Extraction and rename for Proxicast Dipole #4[cite: 1]
                         unit_name = str(df_raw.iloc[0, 0]).split(':')[-1].strip()
                         unit_name = unit_name.replace("Proxicast #4", "Proxicast Dipole #4")
                         
@@ -101,7 +117,7 @@ def load_and_clean_data(file_name, is_comparison=False):
         st.error(f"Error parsing file: {e}")
         return None
 
-# Mapping files
+# Mapping files[cite: 1]
 files = {
     "Yearly": 'Satimo 1 Chamber - Passive Trend Charts - Satimo 1- Dipoles Yearly (4).csv',
     "Quarterly": 'Satimo 1 Chamber - Passive Trend Charts - Satimo 1- Dipoles Quarterly (1).csv',
@@ -114,13 +130,18 @@ df = load_and_clean_data(files[validation_type], is_comparison=is_comp)
 
 if df is not None and not df.empty:
     if is_comp:
+        # Bold Label for Dipole selection in comparison mode[cite: 1]
+        st.sidebar.markdown("**Select Dipole:**")
         units = df['Dipole'].unique()
-        selected_unit = st.sidebar.selectbox("Select Dipole:", units)
+        selected_unit = st.sidebar.selectbox("Select Dipole:", units, label_visibility="collapsed")
         subset = df[df['Dipole'] == selected_unit].copy()
         unit_display_name = selected_unit
     else:
+        # Bold Label for Dynamic selection (Horn or Dipole)[cite: 1]
         units = df['Dipole'].unique()
-        selected_unit = st.sidebar.selectbox(f"Select a {'Horn' if validation_type == 'Monthly' else 'Dipole'}:", units)
+        label_text = f"Select a {'Horn' if validation_type == 'Monthly' else 'Dipole'}:"
+        st.sidebar.markdown(f"**{label_text}**")
+        selected_unit = st.sidebar.selectbox(label_text, units, label_visibility="collapsed")
         subset = df[df['Dipole'] == selected_unit].copy()
         if not subset.empty:
             date_label = subset["Date_Label"].iloc[0]
@@ -129,7 +150,7 @@ if df is not None and not df.empty:
             subset = pd.DataFrame()
 
     if not subset.empty:
-        # Metrics: Calculations only for non-comparison types
+        # Metrics: Calculations only for non-comparison types[cite: 1]
         if not is_comp:
             subset['Abs_Diff'] = (subset['Reference Efficiency (dB)'] - subset['Date Efficiency (dB)']).abs()
             max_val = subset['Abs_Diff'].max()
@@ -184,7 +205,7 @@ if df is not None and not df.empty:
         min_f = int(subset['Frequency (MHz)'].min())
         max_f = int(subset['Frequency (MHz)'].max())
         
-        # Define background color globally for Passive Validation selections
+        # Background color for Passive Validation selections[cite: 1]
         bg_color = "#e9f1ff"
 
         fig.update_layout(
