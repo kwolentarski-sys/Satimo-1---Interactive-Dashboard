@@ -1,17 +1,18 @@
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
+import os
 
 # --- PAGE CONFIGURATION ---
 st.set_page_config(page_title="Satimo 1 Dashboard", layout="wide")
 
-# App Title: Forced to one line using CSS nowrap[cite: 1]
+# App Title: Forced to one line using CSS nowrap
 st.markdown(
-    '<h1 style="white-space: nowrap; overflow: hidden; text-overflow: clip;">Satimo 1 Chamber - Interactive Dashboard</h1>', 
+    '<h1 style="white-space: nowrap; overflow: hidden; text-overflow: clip; font-size: 34px;">Satimo 1 Chamber Performance - Interactive Dashboard</h1>', 
     unsafe_allow_html=True
 )
 
-# 1. Sidebar - Dashboard Controls[cite: 1]
+# 1. Sidebar - Dashboard Controls
 st.sidebar.markdown('<h2 style="color:#022af2;">Dashboard Controls</h2>', unsafe_allow_html=True)
 
 validation_type = st.sidebar.selectbox(
@@ -19,7 +20,7 @@ validation_type = st.sidebar.selectbox(
     ["Yearly", "Quarterly", "Monthly", "Wideband Dipole - Chamber Comparison"]
 )
 
-# Dynamic Sub-title based on selection[cite: 1]
+# Dynamic Sub-title based on selection
 title_map = {
     "Yearly": "Yearly - Passive Dipole Validation Measurements",
     "Quarterly": "Quarterly - Passive Dipole Validation Measurements",
@@ -30,7 +31,10 @@ st.markdown(f'<h3 style="color:#022af2;"><b>{title_map[validation_type]}</b></h3
 
 @st.cache_data
 def load_and_clean_data(file_name, is_comparison=False):
-    """Dynamically finds and parses Satimo data. Handles standard 3-col and comparison 2-col formats."""[cite: 1]
+    """Dynamically finds and parses Satimo data. Handles standard 3-col and comparison 2-col formats."""
+    if not os.path.exists(file_name):
+        return None
+    
     try:
         df_raw = pd.read_csv(file_name, header=None)
         all_parsed_data = []
@@ -46,12 +50,15 @@ def load_and_clean_data(file_name, is_comparison=False):
             
             if start_row is not None:
                 if not is_comparison:
-                    # Standard 3-column group (ID, Reference, Measured)[cite: 1]
+                    # Standard 3-column group (ID, Reference, Measured)
                     data_cols = df_raw.iloc[start_row:, c:c+3].copy()
                     data_cols.columns = ['ID_Col', 'Ref_Col', 'Meas_Col']
                     current_unit, current_date = None, None
                     for _, row in data_cols.iterrows():
-                        val_id, val_ref, val_meas = str(row['ID_Col']).strip(), str(row['Ref_Col']).strip(), str(row['Meas_Col']).strip()
+                        val_id = str(row['ID_Col']).strip()
+                        val_ref = str(row['Ref_Col']).strip()
+                        val_meas = str(row['Meas_Col']).strip()
+                        
                         if val_id.startswith(('SD', 'WD', 'SH')) and len(val_id) > 2:
                             current_unit, current_date = val_id, (val_meas if val_meas != 'nan' else 'Current Date')
                             continue
@@ -64,33 +71,37 @@ def load_and_clean_data(file_name, is_comparison=False):
                                     'Reference Efficiency (dB)': float(val_ref), 
                                     'Date Efficiency (dB)': float(val_meas)
                                 })
-                            except ValueError: pass
+                            except (ValueError, TypeError): continue
                 else:
-                    # Comparison 2-column format (Frequency, Efficiency)[cite: 1]
-                    chamber_name = str(df_raw.iloc[start_row+1, c]).strip()
-                    chamber_date = str(df_raw.iloc[start_row+1, c+1]).strip()
-                    if chamber_name == "Satimo1": chamber_name = "Satimo 1"
-                    
-                    # Extraction and rename for Proxicast Dipole #4[cite: 1]
-                    unit_name = str(df_raw.iloc[0, 0]).split(':')[-1].strip()
-                    unit_name = unit_name.replace("Proxicast #4", "Proxicast Dipole #4")
-                    
-                    data_cols = df_raw.iloc[start_row+2:, c:c+2].copy()
-                    data_cols.columns = ['Freq_Col', 'Eff_Col']
-                    for _, row in data_cols.iterrows():
-                        try:
-                            all_parsed_data.append({
-                                'Dipole': unit_name, 
-                                'Chamber': chamber_name, 
-                                'Chamber_Date': chamber_date, 
-                                'Frequency (MHz)': float(row['Freq_Col']), 
-                                'Efficiency': float(row['Eff_Col'])
-                            })
-                        except ValueError: pass
+                    # Comparison 2-column format (Frequency, Efficiency)
+                    try:
+                        chamber_name = str(df_raw.iloc[start_row+1, c]).strip()
+                        chamber_date = str(df_raw.iloc[start_row+1, c+1]).strip()
+                        if chamber_name == "Satimo1": chamber_name = "Satimo 1"
+                        
+                        # Extraction and rename for Proxicast Dipole #4
+                        unit_name = str(df_raw.iloc[0, 0]).split(':')[-1].strip()
+                        unit_name = unit_name.replace("Proxicast #4", "Proxicast Dipole #4")
+                        
+                        data_cols = df_raw.iloc[start_row+2:, c:c+2].copy()
+                        data_cols.columns = ['Freq_Col', 'Eff_Col']
+                        for _, row in data_cols.iterrows():
+                            try:
+                                all_parsed_data.append({
+                                    'Dipole': unit_name, 
+                                    'Chamber': chamber_name, 
+                                    'Chamber_Date': chamber_date, 
+                                    'Frequency (MHz)': float(row['Freq_Col']), 
+                                    'Efficiency': float(row['Eff_Col'])
+                                })
+                            except (ValueError, TypeError): continue
+                    except IndexError: continue
         return pd.DataFrame(all_parsed_data)
-    except Exception: return None
+    except Exception as e:
+        st.error(f"Error parsing file: {e}")
+        return None
 
-# Mapping files[cite: 1]
+# Mapping files
 files = {
     "Yearly": 'Satimo 1 Chamber - Passive Trend Charts - Satimo 1- Dipoles Yearly (4).csv',
     "Quarterly": 'Satimo 1 Chamber - Passive Trend Charts - Satimo 1- Dipoles Quarterly (1).csv',
@@ -111,10 +122,14 @@ if df is not None and not df.empty:
         units = df['Dipole'].unique()
         selected_unit = st.sidebar.selectbox(f"Select a {'Horn' if validation_type == 'Monthly' else 'Dipole'}:", units)
         subset = df[df['Dipole'] == selected_unit].copy()
-        date_label, unit_display_name = subset["Date_Label"].iloc[0], selected_unit
+        if not subset.empty:
+            date_label = subset["Date_Label"].iloc[0]
+            unit_display_name = selected_unit
+        else:
+            subset = pd.DataFrame()
 
     if not subset.empty:
-        # Metrics: Calculations only for non-comparison types[cite: 1]
+        # Metrics: Calculations only for non-comparison types
         if not is_comp:
             subset['Abs_Diff'] = (subset['Reference Efficiency (dB)'] - subset['Date Efficiency (dB)']).abs()
             max_val = subset['Abs_Diff'].max()
@@ -132,7 +147,6 @@ if df is not None and not df.empty:
         fig = go.Figure()
         
         if is_comp:
-            # Chamber comparison trace settings[cite: 1]
             chamber_styles = {
                 "Satimo 1": {"color": "red", "dash": "solid"},
                 "Satimo 2": {"color": "#022af2", "dash": "solid"},
@@ -152,7 +166,6 @@ if df is not None and not df.empty:
                         line=dict(color=style['color'], width=2, dash=style['dash'])
                     ))
         else:
-            # Passive validation trace settings[cite: 1]
             fig.add_trace(go.Scatter(
                 x=subset['Frequency (MHz)'], 
                 y=subset['Reference Efficiency (dB)'], 
@@ -168,7 +181,8 @@ if df is not None and not df.empty:
                 line=dict(color='#022af2', width=2)
             ))
         
-        min_f, max_f = int(subset['Frequency (MHz)'].min()), int(subset['Frequency (MHz)'].max())
+        min_f = int(subset['Frequency (MHz)'].min())
+        max_f = int(subset['Frequency (MHz)'].max())
         
         # Define background color based on selection
         bg_color = "#e9f1ff" if not is_comp else "white"
@@ -177,7 +191,6 @@ if df is not None and not df.empty:
             title=dict(text=f"<b>{unit_display_name}</b> <span style='font-size: 20px;'>({min_f}-{max_f} MHz)</span>", font=dict(size=30)),
             xaxis_title="<b>Frequency (MHz)</b>", yaxis_title="<b>Efficiency (dB)</b>",
             hovermode="x unified", template="plotly_white", height=560,
-            # Set background color
             plot_bgcolor=bg_color,
             paper_bgcolor=bg_color,
             legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02, font=dict(size=16)),
@@ -189,4 +202,4 @@ if df is not None and not df.empty:
     else:
         st.warning("No matching frequency data found for this selection.")
 else:
-    st.error(f"Please ensure the data file for {validation_type} is uploaded to the directory.")
+    st.error(f"Please ensure the data files are uploaded to the directory.")
