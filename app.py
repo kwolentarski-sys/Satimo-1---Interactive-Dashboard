@@ -181,11 +181,11 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
         )
         st.plotly_chart(fig_imei, use_container_width=True)
 
-        # NEW SUB-GRAPHS BY FREQUENCY RANGE
+        # SUB-GRAPHS BY FREQUENCY RANGE WITH UPDATED TITLES
         ranges = [
-            (664.8, 913.42, "664.8 to 913.42 MHz"),
-            (1711.58, 1978.42, "1711.58 to 1978.42 MHz"),
-            (2502.62, 2567.38, "2502.62 to 2567.38 MHz")
+            (664.8, 913.42, "LTE TRP Active Trend - Low Bands"),
+            (1711.58, 1978.42, "LTE TRP Active Trend - Mid Bands"),
+            (2502.62, 2567.38, "LTE TRP Active Trend - Mid Bands")
         ]
 
         for low_f, high_f, title_label in ranges:
@@ -202,7 +202,7 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
                 ))
                 
                 fig.update_layout(
-                    title=dict(text=f"<b>{title_label} vs TRP</b>", font=dict(color='black', size=22)), 
+                    title=dict(text=f"<b>{title_label}</b>", font=dict(color='black', size=22)), 
                     template="plotly_white", height=450, margin=dict(t=80, b=50, l=50, r=150),
                     plot_bgcolor="#e9f1ff", paper_bgcolor="#e9f1ff",
                     showlegend=True,
@@ -225,12 +225,12 @@ if validation_type != "None" and df_passive is not None:
     st.markdown(f'<h3 style="color:#022af2;"><b>{title_map[validation_type]}</b></h3>', unsafe_allow_html=True)
     
     if selected_unit:
-        subset_passive = df_passive[df_passive['Dipole'] == selected_unit].copy()
-        if not subset_passive.empty:
+        subset_p = df_passive[df_passive['Dipole'] == selected_unit].copy()
+        if not subset_p.empty:
             if validation_type != "Wideband Dipole - Chamber Comparison":
-                subset_passive['Abs_Diff'] = (subset_passive['Reference Efficiency (dB)'] - subset_passive['Date Efficiency (dB)']).abs()
-                max_val, max_freq = subset_passive['Abs_Diff'].max(), subset_passive.loc[subset_passive['Abs_Diff'].idxmax(), 'Frequency (MHz)']
-                above_0_subset = subset_passive[subset_passive['Date Efficiency (dB)'] > 0]
+                subset_p['Abs_Diff'] = (subset_p['Reference Efficiency (dB)'] - subset_p['Date Efficiency (dB)']).abs()
+                max_val, max_freq = subset_p['Abs_Diff'].max(), subset_p.loc[subset_p['Abs_Diff'].idxmax(), 'Frequency (MHz)']
+                above_0_subset = subset_p[subset_p['Date Efficiency (dB)'] > 0]
                 st.write(f"**Maximum Difference From Reference NIST:** {max_val:.2f} dB at {max_freq} MHz")
                 if not above_0_subset.empty:
                     max_above_idx = above_0_subset['Date Efficiency (dB)'].idxmax()
@@ -241,15 +241,15 @@ if validation_type != "None" and df_passive is not None:
             if validation_type == "Wideband Dipole - Chamber Comparison":
                 chamber_styles = {"Satimo 1": "red", "Satimo 2": "#022af2", "Satimo 3": "#2ca02c"}
                 for chamber, color in chamber_styles.items():
-                    ch_data = subset_passive[subset_passive['Chamber'] == chamber]
+                    ch_data = subset_p[subset_p['Chamber'] == chamber]
                     if not ch_data.empty:
                         fig_p.add_trace(go.Scatter(x=ch_data['Frequency (MHz)'], y=ch_data['Efficiency'], mode='lines+markers', name=f"<b>{chamber}</b> ({ch_data['Chamber_Date'].iloc[0]})", line=dict(color=color, width=2)))
             else:
-                date_label_p = str(subset_passive["Date_Label"].iloc[0])
-                fig_p.add_trace(go.Scatter(x=subset_passive['Frequency (MHz)'], y=subset_passive['Reference Efficiency (dB)'], mode='lines+markers', name="<b>Reference Data - NIST</b>", line=dict(color='red', width=2, dash='dash')))
-                fig_p.add_trace(go.Scatter(x=subset_passive['Frequency (MHz)'], y=subset_passive['Date Efficiency (dB)'], mode='lines+markers', name=f'<b>{date_label_p}</b>', line=dict(color='#022af2', width=2)))
+                date_label_p = str(subset_p["Date_Label"].iloc[0])
+                fig_p.add_trace(go.Scatter(x=subset_p['Frequency (MHz)'], y=subset_p['Reference Efficiency (dB)'], mode='lines+markers', name="<b>Reference Data - NIST</b>", line=dict(color='red', width=2, dash='dash')))
+                fig_p.add_trace(go.Scatter(x=subset_p['Frequency (MHz)'], y=subset_p['Date Efficiency (dB)'], mode='lines+markers', name=f'<b>{date_label_p}</b>', line=dict(color='#022af2', width=2)))
             
-            min_f_p, max_f_p = int(subset_passive['Frequency (MHz)'].min()), int(subset_passive['Frequency (MHz)'].max())
+            min_f_p, max_f_p = int(subset_p['Frequency (MHz)'].min()), int(subset_p['Frequency (MHz)'].max())
             fig_p.update_layout(
                 title=dict(text=f"<b>{selected_unit}</b> <span style='font-size: 20px;'>({min_f_p}-{max_f_p} MHz)</span>", font=dict(size=30)),
                 xaxis_title="<b>Frequency (MHz)</b>", yaxis_title="<b>Efficiency (dB)</b>",
