@@ -243,9 +243,10 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
 
 # 2. Handle Passive Selection
 if validation_type != "None" and df_passive is not None:
+    # UPDATED TITLE_MAP: Removed "Passive" from Quarterly
     title_map = {
         "Yearly": "Yearly - Passive Dipole Validation Measurements",
-        "Quarterly": "Quarterly - Passive Dipole Validation Measurements",
+        "Quarterly": "Quarterly - Dipole Validation Measurements",
         "Monthly": "Monthly - Passive Horn Validation Measurements",
         "Wideband Dipole - Chamber Comparison": "Wideband Dipole - Chamber Comparison"
     }
@@ -290,7 +291,6 @@ if validation_type != "None" and df_passive is not None:
             
             min_f_p, max_f_p = int(subset_p['Frequency (MHz)'].min()), int(subset_p['Frequency (MHz)'].max())
             fig_p.update_layout(
-                # Centered Title: "Passive Trend" and unit ID now 26pt
                 title=dict(
                     text=f"<b>{selected_unit}</b> <span style='font-size: 20px;'>({min_f_p}-{max_f_p} MHz)</span> <b>- Passive Trend</b>", 
                     font=dict(size=26),
