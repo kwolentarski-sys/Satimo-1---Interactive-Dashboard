@@ -109,7 +109,7 @@ def load_active_trp_data(file_name):
 
 # --- SIDEBAR CONTROLS ---
 
-st.sidebar.markdown('<h2 style="color:#022af2;">Dashboard Controls</h2>', unsafe_allow_html=True)
+st.sidebar.markdown('<h2 style="color:#022af2; font-size: 32px;">Dashboard Controls</h2>', unsafe_allow_html=True)
 
 # 1. Passive Selection
 st.sidebar.markdown("**Select Passive Validation Type:**")
@@ -175,7 +175,7 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
             title=dict(
                 text="<b>LTE TRP Active Trend</b>", 
                 font=dict(color='black', size=22),
-                x=0.5, # Centered
+                x=0.5,
                 xanchor='center'
             ), 
             template="plotly_white", height=450, margin=dict(t=80, b=50, l=50, r=150),
@@ -219,7 +219,7 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
                     title=dict(
                         text=f"<b>{title_label}</b>", 
                         font=dict(color='black', size=22),
-                        x=0.5, # Centered
+                        x=0.5,
                         xanchor='center'
                     ), 
                     template="plotly_white", height=450, margin=dict(t=80, b=50, l=50, r=150),
@@ -258,11 +258,15 @@ if validation_type != "None" and df_passive is not None:
                 subset_p['Abs_Diff'] = (subset_p['Reference Efficiency (dB)'] - subset_p['Date Efficiency (dB)']).abs()
                 max_val, max_freq = subset_p['Abs_Diff'].max(), subset_p.loc[subset_p['Abs_Diff'].idxmax(), 'Frequency (MHz)']
                 above_0_subset = subset_p[subset_p['Date Efficiency (dB)'] > 0]
-                st.write(f"**Maximum Difference From Reference NIST:** {max_val:.2f} dB at {max_freq} MHz")
+                
+                # --- UPDATED METRICS FONT SIZE ---
+                st.markdown(f'<p style="font-size: 24px;"><b>Maximum Difference From Reference NIST:</b> {max_val:.2f} dB at {max_freq} MHz</p>', unsafe_allow_html=True)
+                
                 if not above_0_subset.empty:
                     max_above_idx = above_0_subset['Date Efficiency (dB)'].idxmax()
-                    st.markdown(f'**Maximum Overshoot Above 0 dB:** <span style="color:red;">{above_0_subset.loc[max_above_idx, "Date Efficiency (dB)"]:.2f} dB at {above_0_subset.loc[max_above_idx, "Frequency (MHz)"]} MHz</span>', unsafe_allow_html=True)
-                else: st.markdown('**Maximum Overshoot Above 0 dB:** <span style="color:green;">None</span>', unsafe_allow_html=True)
+                    st.markdown(f'<p style="font-size: 24px;"><b>Maximum Overshoot Above 0 dB:</b> <span style="color:red;">{above_0_subset.loc[max_above_idx, "Date Efficiency (dB)"]:.2f} dB at {above_0_subset.loc[max_above_idx, "Frequency (MHz)"]} MHz</span></p>', unsafe_allow_html=True)
+                else: 
+                    st.markdown('<p style="font-size: 24px;"><b>Maximum Overshoot Above 0 dB:</b> <span style="color:green;">None</span></p>', unsafe_allow_html=True)
             
             fig_p = go.Figure()
             if validation_type == "Wideband Dipole - Chamber Comparison":
@@ -281,7 +285,7 @@ if validation_type != "None" and df_passive is not None:
                 title=dict(
                     text=f"<b>{selected_unit}</b> <span style='font-size: 20px;'>({min_f_p}-{max_f_p} MHz)</span>", 
                     font=dict(size=30),
-                    x=0.5, # Centered
+                    x=0.5,
                     xanchor='center'
                 ),
                 xaxis_title="<b>Frequency (MHz)</b>", yaxis_title="<b>Efficiency (dB)</b>",
