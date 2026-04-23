@@ -205,7 +205,6 @@ active_validation_type = st.sidebar.selectbox(
 
 # --- MAIN DASHBOARD LOGIC ---
 
-# 1-3: LTE TRP, LTE TIS, Pixel Phone S4 (Standard Baseline)
 if active_validation_type == "LTE TRP" and not is_active_disabled:
     st.markdown('<h3 style="color:#022af2; margin-bottom: 0px;"><b>Quarterly - Active Reference - LTE TRP</b></h3>', unsafe_allow_html=True)
     st.markdown('<h4 style="color:black; margin-top: 0px;"><b>Inseego MiFi Reference Device: IMEI: 7427</b></h4>', unsafe_allow_html=True)
@@ -254,13 +253,13 @@ if active_validation_type == "Phantom Wrist Dielectrics" and not is_active_disab
         max_spread = df_wrist['Spread'].max()
         max_spread_freq = df_wrist.loc[df_wrist['Spread'].idxmax(), 'Frequency (MHz)']
 
-        # CONSOLIDATED SUBTITLES WITH MATCHING BOLD 20PX FONT SIZES & ZERO SPACING
+        # UPDATED SUBTITLES: SELECTIVE BOLDING APPLIED
         st.markdown(
             f"""
             <h3 style="color:#022af2; margin: 0px !important; padding: 0px !important;"><b>Phantom Wrist Dielectrics</b></h3>
-            <p style="font-size: 20px; font-weight: bold; color:black; margin: 0px !important; padding: 0px !important;">Phantom Wrist Speag: SHO-GFPC V1: 0.3 – 3 GHz</p>
-            <p style="font-size: 20px; font-weight: bold; color:black; margin: 0px !important; padding: 0px !important;">Active Reference Device: Selene L003P</p>
-            <p style="font-size: 20px; font-weight: bold; color:black; margin: 0px !important; padding: 0px !important;">Maximum Delta - New Wrists: {max_spread:.2f} dB at {max_spread_freq} MHz</p>
+            <p style="font-size: 20px; color:#000000; margin: 0px !important; padding: 0px !important;"><b>Phantom Wrist Speag:</b> SHO-GFPC V1: 0.3 – 3 GHz</p>
+            <p style="font-size: 20px; font-weight: bold; color:#000000; margin: 0px !important; padding: 0px !important;">Active Reference Device: Selene L003P</p>
+            <p style="font-size: 20px; font-weight: bold; color:#000000; margin: 0px !important; padding: 0px !important;">Maximum Delta - New Wrists: {max_spread:.2f} dB at {max_spread_freq} MHz</p>
             """, 
             unsafe_allow_html=True
         )
