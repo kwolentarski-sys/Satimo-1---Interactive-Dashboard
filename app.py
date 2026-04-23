@@ -153,7 +153,6 @@ active_validation_type = st.sidebar.selectbox(
 
 # 1. Handle Active Selection
 if active_validation_type == "LTE TRP" and not is_active_disabled:
-    # Subtitle removed as requested; Heading updated
     st.markdown('<h3 style="color:#022af2;"><b>Quarterly - Active Reference - LTE TRP</b></h3>', unsafe_allow_html=True)
     
     active_file = "Satimo 1 Chamber - Active Trend Charts - Satimo1 - Active Reference Quarterly - LTE TRP.csv"
@@ -161,19 +160,24 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
     
     if df_active is not None and not df_active.empty:
         fig1 = go.Figure()
-        # "undefined" replaced with "Inseego MiFi Reference Device - IMEI: 7427"
-        # The date is included in the trace name to appear in the legend
+        # "undefined" replaced with "Inseego MiFi Reference Device" in hovertemplate
+        # Legend name set to 3/3/26 (active_date)
         fig1.add_trace(go.Scatter(
             x=df_active['Band/Chan'], 
             y=df_active['TRP (dBm)'], 
             mode='lines+markers', 
-            name=f"<b>Inseego MiFi Reference Device - IMEI: 7427 ({active_date})</b>", 
+            name=str(active_date), 
+            hovertemplate="<b>Inseego MiFi Reference Device</b><br>Band/Chan: %{x}<br>TRP: %{y:.2f} dBm<extra></extra>",
             line=dict(color='#022af2', width=2)
         ))
         
         fig1.update_layout(
-            title=None, 
-            template="plotly_white", height=450, margin=dict(t=30, b=50, l=50, r=50),
+            # Graph Title updated as requested
+            title=dict(
+                text="<b>Inseego MiFi Reference Device - IMEI: 7427</b>", 
+                font=dict(color='black', size=22)
+            ), 
+            template="plotly_white", height=450, margin=dict(t=80, b=50, l=50, r=50),
             plot_bgcolor="#e9f1ff", 
             paper_bgcolor="#e9f1ff",
             showlegend=True,
@@ -203,7 +207,7 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
     else:
         st.error(f"Please ensure '{active_file}' is uploaded.")
 
-# 2. Handle Passive Selection (Baseline)
+# 2. Handle Passive Selection (Baseline - No Changes)
 if validation_type != "None" and df_passive is not None:
     title_map = {
         "Yearly": "Yearly - Passive Dipole Validation Measurements",
