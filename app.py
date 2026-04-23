@@ -153,7 +153,6 @@ active_validation_type = st.sidebar.selectbox(
 
 # 1. Handle Active Selection
 if active_validation_type == "LTE TRP" and not is_active_disabled:
-    # Heading and newly added subtitle
     st.markdown('<h3 style="color:#022af2; margin-bottom: 0px;"><b>Quarterly - Active Reference - LTE TRP</b></h3>', unsafe_allow_html=True)
     st.markdown('<h4 style="color:#022af2; margin-top: 0px;"><b>Inseego MiFi Reference Device</b></h4>', unsafe_allow_html=True)
     
@@ -162,9 +161,9 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
     
     if df_active is not None and not df_active.empty:
         fig1 = go.Figure()
-        # Changed X-axis to Frequency (Mhz) and set legend name to date
+        # Reverted X-axis back to Band/Chan
         fig1.add_trace(go.Scatter(
-            x=df_active['Frequency (Mhz)'], 
+            x=df_active['Band/Chan'], 
             y=df_active['TRP (dBm)'], 
             mode='lines+markers', 
             name=f"<b>{active_date}</b>", 
@@ -172,11 +171,10 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
         ))
         
         fig1.update_layout(
-            title=dict(text="<b>LTE TRP</b>", font=dict(color='black')), 
-            template="plotly_white", height=450, margin=dict(t=80, b=50, l=50, r=50),
+            title=None, # Removed graph title
+            template="plotly_white", height=450, margin=dict(t=30, b=50, l=50, r=50),
             plot_bgcolor="#e9f1ff", 
             paper_bgcolor="#e9f1ff",
-            # Legend positioned on top
             legend=dict(
                 orientation="h",
                 yanchor="bottom",
@@ -186,7 +184,7 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
                 font=dict(color='black', size=14)
             ),
             xaxis=dict(
-                title=dict(text="<b>Frequency (MHz)</b>", font=dict(size=20, color='black')),
+                title=dict(text="<b>Band/Chan</b>", font=dict(size=20, color='black')),
                 tickfont=dict(weight='bold', color='black'),
                 showline=True, linewidth=1, linecolor='black', mirror=True,
                 showgrid=True, gridcolor='gray'
@@ -203,7 +201,7 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
     else:
         st.error(f"Please ensure '{active_file}' is uploaded.")
 
-# 2. Handle Passive Selection (Baseline - Locked)
+# 2. Handle Passive Selection (Baseline)
 if validation_type != "None" and df_passive is not None:
     title_map = {
         "Yearly": "Yearly - Passive Dipole Validation Measurements",
