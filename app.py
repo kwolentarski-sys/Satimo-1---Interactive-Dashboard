@@ -175,7 +175,7 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
             template="plotly_white", height=450, margin=dict(t=80, b=50, l=50, r=150),
             plot_bgcolor="#e9f1ff", paper_bgcolor="#e9f1ff",
             showlegend=True,
-            legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02, font=dict(color='black', size=18)),
+            legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02, font=dict(color='black', size=18, weight='bold')),
             xaxis=dict(
                 title=dict(text="<b>Band/Chan</b>", font=dict(size=20, color='black')), 
                 tickfont=dict(weight='bold', color='black', size=18),
@@ -193,7 +193,7 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
         ranges = [
             (664.8, 913.42, "LTE TRP Active Trend - Low Bands"),
             (1711.58, 1978.42, "LTE TRP Active Trend - Mid Bands"),
-            (2502.62, 2567.38, "LTE TRP Active Trend - Mid Bands")
+            (2502.62, 2567.38, "LTE TRP Active Trend - High Band")
         ]
 
         for low_f, high_f, title_label in ranges:
@@ -214,7 +214,7 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
                     template="plotly_white", height=450, margin=dict(t=80, b=50, l=50, r=150),
                     plot_bgcolor="#e9f1ff", paper_bgcolor="#e9f1ff",
                     showlegend=True,
-                    legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02, font=dict(color='black', size=18)),
+                    legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02, font=dict(color='black', size=18, weight='bold')),
                     xaxis=dict(
                         title=dict(text="<b>Frequency (MHz)</b>", font=dict(size=20, color='black')), 
                         tickfont=dict(weight='bold', color='black', size=18),
@@ -230,7 +230,7 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
     else:
         st.error(f"Please ensure '{active_file}' is uploaded.")
 
-# 2. Handle Passive Selection (Baseline - Locked logic, updated font sizes)
+# 2. Handle Passive Selection (Global Readability Baseline)
 if validation_type != "None" and df_passive is not None:
     title_map = {
         "Yearly": "Yearly - Passive Dipole Validation Measurements",
@@ -270,9 +270,7 @@ if validation_type != "None" and df_passive is not None:
                 title=dict(text=f"<b>{selected_unit}</b> <span style='font-size: 20px;'>({min_f_p}-{max_f_p} MHz)</span>", font=dict(size=30)),
                 xaxis_title="<b>Frequency (MHz)</b>", yaxis_title="<b>Efficiency (dB)</b>",
                 hovermode="x unified", template="plotly_white", height=560, plot_bgcolor="#e9f1ff", paper_bgcolor="#e9f1ff",
-                # Legend text size increased to 18
-                legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02, font=dict(size=18)), margin=dict(t=100, b=50, l=50, r=150),
-                # Tick sizes for X and Y axes increased to 18
+                legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02, font=dict(size=18, weight='bold')), margin=dict(t=100, b=50, l=50, r=150),
                 xaxis=dict(title_font=dict(color='black', size=20), tickfont=dict(color='black', size=18, weight='bold'), showgrid=True, gridcolor='silver', gridwidth=1, showline=True, linewidth=1, linecolor='black', mirror=True),
                 yaxis=dict(title_font=dict(color='black', size=20), tickfont=dict(color='black', size=18, weight='bold'), showgrid=True, gridcolor='silver', gridwidth=1, zeroline=True, zerolinewidth=3, zerolinecolor='black', showline=True, linewidth=1, linecolor='black', mirror=True)
             )
