@@ -6,7 +6,7 @@ import os
 # --- PAGE CONFIGURATION ---
 st.set_page_config(page_title="Satimo 1 Dashboard", layout="wide")
 
-# Custom CSS for Sidebar Background and styling[cite: 1]
+# Custom CSS for Sidebar Background and styling
 st.markdown(
     """
     <style>
@@ -19,7 +19,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# App Title: Forced to one line using CSS nowrap[cite: 1]
+# App Title: Forced to one line using CSS nowrap
 st.markdown(
     '<h1 style="white-space: nowrap; overflow: hidden; text-overflow: clip; font-size: 34px;">Satimo 1 Chamber Performance - Interactive Dashboard</h1>', 
     unsafe_allow_html=True
@@ -29,7 +29,7 @@ st.markdown(
 
 @st.cache_data
 def load_and_clean_data(file_name, is_comparison=False):
-    """Dynamically finds and parses Satimo data. Handles standard 3-col and comparison 2-col formats."""[cite: 1]
+    """Dynamically finds and parses Satimo data. Handles standard 3-col and comparison 2-col formats."""
     if not os.path.exists(file_name):
         return None
     try:
@@ -90,7 +90,7 @@ def load_and_clean_data(file_name, is_comparison=False):
 
 @st.cache_data
 def load_active_trp_data(file_name):
-    """Parses Active LTE TRP data file."""[cite: 1]
+    """Parses Active LTE TRP data file."""
     if not os.path.exists(file_name):
         return None, None
     try:
@@ -107,11 +107,11 @@ def load_active_trp_data(file_name):
         return data.dropna(), date_val
     except Exception: return None, None
 
-# --- SIDEBAR CONTROLS ---[cite: 1]
+# --- SIDEBAR CONTROLS ---
 
 st.sidebar.markdown('<h2 style="color:#022af2;">Dashboard Controls</h2>', unsafe_allow_html=True)
 
-# 1. Passive Selection[cite: 1]
+# 1. Passive Selection
 st.sidebar.markdown("**Select Passive Validation Type:**")
 validation_type = st.sidebar.selectbox(
     "Select Passive Validation Type:",
@@ -119,7 +119,7 @@ validation_type = st.sidebar.selectbox(
     label_visibility="collapsed"
 )
 
-# 2. Dynamic Unit Selection[cite: 1]
+# 2. Dynamic Unit Selection (Positioned above Active Validation)
 selected_unit = None
 df_passive = None
 if validation_type != "None":
@@ -138,7 +138,7 @@ if validation_type != "None":
         st.sidebar.markdown(f"**{label_text}**")
         selected_unit = st.sidebar.selectbox(label_text, units, label_visibility="collapsed")
 
-# 3. Active Selection (Disabled unless Passive is "None")[cite: 1]
+# 3. Active Selection (Disabled unless Passive is "None")
 st.sidebar.markdown("**Select Active Validation Type:**")
 is_active_disabled = (validation_type != "None")
 active_validation_type = st.sidebar.selectbox(
@@ -151,7 +151,7 @@ active_validation_type = st.sidebar.selectbox(
 
 # --- MAIN DASHBOARD LOGIC ---
 
-# 1. Handle Active Selection[cite: 1]
+# 1. Handle Active Selection
 if active_validation_type == "LTE TRP" and not is_active_disabled:
     st.markdown('<h3 style="color:#022af2;"><b>Active Reference Quarterly - LTE TRP</b></h3>', unsafe_allow_html=True)
     active_file = "Satimo 1 Chamber - Active Trend Charts - Satimo1 - Active Reference Quarterly - LTE TRP.csv"
@@ -166,7 +166,7 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
             name=f"LTE TRP ({active_date})", 
             line=dict(color='#022af2', width=2)
         ))
-        # Updated styling for Active LTE TRP graph[cite: 1]
+        
         fig1.update_layout(
             title=dict(text="<b>LTE (Band/Chan) vs TRP</b>", font=dict(color='black')), 
             template="plotly_white", height=450, margin=dict(t=50, b=50, l=50, r=50),
@@ -188,7 +188,7 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
     else:
         st.error(f"Please ensure '{active_file}' is uploaded.")
 
-# 2. Handle Passive Selection (Locked Baseline)[cite: 1]
+# 2. Handle Passive Selection (Baseline)
 if validation_type != "None" and df_passive is not None:
     title_map = {
         "Yearly": "Yearly - Passive Dipole Validation Measurements",
