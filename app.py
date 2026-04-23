@@ -175,13 +175,21 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
             template="plotly_white", height=450, margin=dict(t=80, b=50, l=50, r=150),
             plot_bgcolor="#e9f1ff", paper_bgcolor="#e9f1ff",
             showlegend=True,
-            legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02, font=dict(color='black', size=14)),
-            xaxis=dict(title=dict(text="<b>Band/Chan</b>", font=dict(size=20, color='black')), tickfont=dict(weight='bold', color='black'), showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray'),
-            yaxis=dict(title=dict(text="<b>TRP (dBm)</b>", font=dict(size=20, color='black')), tickfont=dict(weight='bold', color='black'), zeroline=True, zerolinewidth=3, zerolinecolor='black', showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray')
+            legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02, font=dict(color='black', size=18)), # Increased size
+            xaxis=dict(
+                title=dict(text="<b>Band/Chan</b>", font=dict(size=20, color='black')), 
+                tickfont=dict(weight='bold', color='black', size=18), # Increased tick size
+                showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray'
+            ),
+            yaxis=dict(
+                title=dict(text="<b>TRP (dBm)</b>", font=dict(size=20, color='black')), 
+                tickfont=dict(weight='bold', color='black', size=18), # Increased tick size
+                zeroline=True, zerolinewidth=3, zerolinecolor='black', showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray'
+            )
         )
         st.plotly_chart(fig_imei, use_container_width=True)
 
-        # SUB-GRAPHS BY FREQUENCY RANGE WITH UPDATED TITLES
+        # SUB-GRAPHS BY FREQUENCY RANGE
         ranges = [
             (664.8, 913.42, "LTE TRP Active Trend - Low Bands"),
             (1711.58, 1978.42, "LTE TRP Active Trend - Mid Bands"),
@@ -206,9 +214,17 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
                     template="plotly_white", height=450, margin=dict(t=80, b=50, l=50, r=150),
                     plot_bgcolor="#e9f1ff", paper_bgcolor="#e9f1ff",
                     showlegend=True,
-                    legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02, font=dict(color='black', size=14)),
-                    xaxis=dict(title=dict(text="<b>Frequency (MHz)</b>", font=dict(size=20, color='black')), tickfont=dict(weight='bold', color='black'), showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray'),
-                    yaxis=dict(title=dict(text="<b>TRP (dBm)</b>", font=dict(size=20, color='black')), tickfont=dict(weight='bold', color='black'), zeroline=True, zerolinewidth=3, zerolinecolor='black', showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray')
+                    legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02, font=dict(color='black', size=18)), # Increased size
+                    xaxis=dict(
+                        title=dict(text="<b>Frequency (MHz)</b>", font=dict(size=20, color='black')), 
+                        tickfont=dict(weight='bold', color='black', size=18), # Increased tick size
+                        showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray'
+                    ),
+                    yaxis=dict(
+                        title=dict(text="<b>TRP (dBm)</b>", font=dict(size=20, color='black')), 
+                        tickfont=dict(weight='bold', color='black', size=18), # Increased tick size
+                        zeroline=True, zerolinewidth=3, zerolinecolor='black', showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray'
+                    )
                 )
                 st.plotly_chart(fig, use_container_width=True)
     else:
