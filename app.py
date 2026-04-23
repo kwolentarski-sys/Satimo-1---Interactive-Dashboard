@@ -243,11 +243,11 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
 
 # 2. Handle Passive Selection
 if validation_type != "None" and df_passive is not None:
-    # UPDATED TITLE_MAP: Removed "Passive" from Quarterly
+    # UPDATED TITLE_MAP: Removed "Passive" from Yearly, Quarterly, and Monthly
     title_map = {
-        "Yearly": "Yearly - Passive Dipole Validation Measurements",
+        "Yearly": "Yearly - Dipole Validation Measurements",
         "Quarterly": "Quarterly - Dipole Validation Measurements",
-        "Monthly": "Monthly - Passive Horn Validation Measurements",
+        "Monthly": "Monthly - Horn Validation Measurements",
         "Wideband Dipole - Chamber Comparison": "Wideband Dipole - Chamber Comparison"
     }
     st.markdown(f'<h3 style="color:#022af2;"><b>{title_map[validation_type]}</b></h3>', unsafe_allow_html=True)
