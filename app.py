@@ -160,8 +160,6 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
     
     if df_active is not None and not df_active.empty:
         fig1 = go.Figure()
-        # "undefined" replaced with "Inseego MiFi Reference Device" in hovertemplate
-        # Legend name set to 3/3/26 (active_date)
         fig1.add_trace(go.Scatter(
             x=df_active['Band/Chan'], 
             y=df_active['TRP (dBm)'], 
@@ -172,21 +170,21 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
         ))
         
         fig1.update_layout(
-            # Graph Title updated as requested
             title=dict(
                 text="<b>Inseego MiFi Reference Device - IMEI: 7427</b>", 
                 font=dict(color='black', size=22)
             ), 
-            template="plotly_white", height=450, margin=dict(t=80, b=50, l=50, r=50),
+            template="plotly_white", height=450, margin=dict(t=80, b=50, l=50, r=150),
             plot_bgcolor="#e9f1ff", 
             paper_bgcolor="#e9f1ff",
             showlegend=True,
+            # Legend moved to the right side
             legend=dict(
-                orientation="h",
-                yanchor="bottom",
-                y=1.02,
-                xanchor="center",
-                x=0.5,
+                orientation="v",
+                yanchor="middle",
+                y=0.5,
+                xanchor="left",
+                x=1.02,
                 font=dict(color='black', size=14)
             ),
             xaxis=dict(
@@ -207,7 +205,7 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
     else:
         st.error(f"Please ensure '{active_file}' is uploaded.")
 
-# 2. Handle Passive Selection (Baseline - No Changes)
+# 2. Handle Passive Selection (Baseline)
 if validation_type != "None" and df_passive is not None:
     title_map = {
         "Yearly": "Yearly - Passive Dipole Validation Measurements",
