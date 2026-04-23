@@ -153,7 +153,7 @@ active_validation_type = st.sidebar.selectbox(
 
 # 1. Handle Active Selection
 if active_validation_type == "LTE TRP" and not is_active_disabled:
-    # Heading and newly added subtitle
+    # Subtitle remains as requested
     st.markdown('<h3 style="color:#022af2; margin-bottom: 0px;"><b>Quarterly - Active Reference - LTE TRP</b></h3>', unsafe_allow_html=True)
     st.markdown('<h4 style="color:#022af2; margin-top: 0px;"><b>Inseego MiFi Reference Device: IMEI: 7427</b></h4>', unsafe_allow_html=True)
     
@@ -173,7 +173,8 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
         ))
         
         fig_imei.update_layout(
-            title=dict(text="<b>Inseego MiFi Reference Device - IMEI: 7427</b>", font=dict(color='black', size=22)), 
+            # Chart title updated to "LTE TRP Active Trend"
+            title=dict(text="<b>LTE TRP Active Trend</b>", font=dict(color='black', size=22)), 
             template="plotly_white", height=450, margin=dict(t=80, b=50, l=50, r=150),
             plot_bgcolor="#e9f1ff", paper_bgcolor="#e9f1ff",
             showlegend=True,
