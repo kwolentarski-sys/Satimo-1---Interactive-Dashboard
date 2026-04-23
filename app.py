@@ -119,7 +119,7 @@ validation_type = st.sidebar.selectbox(
     label_visibility="collapsed"
 )
 
-# 2. Dynamic Unit Selection (Positioned above Active Validation)
+# 2. Dynamic Unit Selection
 selected_unit = None
 df_passive = None
 if validation_type != "None":
@@ -153,7 +153,8 @@ active_validation_type = st.sidebar.selectbox(
 
 # 1. Handle Active Selection
 if active_validation_type == "LTE TRP" and not is_active_disabled:
-    st.markdown('<h3 style="color:#022af2;"><b>Active Reference Quarterly - LTE TRP</b></h3>', unsafe_allow_html=True)
+    # Updated heading label as requested
+    st.markdown('<h3 style="color:#022af2;"><b>Quarterly - Active Reference - LTE TRP</b></h3>', unsafe_allow_html=True)
     active_file = "Satimo 1 Chamber - Active Trend Charts - Satimo1 - Active Reference Quarterly - LTE TRP.csv"
     df_active, active_date = load_active_trp_data(active_file)
     
@@ -175,13 +176,15 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
             xaxis=dict(
                 title=dict(text="<b>Band/Chan</b>", font=dict(size=20, color='black')),
                 tickfont=dict(weight='bold', color='black'),
-                showline=True, linewidth=1, linecolor='black', mirror=True
+                showline=True, linewidth=1, linecolor='black', mirror=True,
+                showgrid=True, gridcolor='gray' # Darkened grid lines
             ), 
             yaxis=dict(
                 title=dict(text="<b>TRP (dBm)</b>", font=dict(size=20, color='black')),
                 tickfont=dict(weight='bold', color='black'), 
                 zeroline=True, zerolinewidth=3, zerolinecolor='black',
-                showline=True, linewidth=1, linecolor='black', mirror=True
+                showline=True, linewidth=1, linecolor='black', mirror=True,
+                showgrid=True, gridcolor='gray' # Darkened grid lines
             )
         )
         st.plotly_chart(fig1, use_container_width=True)
