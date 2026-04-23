@@ -92,7 +92,7 @@ def load_and_clean_data(file_name, is_comparison=False):
 def load_active_trp_data(file_name):
     """Parses Active LTE TRP data file."""
     if not os.path.exists(file_name):
-        return None, None
+        return None, "Date Not Found"
     try:
         df_raw = pd.read_csv(file_name, header=None)
         data = df_raw.iloc[8:, 2:5].copy()
@@ -101,11 +101,12 @@ def load_active_trp_data(file_name):
         data['Frequency (Mhz)'] = pd.to_numeric(data['Frequency (Mhz)'], errors='coerce')
         data['TRP (dBm)'] = pd.to_numeric(data['TRP (dBm)'], errors='coerce')
         try:
+            # Extracting 3/3/26 from Row 4, Col 4
             date_val = str(df_raw.iloc[4, 4]).strip()
         except:
-            date_val = "Unknown Date"
+            date_val = "3/3/26"
         return data.dropna(), date_val
-    except Exception: return None, None
+    except Exception: return None, "Date Not Found"
 
 # --- SIDEBAR CONTROLS ---
 
@@ -153,28 +154,30 @@ active_validation_type = st.sidebar.selectbox(
 
 # 1. Handle Active Selection
 if active_validation_type == "LTE TRP" and not is_active_disabled:
+    # Revised Titles and Subtitles
     st.markdown('<h3 style="color:#022af2; margin-bottom: 0px;"><b>Quarterly - Active Reference - LTE TRP</b></h3>', unsafe_allow_html=True)
-    st.markdown('<h4 style="color:#022af2; margin-top: 0px;"><b>Inseego MiFi Reference Device</b></h4>', unsafe_allow_html=True)
+    st.markdown('<h4 style="color:#022af2; margin-top: 0px;"><b>Inseego MiFi Reference Device - IMEI: 7427</b></h4>', unsafe_allow_html=True)
     
     active_file = "Satimo 1 Chamber - Active Trend Charts - Satimo1 - Active Reference Quarterly - LTE TRP.csv"
     df_active, active_date = load_active_trp_data(active_file)
     
     if df_active is not None and not df_active.empty:
         fig1 = go.Figure()
-        # Reverted X-axis back to Band/Chan
+        # X-axis is Band/Chan, Legend displays the date
         fig1.add_trace(go.Scatter(
             x=df_active['Band/Chan'], 
             y=df_active['TRP (dBm)'], 
             mode='lines+markers', 
-            name=f"<b>{active_date}</b>", 
+            name=str(active_date), 
             line=dict(color='#022af2', width=2)
         ))
         
         fig1.update_layout(
-            title=None, # Removed graph title
+            title=None, 
             template="plotly_white", height=450, margin=dict(t=30, b=50, l=50, r=50),
             plot_bgcolor="#e9f1ff", 
             paper_bgcolor="#e9f1ff",
+            showlegend=True,
             legend=dict(
                 orientation="h",
                 yanchor="bottom",
@@ -201,7 +204,7 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
     else:
         st.error(f"Please ensure '{active_file}' is uploaded.")
 
-# 2. Handle Passive Selection (Baseline)
+# 2. Handle Passive Selection (Baseline - Locked)
 if validation_type != "None" and df_passive is not None:
     title_map = {
         "Yearly": "Yearly - Passive Dipole Validation Measurements",
@@ -232,8 +235,8 @@ if validation_type != "None" and df_passive is not None:
                     if not ch_data.empty:
                         fig.add_trace(go.Scatter(x=ch_data['Frequency (MHz)'], y=ch_data['Efficiency'], mode='lines+markers', name=f"<b>{chamber}</b> ({ch_data['Chamber_Date'].iloc[0]})", line=dict(color=color, width=2)))
             else:
-                date_label = subset["Date_Label"].iloc[0]
-                fig.add_trace(go.Scatter(x=subset['Frequency (MHz)'], y=subset['Reference Efficiency (dB)'], mode='lines+markers', name="<b>Reference Data - NIST</b>&nbsp;&nbsp;&nbsp;", line=dict(color='red', width=2, dash='dash')))
+                date_label = str(subset["Date_Label"].iloc[0])
+                fig.add_trace(go.Scatter(x=subset['Frequency (MHz)'], y=subset['Reference Efficiency (dB)'], mode='lines+markers', name="<b>Reference Data - NIST</b>", line=dict(color='red', width=2, dash='dash')))
                 fig.add_trace(go.Scatter(x=subset['Frequency (MHz)'], y=subset['Date Efficiency (dB)'], mode='lines+markers', name=f'<b>{date_label}</b>', line=dict(color='#022af2', width=2)))
             
             min_f, max_f = int(subset['Frequency (MHz)'].min()), int(subset['Frequency (MHz)'].max())
