@@ -159,9 +159,9 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
     df_active, active_date = load_active_trp_data(active_file)
     
     if df_active is not None and not df_active.empty:
-        fig1 = go.Figure()
-        # Bold legend name and custom hover template
-        fig1.add_trace(go.Scatter(
+        # BASELINE IMEI GRAPH
+        fig_imei = go.Figure()
+        fig_imei.add_trace(go.Scatter(
             x=df_active['Band/Chan'], 
             y=df_active['TRP (dBm)'], 
             mode='lines+markers', 
@@ -170,43 +170,51 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
             line=dict(color='#022af2', width=2)
         ))
         
-        fig1.update_layout(
-            title=dict(
-                text="<b>Inseego MiFi Reference Device - IMEI: 7427</b>", 
-                font=dict(color='black', size=22)
-            ), 
+        fig_imei.update_layout(
+            title=dict(text="<b>Inseego MiFi Reference Device - IMEI: 7427</b>", font=dict(color='black', size=22)), 
             template="plotly_white", height=450, margin=dict(t=80, b=50, l=50, r=150),
-            plot_bgcolor="#e9f1ff", 
-            paper_bgcolor="#e9f1ff",
+            plot_bgcolor="#e9f1ff", paper_bgcolor="#e9f1ff",
             showlegend=True,
-            # Legend moved to the top-right side and set to bold font style
-            legend=dict(
-                orientation="v",
-                yanchor="top",
-                y=1,
-                xanchor="left",
-                x=1.02,
-                font=dict(color='black', size=14)
-            ),
-            xaxis=dict(
-                title=dict(text="<b>Band/Chan</b>", font=dict(size=20, color='black')),
-                tickfont=dict(weight='bold', color='black'),
-                showline=True, linewidth=1, linecolor='black', mirror=True,
-                showgrid=True, gridcolor='gray'
-            ), 
-            yaxis=dict(
-                title=dict(text="<b>TRP (dBm)</b>", font=dict(size=20, color='black')),
-                tickfont=dict(weight='bold', color='black'), 
-                zeroline=True, zerolinewidth=3, zerolinecolor='black',
-                showline=True, linewidth=1, linecolor='black', mirror=True,
-                showgrid=True, gridcolor='gray'
-            )
+            legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02, font=dict(color='black', size=14)),
+            xaxis=dict(title=dict(text="<b>Band/Chan</b>", font=dict(size=20, color='black')), tickfont=dict(weight='bold', color='black'), showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray'),
+            yaxis=dict(title=dict(text="<b>TRP (dBm)</b>", font=dict(size=20, color='black')), tickfont=dict(weight='bold', color='black'), zeroline=True, zerolinewidth=3, zerolinecolor='black', showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray')
         )
-        st.plotly_chart(fig1, use_container_width=True)
+        st.plotly_chart(fig_imei, use_container_width=True)
+
+        # NEW SUB-GRAPHS BY FREQUENCY RANGE
+        ranges = [
+            (664.8, 913.42, "664.8 to 913.42 MHz"),
+            (1711.58, 1978.42, "1711.58 to 1978.42 MHz"),
+            (2502.62, 2567.38, "2502.62 to 2567.38 MHz")
+        ]
+
+        for low_f, high_f, title_label in ranges:
+            subset = df_active[(df_active['Frequency (Mhz)'] >= low_f) & (df_active['Frequency (Mhz)'] <= high_f)].copy()
+            if not subset.empty:
+                fig = go.Figure()
+                fig.add_trace(go.Scatter(
+                    x=subset['Frequency (Mhz)'], 
+                    y=subset['TRP (dBm)'], 
+                    mode='lines+markers', 
+                    name=f"<b>{active_date}</b>", 
+                    hovertemplate="<b>Inseego MiFi Reference Device</b><br>Freq: %{x} MHz<br>TRP: %{y:.2f} dBm<extra></extra>",
+                    line=dict(color='#022af2', width=2)
+                ))
+                
+                fig.update_layout(
+                    title=dict(text=f"<b>{title_label} vs TRP</b>", font=dict(color='black', size=22)), 
+                    template="plotly_white", height=450, margin=dict(t=80, b=50, l=50, r=150),
+                    plot_bgcolor="#e9f1ff", paper_bgcolor="#e9f1ff",
+                    showlegend=True,
+                    legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02, font=dict(color='black', size=14)),
+                    xaxis=dict(title=dict(text="<b>Frequency (MHz)</b>", font=dict(size=20, color='black')), tickfont=dict(weight='bold', color='black'), showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray'),
+                    yaxis=dict(title=dict(text="<b>TRP (dBm)</b>", font=dict(size=20, color='black')), tickfont=dict(weight='bold', color='black'), zeroline=True, zerolinewidth=3, zerolinecolor='black', showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray')
+                )
+                st.plotly_chart(fig, use_container_width=True)
     else:
         st.error(f"Please ensure '{active_file}' is uploaded.")
 
-# 2. Handle Passive Selection (Baseline)
+# 2. Handle Passive Selection (Baseline - Locked)
 if validation_type != "None" and df_passive is not None:
     title_map = {
         "Yearly": "Yearly - Passive Dipole Validation Measurements",
@@ -217,37 +225,37 @@ if validation_type != "None" and df_passive is not None:
     st.markdown(f'<h3 style="color:#022af2;"><b>{title_map[validation_type]}</b></h3>', unsafe_allow_html=True)
     
     if selected_unit:
-        subset = df_passive[df_passive['Dipole'] == selected_unit].copy()
-        if not subset.empty:
+        subset_passive = df_passive[df_passive['Dipole'] == selected_unit].copy()
+        if not subset_passive.empty:
             if validation_type != "Wideband Dipole - Chamber Comparison":
-                subset['Abs_Diff'] = (subset['Reference Efficiency (dB)'] - subset['Date Efficiency (dB)']).abs()
-                max_val, max_freq = subset['Abs_Diff'].max(), subset.loc[subset['Abs_Diff'].idxmax(), 'Frequency (MHz)']
-                above_0_subset = subset[subset['Date Efficiency (dB)'] > 0]
+                subset_passive['Abs_Diff'] = (subset_passive['Reference Efficiency (dB)'] - subset_passive['Date Efficiency (dB)']).abs()
+                max_val, max_freq = subset_passive['Abs_Diff'].max(), subset_passive.loc[subset_passive['Abs_Diff'].idxmax(), 'Frequency (MHz)']
+                above_0_subset = subset_passive[subset_passive['Date Efficiency (dB)'] > 0]
                 st.write(f"**Maximum Difference From Reference NIST:** {max_val:.2f} dB at {max_freq} MHz")
                 if not above_0_subset.empty:
                     max_above_idx = above_0_subset['Date Efficiency (dB)'].idxmax()
                     st.markdown(f'**Maximum Overshoot Above 0 dB:** <span style="color:red;">{above_0_subset.loc[max_above_idx, "Date Efficiency (dB)"]:.2f} dB at {above_0_subset.loc[max_above_idx, "Frequency (MHz)"]} MHz</span>', unsafe_allow_html=True)
                 else: st.markdown('**Maximum Overshoot Above 0 dB:** <span style="color:green;">None</span>', unsafe_allow_html=True)
             
-            fig = go.Figure()
+            fig_p = go.Figure()
             if validation_type == "Wideband Dipole - Chamber Comparison":
                 chamber_styles = {"Satimo 1": "red", "Satimo 2": "#022af2", "Satimo 3": "#2ca02c"}
                 for chamber, color in chamber_styles.items():
-                    ch_data = subset[subset['Chamber'] == chamber]
+                    ch_data = subset_passive[subset_passive['Chamber'] == chamber]
                     if not ch_data.empty:
-                        fig.add_trace(go.Scatter(x=ch_data['Frequency (MHz)'], y=ch_data['Efficiency'], mode='lines+markers', name=f"<b>{chamber}</b> ({ch_data['Chamber_Date'].iloc[0]})", line=dict(color=color, width=2)))
+                        fig_p.add_trace(go.Scatter(x=ch_data['Frequency (MHz)'], y=ch_data['Efficiency'], mode='lines+markers', name=f"<b>{chamber}</b> ({ch_data['Chamber_Date'].iloc[0]})", line=dict(color=color, width=2)))
             else:
-                date_label = str(subset["Date_Label"].iloc[0])
-                fig.add_trace(go.Scatter(x=subset['Frequency (MHz)'], y=subset['Reference Efficiency (dB)'], mode='lines+markers', name="<b>Reference Data - NIST</b>", line=dict(color='red', width=2, dash='dash')))
-                fig.add_trace(go.Scatter(x=subset['Frequency (MHz)'], y=subset['Date Efficiency (dB)'], mode='lines+markers', name=f'<b>{date_label}</b>', line=dict(color='#022af2', width=2)))
+                date_label_p = str(subset_passive["Date_Label"].iloc[0])
+                fig_p.add_trace(go.Scatter(x=subset_passive['Frequency (MHz)'], y=subset_passive['Reference Efficiency (dB)'], mode='lines+markers', name="<b>Reference Data - NIST</b>", line=dict(color='red', width=2, dash='dash')))
+                fig_p.add_trace(go.Scatter(x=subset_passive['Frequency (MHz)'], y=subset_passive['Date Efficiency (dB)'], mode='lines+markers', name=f'<b>{date_label_p}</b>', line=dict(color='#022af2', width=2)))
             
-            min_f, max_f = int(subset['Frequency (MHz)'].min()), int(subset['Frequency (MHz)'].max())
-            fig.update_layout(
-                title=dict(text=f"<b>{selected_unit}</b> <span style='font-size: 20px;'>({min_f}-{max_f} MHz)</span>", font=dict(size=30)),
+            min_f_p, max_f_p = int(subset_passive['Frequency (MHz)'].min()), int(subset_passive['Frequency (MHz)'].max())
+            fig_p.update_layout(
+                title=dict(text=f"<b>{selected_unit}</b> <span style='font-size: 20px;'>({min_f_p}-{max_f_p} MHz)</span>", font=dict(size=30)),
                 xaxis_title="<b>Frequency (MHz)</b>", yaxis_title="<b>Efficiency (dB)</b>",
                 hovermode="x unified", template="plotly_white", height=560, plot_bgcolor="#e9f1ff", paper_bgcolor="#e9f1ff",
                 legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02, font=dict(size=16)), margin=dict(t=100, b=50, l=50, r=150),
                 xaxis=dict(title_font=dict(color='black', size=20), tickfont=dict(color='black', size=14, weight='bold'), showgrid=True, gridcolor='silver', gridwidth=1, showline=True, linewidth=1, linecolor='black', mirror=True),
                 yaxis=dict(title_font=dict(color='black', size=20), tickfont=dict(color='black', size=14, weight='bold'), showgrid=True, gridcolor='silver', gridwidth=1, zeroline=True, zerolinewidth=3, zerolinecolor='black', showline=True, linewidth=1, linecolor='black', mirror=True)
             )
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig_p, use_container_width=True)
