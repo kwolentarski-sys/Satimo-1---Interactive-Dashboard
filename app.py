@@ -153,7 +153,9 @@ active_validation_type = st.sidebar.selectbox(
 
 # 1. Handle Active Selection
 if active_validation_type == "LTE TRP" and not is_active_disabled:
-    st.markdown('<h3 style="color:#022af2;"><b>Quarterly - Active Reference - LTE TRP</b></h3>', unsafe_allow_html=True)
+    # Heading and newly added subtitle
+    st.markdown('<h3 style="color:#022af2; margin-bottom: 0px;"><b>Quarterly - Active Reference - LTE TRP</b></h3>', unsafe_allow_html=True)
+    st.markdown('<h4 style="color:#022af2; margin-top: 0px;"><b>Inseego MiFi Reference Device: IMEI: 7427</b></h4>', unsafe_allow_html=True)
     
     active_file = "Satimo 1 Chamber - Active Trend Charts - Satimo1 - Active Reference Quarterly - LTE TRP.csv"
     df_active, active_date = load_active_trp_data(active_file)
