@@ -92,7 +92,7 @@ def load_and_clean_data(file_name, is_comparison=False):
 def load_active_trp_data(file_name):
     """Parses Active LTE TRP data file."""
     if not os.path.exists(file_name):
-        return None, "Date Not Found"
+        return None, "3/3/26"
     try:
         df_raw = pd.read_csv(file_name, header=None)
         data = df_raw.iloc[8:, 2:5].copy()
@@ -101,12 +101,11 @@ def load_active_trp_data(file_name):
         data['Frequency (Mhz)'] = pd.to_numeric(data['Frequency (Mhz)'], errors='coerce')
         data['TRP (dBm)'] = pd.to_numeric(data['TRP (dBm)'], errors='coerce')
         try:
-            # Extracting 3/3/26 from Row 4, Col 4
             date_val = str(df_raw.iloc[4, 4]).strip()
         except:
             date_val = "3/3/26"
         return data.dropna(), date_val
-    except Exception: return None, "Date Not Found"
+    except Exception: return None, "3/3/26"
 
 # --- SIDEBAR CONTROLS ---
 
@@ -154,21 +153,21 @@ active_validation_type = st.sidebar.selectbox(
 
 # 1. Handle Active Selection
 if active_validation_type == "LTE TRP" and not is_active_disabled:
-    # Revised Titles and Subtitles
-    st.markdown('<h3 style="color:#022af2; margin-bottom: 0px;"><b>Quarterly - Active Reference - LTE TRP</b></h3>', unsafe_allow_html=True)
-    st.markdown('<h4 style="color:#022af2; margin-top: 0px;"><b>Inseego MiFi Reference Device - IMEI: 7427</b></h4>', unsafe_allow_html=True)
+    # Subtitle removed as requested; Heading updated
+    st.markdown('<h3 style="color:#022af2;"><b>Quarterly - Active Reference - LTE TRP</b></h3>', unsafe_allow_html=True)
     
     active_file = "Satimo 1 Chamber - Active Trend Charts - Satimo1 - Active Reference Quarterly - LTE TRP.csv"
     df_active, active_date = load_active_trp_data(active_file)
     
     if df_active is not None and not df_active.empty:
         fig1 = go.Figure()
-        # X-axis is Band/Chan, Legend displays the date
+        # "undefined" replaced with "Inseego MiFi Reference Device - IMEI: 7427"
+        # The date is included in the trace name to appear in the legend
         fig1.add_trace(go.Scatter(
             x=df_active['Band/Chan'], 
             y=df_active['TRP (dBm)'], 
             mode='lines+markers', 
-            name=str(active_date), 
+            name=f"<b>Inseego MiFi Reference Device - IMEI: 7427 ({active_date})</b>", 
             line=dict(color='#022af2', width=2)
         ))
         
@@ -204,7 +203,7 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
     else:
         st.error(f"Please ensure '{active_file}' is uploaded.")
 
-# 2. Handle Passive Selection (Baseline - Locked)
+# 2. Handle Passive Selection (Baseline)
 if validation_type != "None" and df_passive is not None:
     title_map = {
         "Yearly": "Yearly - Passive Dipole Validation Measurements",
