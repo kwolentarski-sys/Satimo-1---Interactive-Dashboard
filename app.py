@@ -241,7 +241,7 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
     else:
         st.error(f"Please ensure '{active_file}' is uploaded.")
 
-# 2. Handle Passive Selection (Global Readability Baseline)
+# 2. Handle Passive Selection
 if validation_type != "None" and df_passive is not None:
     title_map = {
         "Yearly": "Yearly - Passive Dipole Validation Measurements",
@@ -259,14 +259,23 @@ if validation_type != "None" and df_passive is not None:
                 max_val, max_freq = subset_p['Abs_Diff'].max(), subset_p.loc[subset_p['Abs_Diff'].idxmax(), 'Frequency (MHz)']
                 above_0_subset = subset_p[subset_p['Date Efficiency (dB)'] > 0]
                 
-                # --- METRICS FONT SIZE REDUCED TO 20px ---
-                st.markdown(f'<p style="font-size: 20px;"><b>Maximum Difference From Reference NIST:</b> {max_val:.2f} dB at {max_freq} MHz</p>', unsafe_allow_html=True)
-                
+                # --- METRICS FONT SIZE 20px WITH ELIMINATED LINE SPACE ---
+                overshoot_html = ""
                 if not above_0_subset.empty:
                     max_above_idx = above_0_subset['Date Efficiency (dB)'].idxmax()
-                    st.markdown(f'<p style="font-size: 20px;"><b>Maximum Overshoot Above 0 dB:</b> <span style="color:red;">{above_0_subset.loc[max_above_idx, "Date Efficiency (dB)"]:.2f} dB at {above_0_subset.loc[max_above_idx, "Frequency (MHz)"]} MHz</span></p>', unsafe_allow_html=True)
+                    overshoot_val = above_0_subset.loc[max_above_idx, "Date Efficiency (dB)"]
+                    overshoot_freq = above_0_subset.loc[max_above_idx, "Frequency (MHz)"]
+                    overshoot_html = f'<p style="font-size: 20px; margin-top: 0px;"><b>Maximum Overshoot Above 0 dB:</b> <span style="color:red;">{overshoot_val:.2f} dB at {overshoot_freq} MHz</span></p>'
                 else: 
-                    st.markdown('<p style="font-size: 20px;"><b>Maximum Overshoot Above 0 dB:</b> <span style="color:green;">None</span></p>', unsafe_allow_html=True)
+                    overshoot_html = '<p style="font-size: 20px; margin-top: 0px;"><b>Maximum Overshoot Above 0 dB:</b> <span style="color:green;">None</span></p>'
+
+                st.markdown(
+                    f"""
+                    <p style="font-size: 20px; margin-bottom: 0px;"><b>Maximum Difference From Reference NIST:</b> {max_val:.2f} dB at {max_freq} MHz</p>
+                    {overshoot_html}
+                    """, 
+                    unsafe_allow_html=True
+                )
             
             fig_p = go.Figure()
             if validation_type == "Wideband Dipole - Chamber Comparison":
