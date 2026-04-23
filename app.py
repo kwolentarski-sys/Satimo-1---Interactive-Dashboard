@@ -290,10 +290,10 @@ if validation_type != "None" and df_passive is not None:
             
             min_f_p, max_f_p = int(subset_p['Frequency (MHz)'].min()), int(subset_p['Frequency (MHz)'].max())
             fig_p.update_layout(
-                # Centered Title: Suffix matches main font size (30pt), Freq range stays 20px
+                # Centered Title: "Passive Trend" and unit ID now 26pt
                 title=dict(
                     text=f"<b>{selected_unit}</b> <span style='font-size: 20px;'>({min_f_p}-{max_f_p} MHz)</span> <b>- Passive Trend</b>", 
-                    font=dict(size=30),
+                    font=dict(size=26),
                     x=0.5,
                     xanchor='center'
                 ),
