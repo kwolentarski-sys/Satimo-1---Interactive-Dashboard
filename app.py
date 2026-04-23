@@ -242,8 +242,12 @@ if active_validation_type == "LTE TIS" and not is_active_disabled:
         )
         st.plotly_chart(fig_imei, use_container_width=True)
 
-        # SUB-GRAPHS BY FREQUENCY RANGE
-        ranges = [(600, 913.42, "LTE TIS Active Trend - Low Bands"), (1711.58, 1978.42, "LTE TIS Active Trend - Mid Bands"), (2502.62, 2567.38, "LTE TIS Active Trend - High Band")]
+        # SUB-GRAPHS BY FREQUENCY RANGE - UPDATED LOW BAND RANGE
+        ranges = [
+            (622, 955, "LTE TIS Active Trend - Low Bands"), 
+            (1711.58, 1978.42, "LTE TIS Active Trend - Mid Bands"), 
+            (2502.62, 2567.38, "LTE TIS Active Trend - High Band")
+        ]
         for low_f, high_f, title_label in ranges:
             subset = df_active[(df_active['Frequency (Mhz)'] >= low_f) & (df_active['Frequency (Mhz)'] <= high_f)].copy()
             if not subset.empty:
@@ -281,5 +285,5 @@ if validation_type != "None" and df_passive is not None:
                 fig_p.add_trace(go.Scatter(x=subset_p['Frequency (MHz)'], y=subset_p['Reference Efficiency (dB)'], mode='lines+markers', name="<b>Reference Data - NIST</b>", line=dict(color='red', width=2, dash='dash')))
                 fig_p.add_trace(go.Scatter(x=subset_p['Frequency (MHz)'], y=subset_p['Date Efficiency (dB)'], mode='lines+markers', name=f'<b>{date_label_p}</b>', line=dict(color='#022af2', width=2)))
             min_f_p, max_f_p = int(subset_p['Frequency (MHz)'].min()), int(subset_p['Frequency (MHz)'].max())
-            fig_p.update_layout(title=dict(text=f"<b>{selected_unit}</b> <span style='font-size: 20px;'>({min_f_p}-{max_f_p} MHz)</span> <b>- Passive Trend</b>", font=dict(size=26), x=0.5, xanchor='center'), xaxis_title="<b>Frequency (MHz)</b>", yaxis_title="<b>Efficiency (dB)</b>", hovermode="x unified", template="plotly_white", height=560, plot_bgcolor="#e9f1ff", paper_bgcolor="#e9f1ff", legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02, font=dict(size=18, weight='bold')), margin=dict(t=100, b=50, l=50, r=150), xaxis=dict(title_font=dict(color='black', size=20), tickfont=dict(color='black', size=18, weight='bold'), showgrid=True, gridcolor='silver', gridwidth=1, showline=True, linewidth=1, linecolor='black', mirror=True), yaxis=dict(title_font=dict(color='black', size=20), tickfont=dict(color='black', size=18, weight='bold'), showgrid=True, gridcolor='silver', gridwidth=1, zeroline=True, zerolinewidth=3, zerolinecolor='black', showline=True, linewidth=1, linecolor='black', mirror=True))
+            fig_p.update_layout(title=dict(text=f"<b>{selected_unit}</b> <span style='font-size: 20px;'>({min_f_p}-{max_f_p} MHz)</span> <b>- Passive Trend</b>", font=dict(size=26), x=0.5, xanchor='center'), xaxis_title="<b>Frequency (MHz)</b>", yaxis_title="<b>Efficiency (dB)</b>", hovermode="x unified", template="plotly_white", height=560, plot_bgcolor="#e9f1ff", paper_bgcolor="#e9f1ff", legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02, font=dict(size=18, weight='bold')), margin=dict(t=100, b=50, l=50, r=150), xaxis=dict(title_font=dict(color='black', size=20), tickfont=dict(color='black', size=18, weight='bold'), showgrid=True, gridcolor='silver', gridwidth=1, showline=True, linewidth=1, linecolor='black', mirror=True), yaxis=dict(title_font=dict(color='black', size=20), tickfont=dict(color='black', size=18, weight='bold'), showgrid=True, gridcolor='silver gridwidth=1, zeroline=True, zerolinewidth=3, zerolinecolor='black', showline=True, linewidth=1, linecolor='black', mirror=True))
             st.plotly_chart(fig_p, use_container_width=True)
