@@ -242,10 +242,10 @@ if active_validation_type == "LTE TIS" and not is_active_disabled:
         )
         st.plotly_chart(fig_imei, use_container_width=True)
 
-        # SUB-GRAPHS BY FREQUENCY RANGE - UPDATED LOW BAND RANGE
+        # SUB-GRAPHS BY FREQUENCY RANGE - UPDATED MID BAND RANGE
         ranges = [
             (622, 955, "LTE TIS Active Trend - Low Bands"), 
-            (1711.58, 1978.42, "LTE TIS Active Trend - Mid Bands"), 
+            (1810, 2175, "LTE TIS Active Trend - Mid Bands"), 
             (2502.62, 2567.38, "LTE TIS Active Trend - High Band")
         ]
         for low_f, high_f, title_label in ranges:
