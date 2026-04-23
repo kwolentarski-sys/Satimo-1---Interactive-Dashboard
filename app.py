@@ -179,7 +179,6 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
     df_active, active_date = load_active_trp_data(active_file)
     
     if df_active is not None and not df_active.empty:
-        # BASELINE IMEI GRAPH
         fig_imei = go.Figure()
         fig_imei.add_trace(go.Scatter(
             x=df_active['Band/Chan'], 
@@ -201,7 +200,6 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
         )
         st.plotly_chart(fig_imei, use_container_width=True)
 
-        # SUB-GRAPHS BY FREQUENCY RANGE
         ranges = [(664.8, 913.42, "LTE TRP Active Trend - Low Bands"), (1711.58, 1978.42, "LTE TRP Active Trend - Mid Bands"), (2502.62, 2567.38, "LTE TRP Active Trend - High Band")]
         for low_f, high_f, title_label in ranges:
             subset = df_active[(df_active['Frequency (Mhz)'] >= low_f) & (df_active['Frequency (Mhz)'] <= high_f)].copy()
@@ -220,7 +218,6 @@ if active_validation_type == "LTE TIS" and not is_active_disabled:
     df_active, active_date = load_active_tis_data(tis_file)
     
     if df_active is not None and not df_active.empty:
-        # BASELINE IMEI GRAPH
         fig_imei = go.Figure()
         fig_imei.add_trace(go.Scatter(
             x=df_active['Band/Chan'], 
@@ -242,11 +239,12 @@ if active_validation_type == "LTE TIS" and not is_active_disabled:
         )
         st.plotly_chart(fig_imei, use_container_width=True)
 
-        # SUB-GRAPHS BY FREQUENCY RANGE - UPDATED MID BAND RANGE
+        # Added fourth range: 2630 to 2680 MHz
         ranges = [
             (622, 955, "LTE TIS Active Trend - Low Bands"), 
             (1810, 2175, "LTE TIS Active Trend - Mid Bands"), 
-            (2502.62, 2567.38, "LTE TIS Active Trend - High Band")
+            (2502.62, 2567.38, "LTE TIS Active Trend - High Band"),
+            (2630, 2680, "LTE TIS Active Trend - High Band")
         ]
         for low_f, high_f, title_label in ranges:
             subset = df_active[(df_active['Frequency (Mhz)'] >= low_f) & (df_active['Frequency (Mhz)'] <= high_f)].copy()
