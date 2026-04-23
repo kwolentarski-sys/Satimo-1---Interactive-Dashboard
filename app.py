@@ -205,6 +205,7 @@ active_validation_type = st.sidebar.selectbox(
 
 # --- MAIN DASHBOARD LOGIC ---
 
+# 1. Handle Active Selection (LTE TRP) - RESTORED
 if active_validation_type == "LTE TRP" and not is_active_disabled:
     st.markdown('<h3 style="color:#022af2; margin-bottom: 0px;"><b>Quarterly - Active Reference - LTE TRP</b></h3>', unsafe_allow_html=True)
     st.markdown('<h4 style="color:black; margin-top: 0px;"><b>Inseego MiFi Reference Device: IMEI: 7427</b></h4>', unsafe_allow_html=True)
@@ -216,6 +217,16 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
         fig_imei.update_layout(title=dict(text="<b>LTE TRP Active Trend</b>", font=dict(color='black', size=22), x=0.5, xanchor='center'), template="plotly_white", height=450, margin=dict(t=80, b=50, l=50, r=150), plot_bgcolor="#e9f1ff", paper_bgcolor="#e9f1ff", showlegend=True, legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02, font=dict(color='black', size=18, weight='bold')), xaxis=dict(title=dict(text="<b>Band/Chan</b>", font=dict(size=20, color='black')), tickfont=dict(weight='bold', color='black', size=18), showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray'), yaxis=dict(title=dict(text="<b>TRP (dBm)</b>", font=dict(size=20, color='black')), tickfont=dict(weight='bold', color='black', size=18), zeroline=True, zerolinewidth=3, zerolinecolor='black', showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray'))
         st.plotly_chart(fig_imei, use_container_width=True)
 
+        ranges = [(664.8, 913.42, "LTE TRP Active Trend - Low Bands"), (1711.58, 1978.42, "LTE TRP Active Trend - Mid Bands"), (2502.62, 2567.38, "LTE TRP Active Trend - High Band")]
+        for low_f, high_f, title_label in ranges:
+            subset = df_active[(df_active['Frequency (Mhz)'] >= low_f) & (df_active['Frequency (Mhz)'] <= high_f)].copy()
+            if not subset.empty:
+                fig = go.Figure()
+                fig.add_trace(go.Scatter(x=subset['Frequency (Mhz)'], y=subset['TRP (dBm)'], mode='lines+markers', name=f"<b>{active_date}</b>", hovertemplate="<b>Inseego MiFi Reference Device</b><br>Freq: %{x} MHz<br>TRP: %{y:.2f} dBm<extra></extra>", line=dict(color='#022af2', width=2)))
+                fig.update_layout(title=dict(text=f"<b>{title_label}</b>", font=dict(color='black', size=22), x=0.5, xanchor='center'), template="plotly_white", height=450, margin=dict(t=80, b=50, l=50, r=150), plot_bgcolor="#e9f1ff", paper_bgcolor="#e9f1ff", showlegend=True, legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02, font=dict(color='black', size=18, weight='bold')), xaxis=dict(title=dict(text="<b>Frequency (MHz)</b>", font=dict(size=20, color='black')), tickfont=dict(weight='bold', color='black', size=18), showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray'), yaxis=dict(title=dict(text="<b>TRP (dBm)</b>", font=dict(size=20, color='black')), tickfont=dict(weight='bold', color='black', size=18), zeroline=True, zerolinewidth=3, zerolinecolor='black', showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray'))
+                st.plotly_chart(fig, use_container_width=True)
+
+# 2. Handle Active Selection (LTE TIS) - RESTORED
 if active_validation_type == "LTE TIS" and not is_active_disabled:
     st.markdown('<h3 style="color:#022af2; margin-bottom: 0px;"><b>Quarterly - Active Reference - LTE TIS</b></h3>', unsafe_allow_html=True)
     st.markdown('<h4 style="color:black; margin-top: 0px;"><b>Inseego MiFi Reference Device: IMEI: 7427</b></h4>', unsafe_allow_html=True)
@@ -227,6 +238,16 @@ if active_validation_type == "LTE TIS" and not is_active_disabled:
         fig_imei.update_layout(title=dict(text="<b>LTE TIS Active Trend</b>", font=dict(color='black', size=22), x=0.5, xanchor='center'), template="plotly_white", height=450, margin=dict(t=80, b=50, l=50, r=150), plot_bgcolor="#e9f1ff", paper_bgcolor="#e9f1ff", showlegend=True, legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02, font=dict(color='black', size=18, weight='bold')), xaxis=dict(title=dict(text="<b>Band/Chan</b>", font=dict(size=20, color='black')), tickfont=dict(weight='bold', color='black', size=18), showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray'), yaxis=dict(title=dict(text="<b>TIS (dBm)</b>", font=dict(size=20, color='black')), tickfont=dict(weight='bold', color='black', size=18), zeroline=True, zerolinewidth=3, zerolinecolor='black', showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray'))
         st.plotly_chart(fig_imei, use_container_width=True)
 
+        ranges = [(622, 955, "LTE TIS Active Trend - Low Bands"), (1810, 2175, "LTE TIS Active Trend - Mid Bands"), (2502.62, 2567.38, "LTE TIS Active Trend - High Band"), (2630, 2680, "LTE TIS Active Trend - High Band")]
+        for low_f, high_f, title_label in ranges:
+            subset = df_active[(df_active['Frequency (Mhz)'] >= low_f) & (df_active['Frequency (Mhz)'] <= high_f)].copy()
+            if not subset.empty:
+                fig = go.Figure()
+                fig.add_trace(go.Scatter(x=subset['Frequency (Mhz)'], y=subset['TIS (dBm)'], mode='lines+markers', name=f"<b>{active_date}</b>", hovertemplate="<b>Inseego MiFi Reference Device</b><br>Freq: %{x} MHz<br>TIS: %{y:.2f} dBm<extra></extra>", line=dict(color='#022af2', width=2)))
+                fig.update_layout(title=dict(text=f"<b>{title_label}</b>", font=dict(color='black', size=22), x=0.5, xanchor='center'), template="plotly_white", height=450, margin=dict(t=80, b=50, l=50, r=150), plot_bgcolor="#e9f1ff", paper_bgcolor="#e9f1ff", showlegend=True, legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02, font=dict(color='black', size=18, weight='bold')), xaxis=dict(title=dict(text="<b>Frequency (MHz)</b>", font=dict(size=20, color='black')), tickfont=dict(weight='bold', color='black', size=18), showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray'), yaxis=dict(title=dict(text="<b>TIS (dBm)</b>", font=dict(size=20, color='black')), tickfont=dict(weight='bold', color='black', size=18), zeroline=True, zerolinewidth=3, zerolinecolor='black', showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray'))
+                st.plotly_chart(fig, use_container_width=True)
+
+# 3. Pixel Phone S4
 if active_validation_type == "Pixel Phone S4 with Dipoles" and not is_active_disabled:
     st.markdown('<h3 style="color:#022af2; margin-bottom: 0px;"><b>Active Reference - Pixel Phone S4 with Dipoles</b></h3>', unsafe_allow_html=True)
     pixel_file = "Satimo 1 Chamber - Pixel Phone S4 with Dipoles - Satimo1.csv"
@@ -246,20 +267,18 @@ if active_validation_type == "Pixel Phone S4 with Dipoles" and not is_active_dis
 if active_validation_type == "Phantom Wrist Dielectrics" and not is_active_disabled:
     wrist_file = "Satimo 1 Chamber - Active Trend Charts - Satimo 1 Phantom Wrist Dielectric .csv"
     df_wrist, date_map = load_phantom_wrist_data(wrist_file)
-    
     if df_wrist is not None and not df_wrist.empty:
         new_wrists = ['2-1659 TRP', '2-1660 TRP', '2-1621 TRP']
         df_wrist['Spread'] = df_wrist[new_wrists].max(axis=1) - df_wrist[new_wrists].min(axis=1)
         max_spread = df_wrist['Spread'].max()
         max_spread_freq = df_wrist.loc[df_wrist['Spread'].idxmax(), 'Frequency (MHz)']
 
-        # CONSOLIDATED SUBTITLES WITH SELECTIVE BOLDING AND BLACK FONT
         st.markdown(
             f"""
             <h3 style="color:#022af2; margin: 0px !important; padding: 0px !important;"><b>Phantom Wrist Dielectrics</b></h3>
             <p style="font-size: 20px; color:#000000; margin: 0px !important; padding: 0px !important;"><b>Phantom Wrist Speag:</b> SHO-GFPC V1: 0.3 – 3 GHz</p>
             <p style="font-size: 20px; color:#000000; margin: 0px !important; padding: 0px !important;"><b>Active Reference Device:</b> Selene L003P</p>
-            <p style="font-size: 20px; color:#000000; margin: 0px !important; padding: 0px !important;"><b>Maximum Delta - New Wrists:</b> {max_spread:.2f} dB at {max_spread_freq} MHz</p>
+            <p style="font-size: 20px; font-weight: bold; color:#000000; margin: 0px !important; padding: 0px !important;">Maximum Delta - New Wrists: {max_spread:.2f} dB at {max_spread_freq} MHz</p>
             """, 
             unsafe_allow_html=True
         )
@@ -273,7 +292,7 @@ if active_validation_type == "Phantom Wrist Dielectrics" and not is_active_disab
         fig_wrist.update_layout(title=dict(text="<b>Phantom Wrist TRP Comparison</b>", font=dict(color='black', size=22), x=0.5, xanchor='center'), template="plotly_white", height=500, margin=dict(t=80, b=50, l=50, r=150), plot_bgcolor="#e9f1ff", paper_bgcolor="#e9f1ff", showlegend=True, legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02, font=dict(color='black', size=18, weight='bold')), xaxis=dict(title=dict(text="<b>Frequency (MHz)</b>", font=dict(size=20, color='black')), tickfont=dict(weight='bold', color='black', size=18), showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray'), yaxis=dict(title=dict(text="<b>TRP (dBm)</b>", font=dict(size=20, color='black')), tickfont=dict(weight='bold', color='black', size=18), showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray'))
         st.plotly_chart(fig_wrist, use_container_width=True)
 
-# 5. Passive Selection
+# 5. Handle Passive Selection
 if validation_type != "None" and df_passive is not None:
     title_map = {"Yearly": "Yearly - Dipole Validation Measurements", "Quarterly": "Quarterly - Dipole Validation Measurements", "Monthly": "Monthly - Horn Validation Measurements", "Wideband Dipole - Chamber Comparison": "Wideband Dipole - Chamber Comparison"}
     st.markdown(f'<h3 style="color:#022af2;"><b>{title_map[validation_type]}</b></h3>', unsafe_allow_html=True)
