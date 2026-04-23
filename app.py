@@ -160,11 +160,12 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
     
     if df_active is not None and not df_active.empty:
         fig1 = go.Figure()
+        # Bold legend name and custom hover template
         fig1.add_trace(go.Scatter(
             x=df_active['Band/Chan'], 
             y=df_active['TRP (dBm)'], 
             mode='lines+markers', 
-            name=str(active_date), 
+            name=f"<b>{active_date}</b>", 
             hovertemplate="<b>Inseego MiFi Reference Device</b><br>Band/Chan: %{x}<br>TRP: %{y:.2f} dBm<extra></extra>",
             line=dict(color='#022af2', width=2)
         ))
@@ -178,11 +179,11 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
             plot_bgcolor="#e9f1ff", 
             paper_bgcolor="#e9f1ff",
             showlegend=True,
-            # Legend moved to the right side
+            # Legend moved to the top-right side and set to bold font style
             legend=dict(
                 orientation="v",
-                yanchor="middle",
-                y=0.5,
+                yanchor="top",
+                y=1,
                 xanchor="left",
                 x=1.02,
                 font=dict(color='black', size=14)
