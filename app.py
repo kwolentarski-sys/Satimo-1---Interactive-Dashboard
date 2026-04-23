@@ -153,7 +153,6 @@ active_validation_type = st.sidebar.selectbox(
 
 # 1. Handle Active Selection
 if active_validation_type == "LTE TRP" and not is_active_disabled:
-    # Heading and newly added subtitle
     st.markdown('<h3 style="color:#022af2; margin-bottom: 0px;"><b>Quarterly - Active Reference - LTE TRP</b></h3>', unsafe_allow_html=True)
     st.markdown('<h4 style="color:black; margin-top: 0px;"><b>Inseego MiFi Reference Device: IMEI: 7427</b></h4>', unsafe_allow_html=True)
     
@@ -173,7 +172,12 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
         ))
         
         fig_imei.update_layout(
-            title=dict(text="<b>LTE TRP Active Trend</b>", font=dict(color='black', size=22)), 
+            title=dict(
+                text="<b>LTE TRP Active Trend</b>", 
+                font=dict(color='black', size=22),
+                x=0.5, # Centered
+                xanchor='center'
+            ), 
             template="plotly_white", height=450, margin=dict(t=80, b=50, l=50, r=150),
             plot_bgcolor="#e9f1ff", paper_bgcolor="#e9f1ff",
             showlegend=True,
@@ -212,7 +216,12 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
                 ))
                 
                 fig.update_layout(
-                    title=dict(text=f"<b>{title_label}</b>", font=dict(color='black', size=22)), 
+                    title=dict(
+                        text=f"<b>{title_label}</b>", 
+                        font=dict(color='black', size=22),
+                        x=0.5, # Centered
+                        xanchor='center'
+                    ), 
                     template="plotly_white", height=450, margin=dict(t=80, b=50, l=50, r=150),
                     plot_bgcolor="#e9f1ff", paper_bgcolor="#e9f1ff",
                     showlegend=True,
@@ -269,7 +278,12 @@ if validation_type != "None" and df_passive is not None:
             
             min_f_p, max_f_p = int(subset_p['Frequency (MHz)'].min()), int(subset_p['Frequency (MHz)'].max())
             fig_p.update_layout(
-                title=dict(text=f"<b>{selected_unit}</b> <span style='font-size: 20px;'>({min_f_p}-{max_f_p} MHz)</span>", font=dict(size=30)),
+                title=dict(
+                    text=f"<b>{selected_unit}</b> <span style='font-size: 20px;'>({min_f_p}-{max_f_p} MHz)</span>", 
+                    font=dict(size=30),
+                    x=0.5, # Centered
+                    xanchor='center'
+                ),
                 xaxis_title="<b>Frequency (MHz)</b>", yaxis_title="<b>Efficiency (dB)</b>",
                 hovermode="x unified", template="plotly_white", height=560, plot_bgcolor="#e9f1ff", paper_bgcolor="#e9f1ff",
                 legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02, font=dict(size=18, weight='bold')), margin=dict(t=100, b=50, l=50, r=150),
