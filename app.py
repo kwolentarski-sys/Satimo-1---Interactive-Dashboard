@@ -133,7 +133,6 @@ def load_pixel_phone_data(file_name):
         return None
     try:
         df_raw = pd.read_csv(file_name, header=None)
-        # Data starts from row 5, specific columns for Pixel data
         data = df_raw.iloc[5:, [10, 11, 19, 20]].copy()
         data.columns = ['LTE Band', 'Frequency (MHz)', 'Calculated TRP (dBm)', 'Measured TRP (dBm)']
         data = data.dropna(subset=['Frequency (MHz)'])
@@ -141,6 +140,21 @@ def load_pixel_phone_data(file_name):
         data['Calculated TRP (dBm)'] = pd.to_numeric(data['Calculated TRP (dBm)'], errors='coerce')
         data['Measured TRP (dBm)'] = pd.to_numeric(data['Measured TRP (dBm)'], errors='coerce')
         return data.dropna()
+    except Exception: return None
+
+@st.cache_data
+def load_phantom_wrist_data(file_name):
+    """Parses Phantom Wrist Dielectrics data file."""
+    if not os.path.exists(file_name):
+        return None
+    try:
+        df_raw = pd.read_csv(file_name, header=None)
+        # Data starts at row 7, specific columns for Phantom Wrist data
+        data = df_raw.iloc[7:16, [20, 21, 22, 23, 24]].copy()
+        data.columns = ['Frequency (MHz)', '2-1659 TRP', '2-1660 TRP', '2-1621 TRP', 'Old 2-1010 TRP']
+        for col in data.columns:
+            data[col] = pd.to_numeric(data[col], errors='coerce')
+        return data.dropna(subset=['Frequency (MHz)'])
     except Exception: return None
 
 # --- SIDEBAR CONTROLS ---
@@ -179,7 +193,7 @@ st.sidebar.markdown("**Select Active Validation Type:**")
 is_active_disabled = (validation_type != "None")
 active_validation_type = st.sidebar.selectbox(
     "Select Active Validation Type:",
-    ["None", "LTE TRP", "LTE TIS", "Pixel Phone S4 with Dipoles"],
+    ["None", "LTE TRP", "LTE TIS", "Pixel Phone S4 with Dipoles", "Phantom Wrist Dielectrics"],
     label_visibility="collapsed",
     disabled=is_active_disabled,
     index=0 if is_active_disabled else 0 
@@ -218,23 +232,41 @@ if active_validation_type == "LTE TIS" and not is_active_disabled:
 # 3. Handle Active Selection (Pixel Phone S4)
 if active_validation_type == "Pixel Phone S4 with Dipoles" and not is_active_disabled:
     st.markdown('<h3 style="color:#022af2; margin-bottom: 0px;"><b>Active Reference - Pixel Phone S4 with Dipoles</b></h3>', unsafe_allow_html=True)
-    
     pixel_file = "Satimo 1 Chamber - Pixel Phone S4 with Dipoles - Satimo1.csv"
     df_pixel = load_pixel_phone_data(pixel_file)
-    
     if df_pixel is not None and not df_pixel.empty:
         df_pixel['Delta'] = (df_pixel['Calculated TRP (dBm)'] - df_pixel['Measured TRP (dBm)']).abs()
         max_delta = df_pixel['Delta'].max()
         max_delta_freq = df_pixel.loc[df_pixel['Delta'].idxmax(), 'Frequency (MHz)']
-
         st.markdown(f'<p style="font-size: 20px;"><b>Maximum Delta - Calculated TRP vs Measured TRP:</b> {max_delta:.2f} dB at {max_delta_freq} MHz</p>', unsafe_allow_html=True)
-
         fig_pixel = go.Figure()
         fig_pixel.add_trace(go.Scatter(x=df_pixel['Frequency (MHz)'], y=df_pixel['Calculated TRP (dBm)'], mode='lines+markers', name="<b>Calculated TRP (dBm)</b>", line=dict(color='red', width=2, dash='dash')))
         fig_pixel.add_trace(go.Scatter(x=df_pixel['Frequency (MHz)'], y=df_pixel['Measured TRP (dBm)'], mode='lines+markers', name="<b>Measured TRP (dBm)</b>", line=dict(color='#022af2', width=2)))
+        fig_pixel.update_layout(title=dict(text="<b>Pixel Phone S4 TRP Comparison - 7/21/25</b>", font=dict(color='black', size=22), x=0.5, xanchor='center'), template="plotly_white", height=500, margin=dict(t=80, b=50, l=50, r=150), plot_bgcolor="#e9f1ff", paper_bgcolor="#e9f1ff", showlegend=True, legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02, font=dict(color='black', size=18, weight='bold')), xaxis=dict(title=dict(text="<b>Frequency (MHz)</b>", font=dict(size=20, color='black')), tickfont=dict(weight='bold', color='black', size=18), showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray'), yaxis=dict(title=dict(text="<b>TRP (dBm)</b>", font=dict(size=20, color='black')), tickfont=dict(weight='bold', color='black', size=18), showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray'))
+        st.plotly_chart(fig_pixel, use_container_width=True)
+
+# 4. Handle Active Selection (Phantom Wrist Dielectrics)
+if active_validation_type == "Phantom Wrist Dielectrics" and not is_active_disabled:
+    st.markdown('<h3 style="color:#022af2; margin-bottom: 0px;"><b>Active Reference - Phantom Wrist Dielectrics</b></h3>', unsafe_allow_html=True)
+    
+    wrist_file = "Satimo 1 Chamber - Active Trend Charts - Satimo 1 Phantom Wrist Dielectric .csv"
+    df_wrist = load_phantom_wrist_data(wrist_file)
+    
+    if df_wrist is not None and not df_wrist.empty:
+        fig_wrist = go.Figure()
+        colors = ['#022af2', 'red', 'green', 'purple']
+        wrist_cols = ['2-1659 TRP', '2-1660 TRP', '2-1621 TRP', 'Old 2-1010 TRP']
+        for col, color in zip(wrist_cols, colors):
+            fig_wrist.add_trace(go.Scatter(
+                x=df_wrist['Frequency (MHz)'], 
+                y=df_wrist[col], 
+                mode='lines+markers', 
+                name=f"<b>{col}</b>", 
+                line=dict(color=color, width=2)
+            ))
         
-        fig_pixel.update_layout(
-            title=dict(text="<b>Pixel Phone S4 TRP Comparison - 7/21/25</b>", font=dict(color='black', size=22), x=0.5, xanchor='center'),
+        fig_wrist.update_layout(
+            title=dict(text="<b>Phantom Wrist TRP Comparison</b>", font=dict(color='black', size=22), x=0.5, xanchor='center'),
             template="plotly_white", height=500, margin=dict(t=80, b=50, l=50, r=150),
             plot_bgcolor="#e9f1ff", paper_bgcolor="#e9f1ff",
             showlegend=True,
@@ -242,11 +274,11 @@ if active_validation_type == "Pixel Phone S4 with Dipoles" and not is_active_dis
             xaxis=dict(title=dict(text="<b>Frequency (MHz)</b>", font=dict(size=20, color='black')), tickfont=dict(weight='bold', color='black', size=18), showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray'),
             yaxis=dict(title=dict(text="<b>TRP (dBm)</b>", font=dict(size=20, color='black')), tickfont=dict(weight='bold', color='black', size=18), showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray')
         )
-        st.plotly_chart(fig_pixel, use_container_width=True)
+        st.plotly_chart(fig_wrist, use_container_width=True)
     else:
-        st.error(f"Please ensure '{pixel_file}' is uploaded.")
+        st.error(f"Please ensure '{wrist_file}' is uploaded.")
 
-# 4. Handle Passive Selection
+# 5. Handle Passive Selection
 if validation_type != "None" and df_passive is not None:
     title_map = {"Yearly": "Yearly - Dipole Validation Measurements", "Quarterly": "Quarterly - Dipole Validation Measurements", "Monthly": "Monthly - Horn Validation Measurements", "Wideband Dipole - Chamber Comparison": "Wideband Dipole - Chamber Comparison"}
     st.markdown(f'<h3 style="color:#022af2;"><b>{title_map[validation_type]}</b></h3>', unsafe_allow_html=True)
@@ -263,9 +295,7 @@ if validation_type != "None" and df_passive is not None:
                     overshoot_val, overshoot_freq = above_0_subset.loc[max_above_idx, "Date Efficiency (dB)"], above_0_subset.loc[max_above_idx, "Frequency (MHz)"]
                     overshoot_html = f'<p style="font-size: 20px; margin-top: 0px;"><b>Maximum Overshoot Above 0 dB:</b> <span style="color:red;">{overshoot_val:.2f} dB at {overshoot_freq} MHz</span></p>'
                 else: overshoot_html = '<p style="font-size: 20px; margin-top: 0px;"><b>Maximum Overshoot Above 0 dB:</b> <span style="color:green;">None</span></p>'
-                
                 st.markdown(f'<p style="font-size: 20px; margin-bottom: 0px;"><b>Maximum Delta - Reference NIST:</b> {max_val:.2f} dB at {max_freq} MHz</p>{overshoot_html}', unsafe_allow_html=True)
-            
             fig_p = go.Figure()
             if validation_type == "Wideband Dipole - Chamber Comparison":
                 chamber_styles = {"Satimo 1": "red", "Satimo 2": "#022af2", "Satimo 3": "#2ca02c"}
