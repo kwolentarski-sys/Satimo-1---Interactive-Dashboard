@@ -242,25 +242,28 @@ if active_validation_type == "Pixel Phone S4 with Dipoles" and not is_active_dis
         fig_pixel.update_layout(title=dict(text="<b>Pixel Phone S4 TRP Comparison - 7/21/25</b>", font=dict(color='black', size=22), x=0.5, xanchor='center'), template="plotly_white", height=500, margin=dict(t=80, b=50, l=50, r=150), plot_bgcolor="#e9f1ff", paper_bgcolor="#e9f1ff", showlegend=True, legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02, font=dict(color='black', size=18, weight='bold')), xaxis=dict(title=dict(text="<b>Frequency (MHz)</b>", font=dict(size=20, color='black')), tickfont=dict(weight='bold', color='black', size=18), showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray'), yaxis=dict(title=dict(text="<b>TRP (dBm)</b>", font=dict(size=20, color='black')), tickfont=dict(weight='bold', color='black', size=18), showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray'))
         st.plotly_chart(fig_pixel, use_container_width=True)
 
+# 4. Phantom Wrist Dielectrics
 if active_validation_type == "Phantom Wrist Dielectrics" and not is_active_disabled:
-    # Subtitles with spacing removed via combined markdown and margin control
-    st.markdown(
-        """
-        <h3 style="color:#022af2; margin-bottom: 0px;"><b>Phantom Wrist Dielectrics</b></h3>
-        <h4 style="color:black; margin-top: 0px; margin-bottom: 0px;"><b>Phantom Wrist Speag: SHO-GFPC V1: 0.3 – 3 GHz</b></h4>
-        <h4 style="color:black; margin-top: 0px; margin-bottom: 0px;"><b>Active Reference Device: Selene L003P</b></h4>
-        """, 
-        unsafe_allow_html=True
-    )
-    
     wrist_file = "Satimo 1 Chamber - Active Trend Charts - Satimo 1 Phantom Wrist Dielectric .csv"
     df_wrist, date_map = load_phantom_wrist_data(wrist_file)
+    
     if df_wrist is not None and not df_wrist.empty:
+        # Calculation for Max Delta (Excluding Old trace)
         new_wrists = ['2-1659 TRP', '2-1660 TRP', '2-1621 TRP']
         df_wrist['Spread'] = df_wrist[new_wrists].max(axis=1) - df_wrist[new_wrists].min(axis=1)
         max_spread = df_wrist['Spread'].max()
         max_spread_freq = df_wrist.loc[df_wrist['Spread'].idxmax(), 'Frequency (MHz)']
-        st.markdown(f'<p style="font-size: 20px;"><b>Maximum Delta - New Wrists:</b> {max_spread:.2f} dB at {max_spread_freq} MHz</p>', unsafe_allow_html=True)
+
+        # ALL SUBTITLES AND METRICS IN ONE BLOCK TO FORCE ZERO LINE SPACING
+        st.markdown(
+            f"""
+            <h3 style="color:#022af2; margin: 0px !important; padding: 0px !important;"><b>Phantom Wrist Dielectrics</b></h3>
+            <h4 style="color:black; margin: 0px !important; padding: 0px !important;"><b>Phantom Wrist Speag: SHO-GFPC V1: 0.3 – 3 GHz</b></h4>
+            <h4 style="color:black; margin: 0px !important; padding: 0px !important;"><b>Active Reference Device: Selene L003P</b></h4>
+            <p style="font-size: 20px; margin: 0px !important; padding: 0px !important;"><b>Maximum Delta - New Wrists:</b> {max_spread:.2f} dB at {max_spread_freq} MHz</p>
+            """, 
+            unsafe_allow_html=True
+        )
 
         fig_wrist = go.Figure()
         colors = ['#022af2', 'red', 'green', 'purple']
@@ -271,6 +274,7 @@ if active_validation_type == "Phantom Wrist Dielectrics" and not is_active_disab
         fig_wrist.update_layout(title=dict(text="<b>Phantom Wrist TRP Comparison</b>", font=dict(color='black', size=22), x=0.5, xanchor='center'), template="plotly_white", height=500, margin=dict(t=80, b=50, l=50, r=150), plot_bgcolor="#e9f1ff", paper_bgcolor="#e9f1ff", showlegend=True, legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02, font=dict(color='black', size=18, weight='bold')), xaxis=dict(title=dict(text="<b>Frequency (MHz)</b>", font=dict(size=20, color='black')), tickfont=dict(weight='bold', color='black', size=18), showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray'), yaxis=dict(title=dict(text="<b>TRP (dBm)</b>", font=dict(size=20, color='black')), tickfont=dict(weight='bold', color='black', size=18), showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray'))
         st.plotly_chart(fig_wrist, use_container_width=True)
 
+# 5. Passive Selection
 if validation_type != "None" and df_passive is not None:
     title_map = {"Yearly": "Yearly - Dipole Validation Measurements", "Quarterly": "Quarterly - Dipole Validation Measurements", "Monthly": "Monthly - Horn Validation Measurements", "Wideband Dipole - Chamber Comparison": "Wideband Dipole - Chamber Comparison"}
     st.markdown(f'<h3 style="color:#022af2;"><b>{title_map[validation_type]}</b></h3>', unsafe_allow_html=True)
