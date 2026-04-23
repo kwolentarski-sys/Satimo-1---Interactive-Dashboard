@@ -133,7 +133,6 @@ def load_pixel_phone_data(file_name):
         return None
     try:
         df_raw = pd.read_csv(file_name, header=None)
-        # Data starts from row 5, specific columns for Pixel data
         data = df_raw.iloc[5:, [10, 11, 19, 20]].copy()
         data.columns = ['LTE Band', 'Frequency (MHz)', 'Calculated TRP (dBm)', 'Measured TRP (dBm)']
         data = data.dropna(subset=['Frequency (MHz)'])
@@ -241,14 +240,12 @@ if active_validation_type == "Pixel Phone S4 with Dipoles" and not is_active_dis
     df_pixel = load_pixel_phone_data(pixel_file)
     
     if df_pixel is not None and not df_pixel.empty:
-        # --- CALCULATION OF MAX DELTA ---
         df_pixel['Delta'] = (df_pixel['Calculated TRP (dBm)'] - df_pixel['Measured TRP (dBm)']).abs()
         max_delta = df_pixel['Delta'].max()
         max_delta_freq = df_pixel.loc[df_pixel['Delta'].idxmax(), 'Frequency (MHz)']
 
         st.markdown(f'<p style="font-size: 20px;"><b>Maximum Delta - Calculated TRP vs Measured TRP:</b> {max_delta:.2f} dB at {max_delta_freq} MHz</p>', unsafe_allow_html=True)
 
-        # PLOT
         fig_pixel = go.Figure()
         fig_pixel.add_trace(go.Scatter(x=df_pixel['Frequency (MHz)'], y=df_pixel['Calculated TRP (dBm)'], mode='lines+markers', name="<b>Calculated TRP (dBm)</b>", line=dict(color='red', width=2, dash='dash')))
         fig_pixel.add_trace(go.Scatter(x=df_pixel['Frequency (MHz)'], y=df_pixel['Measured TRP (dBm)'], mode='lines+markers', name="<b>Measured TRP (dBm)</b>", line=dict(color='#022af2', width=2)))
@@ -266,7 +263,7 @@ if active_validation_type == "Pixel Phone S4 with Dipoles" and not is_active_dis
     else:
         st.error(f"Please ensure '{pixel_file}' is uploaded.")
 
-# 4. Handle Passive Selection (Locked Baseline)
+# 4. Handle Passive Selection
 if validation_type != "None" and df_passive is not None:
     title_map = {"Yearly": "Yearly - Dipole Validation Measurements", "Quarterly": "Quarterly - Dipole Validation Measurements", "Monthly": "Monthly - Horn Validation Measurements", "Wideband Dipole - Chamber Comparison": "Wideband Dipole - Chamber Comparison"}
     st.markdown(f'<h3 style="color:#022af2;"><b>{title_map[validation_type]}</b></h3>', unsafe_allow_html=True)
@@ -283,7 +280,10 @@ if validation_type != "None" and df_passive is not None:
                     overshoot_val, overshoot_freq = above_0_subset.loc[max_above_idx, "Date Efficiency (dB)"], above_0_subset.loc[max_above_idx, "Frequency (MHz)"]
                     overshoot_html = f'<p style="font-size: 20px; margin-top: 0px;"><b>Maximum Overshoot Above 0 dB:</b> <span style="color:red;">{overshoot_val:.2f} dB at {overshoot_freq} MHz</span></p>'
                 else: overshoot_html = '<p style="font-size: 20px; margin-top: 0px;"><b>Maximum Overshoot Above 0 dB:</b> <span style="color:green;">None</span></p>'
-                st.markdown(f'<p style="font-size: 20px; margin-bottom: 0px;"><b>Maximum Difference From Reference NIST:</b> {max_val:.2f} dB at {max_freq} MHz</p>{overshoot_html}', unsafe_allow_html=True)
+                
+                # UPDATED PASSIVE METRIC LABEL
+                st.markdown(f'<p style="font-size: 20px; margin-bottom: 0px;"><b>Maximum Delta - Reference NIST:</b> {max_val:.2f} dB at {max_freq} MHz</p>{overshoot_html}', unsafe_allow_html=True)
+            
             fig_p = go.Figure()
             if validation_type == "Wideband Dipole - Chamber Comparison":
                 chamber_styles = {"Satimo 1": "red", "Satimo 2": "#022af2", "Satimo 3": "#2ca02c"}
