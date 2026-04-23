@@ -144,18 +144,30 @@ def load_pixel_phone_data(file_name):
 
 @st.cache_data
 def load_phantom_wrist_data(file_name):
-    """Parses Phantom Wrist Dielectrics data file."""
+    """Parses Phantom Wrist Dielectrics data file including legend dates."""
     if not os.path.exists(file_name):
-        return None
+        return None, None
     try:
         df_raw = pd.read_csv(file_name, header=None)
-        # Data starts at row 7, specific columns for Phantom Wrist data
+        
+        # Extract dates from row 6 (0-indexed) for columns 21, 22, 23, 24
+        dates_raw = df_raw.iloc[6, [21, 22, 23, 24]].values
+        dates = [str(d) if pd.notna(d) else "NA" for d in dates_raw]
+        date_map = {
+            '2-1659 TRP': dates[0],
+            '2-1660 TRP': dates[1],
+            '2-1621 TRP': dates[2],
+            'Old 2-1010 TRP': dates[3]
+        }
+        
+        # Extract numerical data
         data = df_raw.iloc[7:16, [20, 21, 22, 23, 24]].copy()
         data.columns = ['Frequency (MHz)', '2-1659 TRP', '2-1660 TRP', '2-1621 TRP', 'Old 2-1010 TRP']
         for col in data.columns:
             data[col] = pd.to_numeric(data[col], errors='coerce')
-        return data.dropna(subset=['Frequency (MHz)'])
-    except Exception: return None
+            
+        return data.dropna(subset=['Frequency (MHz)']), date_map
+    except Exception: return None, None
 
 # --- SIDEBAR CONTROLS ---
 
@@ -205,10 +217,8 @@ active_validation_type = st.sidebar.selectbox(
 if active_validation_type == "LTE TRP" and not is_active_disabled:
     st.markdown('<h3 style="color:#022af2; margin-bottom: 0px;"><b>Quarterly - Active Reference - LTE TRP</b></h3>', unsafe_allow_html=True)
     st.markdown('<h4 style="color:black; margin-top: 0px;"><b>Inseego MiFi Reference Device: IMEI: 7427</b></h4>', unsafe_allow_html=True)
-    
     active_file = "Satimo 1 Chamber - Active Trend Charts - Satimo1 - Active Reference Quarterly - LTE TRP.csv"
     df_active, active_date = load_active_trp_data(active_file)
-    
     if df_active is not None and not df_active.empty:
         fig_imei = go.Figure()
         fig_imei.add_trace(go.Scatter(x=df_active['Band/Chan'], y=df_active['TRP (dBm)'], mode='lines+markers', name=f"<b>{active_date}</b>", line=dict(color='#022af2', width=2)))
@@ -219,10 +229,8 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
 if active_validation_type == "LTE TIS" and not is_active_disabled:
     st.markdown('<h3 style="color:#022af2; margin-bottom: 0px;"><b>Quarterly - Active Reference - LTE TIS</b></h3>', unsafe_allow_html=True)
     st.markdown('<h4 style="color:black; margin-top: 0px;"><b>Inseego MiFi Reference Device: IMEI: 7427</b></h4>', unsafe_allow_html=True)
-    
     tis_file = "Satimo 1 Chamber - Active Trend Charts - Satimo1 - Active Reference Quarterly - LTE TIS.csv"
     df_active, active_date = load_active_tis_data(tis_file)
-    
     if df_active is not None and not df_active.empty:
         fig_imei = go.Figure()
         fig_imei.add_trace(go.Scatter(x=df_active['Band/Chan'], y=df_active['TIS (dBm)'], mode='lines+markers', name=f"<b>{active_date}</b>", line=dict(color='#022af2', width=2)))
@@ -248,35 +256,23 @@ if active_validation_type == "Pixel Phone S4 with Dipoles" and not is_active_dis
 # 4. Handle Active Selection (Phantom Wrist Dielectrics)
 if active_validation_type == "Phantom Wrist Dielectrics" and not is_active_disabled:
     st.markdown('<h3 style="color:#022af2; margin-bottom: 0px;"><b>Active Reference - Phantom Wrist Dielectrics</b></h3>', unsafe_allow_html=True)
-    
     wrist_file = "Satimo 1 Chamber - Active Trend Charts - Satimo 1 Phantom Wrist Dielectric .csv"
-    df_wrist = load_phantom_wrist_data(wrist_file)
-    
+    df_wrist, date_map = load_phantom_wrist_data(wrist_file)
     if df_wrist is not None and not df_wrist.empty:
         fig_wrist = go.Figure()
         colors = ['#022af2', 'red', 'green', 'purple']
-        wrist_cols = ['2-1659 TRP', '2-1660 TRP', '2-1621 TRP', 'Old 2-1010 TRP']
-        for col, color in zip(wrist_cols, colors):
+        wrist_names = ['2-1659 TRP', '2-1660 TRP', '2-1621 TRP', 'Old 2-1010 TRP']
+        for name, color in zip(wrist_names, colors):
+            date_label = date_map.get(name, "NA")
             fig_wrist.add_trace(go.Scatter(
                 x=df_wrist['Frequency (MHz)'], 
-                y=df_wrist[col], 
+                y=df_wrist[name], 
                 mode='lines+markers', 
-                name=f"<b>{col}</b>", 
+                name=f"<b>{name} ({date_label})</b>", 
                 line=dict(color=color, width=2)
             ))
-        
-        fig_wrist.update_layout(
-            title=dict(text="<b>Phantom Wrist TRP Comparison</b>", font=dict(color='black', size=22), x=0.5, xanchor='center'),
-            template="plotly_white", height=500, margin=dict(t=80, b=50, l=50, r=150),
-            plot_bgcolor="#e9f1ff", paper_bgcolor="#e9f1ff",
-            showlegend=True,
-            legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02, font=dict(color='black', size=18, weight='bold')),
-            xaxis=dict(title=dict(text="<b>Frequency (MHz)</b>", font=dict(size=20, color='black')), tickfont=dict(weight='bold', color='black', size=18), showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray'),
-            yaxis=dict(title=dict(text="<b>TRP (dBm)</b>", font=dict(size=20, color='black')), tickfont=dict(weight='bold', color='black', size=18), showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray')
-        )
+        fig_wrist.update_layout(title=dict(text="<b>Phantom Wrist TRP Comparison</b>", font=dict(color='black', size=22), x=0.5, xanchor='center'), template="plotly_white", height=500, margin=dict(t=80, b=50, l=50, r=150), plot_bgcolor="#e9f1ff", paper_bgcolor="#e9f1ff", showlegend=True, legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02, font=dict(color='black', size=18, weight='bold')), xaxis=dict(title=dict(text="<b>Frequency (MHz)</b>", font=dict(size=20, color='black')), tickfont=dict(weight='bold', color='black', size=18), showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray'), yaxis=dict(title=dict(text="<b>TRP (dBm)</b>", font=dict(size=20, color='black')), tickfont=dict(weight='bold', color='black', size=18), showline=True, linewidth=1, linecolor='black', mirror=True, showgrid=True, gridcolor='gray'))
         st.plotly_chart(fig_wrist, use_container_width=True)
-    else:
-        st.error(f"Please ensure '{wrist_file}' is uploaded.")
 
 # 5. Handle Passive Selection
 if validation_type != "None" and df_passive is not None:
