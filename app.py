@@ -241,7 +241,7 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
     else:
         st.error(f"Please ensure '{active_file}' is uploaded.")
 
-# 2. Handle Passive Selection (Updated Title Suffix)
+# 2. Handle Passive Selection
 if validation_type != "None" and df_passive is not None:
     title_map = {
         "Yearly": "Yearly - Passive Dipole Validation Measurements",
@@ -290,9 +290,9 @@ if validation_type != "None" and df_passive is not None:
             
             min_f_p, max_f_p = int(subset_p['Frequency (MHz)'].min()), int(subset_p['Frequency (MHz)'].max())
             fig_p.update_layout(
-                # Centered Title with "- Passive Trend" suffix
+                # Centered Title: Suffix matches main font size (30pt), Freq range stays 20px
                 title=dict(
-                    text=f"<b>{selected_unit}</b> <span style='font-size: 20px;'>({min_f_p}-{max_f_p} MHz) - Passive Trend</span>", 
+                    text=f"<b>{selected_unit}</b> <span style='font-size: 20px;'>({min_f_p}-{max_f_p} MHz)</span> <b>- Passive Trend</b>", 
                     font=dict(size=30),
                     x=0.5,
                     xanchor='center'
