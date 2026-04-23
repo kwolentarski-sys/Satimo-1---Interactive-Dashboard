@@ -253,13 +253,13 @@ if active_validation_type == "Phantom Wrist Dielectrics" and not is_active_disab
         max_spread = df_wrist['Spread'].max()
         max_spread_freq = df_wrist.loc[df_wrist['Spread'].idxmax(), 'Frequency (MHz)']
 
-        # SUBTITLES WITH UPDATED LABEL FORMATTING
+        # CONSOLIDATED SUBTITLES WITH SELECTIVE BOLDING AND BLACK FONT
         st.markdown(
             f"""
             <h3 style="color:#022af2; margin: 0px !important; padding: 0px !important;"><b>Phantom Wrist Dielectrics</b></h3>
             <p style="font-size: 20px; color:#000000; margin: 0px !important; padding: 0px !important;"><b>Phantom Wrist Speag:</b> SHO-GFPC V1: 0.3 – 3 GHz</p>
             <p style="font-size: 20px; color:#000000; margin: 0px !important; padding: 0px !important;"><b>Active Reference Device:</b> Selene L003P</p>
-            <p style="font-size: 20px; font-weight: bold; color:#000000; margin: 0px !important; padding: 0px !important;">Maximum Delta - New Wrists: {max_spread:.2f} dB at {max_spread_freq} MHz</p>
+            <p style="font-size: 20px; color:#000000; margin: 0px !important; padding: 0px !important;"><b>Maximum Delta - New Wrists:</b> {max_spread:.2f} dB at {max_spread_freq} MHz</p>
             """, 
             unsafe_allow_html=True
         )
