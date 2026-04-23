@@ -259,14 +259,14 @@ if validation_type != "None" and df_passive is not None:
                 max_val, max_freq = subset_p['Abs_Diff'].max(), subset_p.loc[subset_p['Abs_Diff'].idxmax(), 'Frequency (MHz)']
                 above_0_subset = subset_p[subset_p['Date Efficiency (dB)'] > 0]
                 
-                # --- UPDATED METRICS FONT SIZE ---
-                st.markdown(f'<p style="font-size: 24px;"><b>Maximum Difference From Reference NIST:</b> {max_val:.2f} dB at {max_freq} MHz</p>', unsafe_allow_html=True)
+                # --- METRICS FONT SIZE REDUCED TO 20px ---
+                st.markdown(f'<p style="font-size: 20px;"><b>Maximum Difference From Reference NIST:</b> {max_val:.2f} dB at {max_freq} MHz</p>', unsafe_allow_html=True)
                 
                 if not above_0_subset.empty:
                     max_above_idx = above_0_subset['Date Efficiency (dB)'].idxmax()
-                    st.markdown(f'<p style="font-size: 24px;"><b>Maximum Overshoot Above 0 dB:</b> <span style="color:red;">{above_0_subset.loc[max_above_idx, "Date Efficiency (dB)"]:.2f} dB at {above_0_subset.loc[max_above_idx, "Frequency (MHz)"]} MHz</span></p>', unsafe_allow_html=True)
+                    st.markdown(f'<p style="font-size: 20px;"><b>Maximum Overshoot Above 0 dB:</b> <span style="color:red;">{above_0_subset.loc[max_above_idx, "Date Efficiency (dB)"]:.2f} dB at {above_0_subset.loc[max_above_idx, "Frequency (MHz)"]} MHz</span></p>', unsafe_allow_html=True)
                 else: 
-                    st.markdown('<p style="font-size: 24px;"><b>Maximum Overshoot Above 0 dB:</b> <span style="color:green;">None</span></p>', unsafe_allow_html=True)
+                    st.markdown('<p style="font-size: 20px;"><b>Maximum Overshoot Above 0 dB:</b> <span style="color:green;">None</span></p>', unsafe_allow_html=True)
             
             fig_p = go.Figure()
             if validation_type == "Wideband Dipole - Chamber Comparison":
