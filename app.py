@@ -138,7 +138,7 @@ if validation_type != "None":
         st.sidebar.markdown(f"**{label_text}**")
         selected_unit = st.sidebar.selectbox(label_text, units, label_visibility="collapsed")
 
-# 3. Active Selection (Disabled unless Passive is "None")[cite: 1]
+# 3. Active Selection (Disabled unless Passive is "None")
 st.sidebar.markdown("**Select Active Validation Type:**")
 is_active_disabled = (validation_type != "None")
 active_validation_type = st.sidebar.selectbox(
@@ -159,14 +159,29 @@ if active_validation_type == "LTE TRP" and not is_active_disabled:
     
     if df_active is not None and not df_active.empty:
         fig1 = go.Figure()
-        fig1.add_trace(go.Scatter(x=df_active['Band/Chan'], y=df_active['TRP (dBm)'], mode='lines+markers', name=f"LTE TRP ({active_date})", line=dict(color='#022af2', width=2)))
-        fig1.update_layout(title="<b>LTE (Band/Chan) vs TRP</b>", xaxis_title="<b>Band/Chan</b>", yaxis_title="<b>TRP (dBm)</b>", template="plotly_white", height=450, margin=dict(t=50, b=50, l=50, r=50), xaxis=dict(tickfont=dict(weight='bold')), yaxis=dict(tickfont=dict(weight='bold'), zeroline=True, zerolinewidth=3, zerolinecolor='black'))
+        fig1.add_trace(go.Scatter(
+            x=df_active['Band/Chan'], 
+            y=df_active['TRP (dBm)'], 
+            mode='lines+markers', 
+            name=f"LTE TRP ({active_date})", 
+            line=dict(color='#022af2', width=2)
+        ))
+        fig1.update_layout(
+            title="<b>LTE (Band/Chan) vs TRP</b>", 
+            template="plotly_white", height=450, margin=dict(t=50, b=50, l=50, r=50), 
+            xaxis=dict(
+                title=dict(text="<b>Band/Chan</b>", font=dict(size=20)),
+                tickfont=dict(weight='bold'),
+                showline=True, linewidth=1, linecolor='black', mirror=True
+            ), 
+            yaxis=dict(
+                title=dict(text="<b>TRP (dBm)</b>", font=dict(size=20)),
+                tickfont=dict(weight='bold'), 
+                zeroline=True, zerolinewidth=3, zerolinecolor='black',
+                showline=True, linewidth=1, linecolor='black', mirror=True
+            )
+        )
         st.plotly_chart(fig1, use_container_width=True)
-
-        fig2 = go.Figure()
-        fig2.add_trace(go.Scatter(x=df_active['Frequency (Mhz)'], y=df_active['TRP (dBm)'], mode='lines+markers', name=f"LTE TRP ({active_date})", line=dict(color='#022af2', width=2)))
-        fig2.update_layout(title="<b>LTE (Frequency (Mhz) vs TRP</b>", xaxis_title="<b>Frequency (MHz)</b>", yaxis_title="<b>TRP (dBm)</b>", template="plotly_white", height=450, margin=dict(t=50, b=50, l=50, r=50), xaxis=dict(tickfont=dict(weight='bold')), yaxis=dict(tickfont=dict(weight='bold'), zeroline=True, zerolinewidth=3, zerolinecolor='black'))
-        st.plotly_chart(fig2, use_container_width=True)
     else:
         st.error(f"Please ensure '{active_file}' is uploaded.")
 
