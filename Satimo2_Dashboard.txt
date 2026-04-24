@@ -1,0 +1,36 @@
+import streamlit as st
+import pandas as pd
+import plotly.graph_objects as go
+
+# --- PAGE CONFIGURATION ---
+st.set_page_config(page_title="New Interactive Dashboard", layout="wide")
+
+# Custom CSS for Sidebar Background (#cbcbcb)
+st.markdown(
+    """
+    <style>
+        [data-testid="stSidebar"] {
+            background-color: #cbcbcb;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# App Title: Centered & Forced to one line
+st.markdown(
+    '<h1 style="white-space: nowrap; overflow: hidden; text-overflow: clip; font-size: 34px;">New Project Dashboard</h1>', 
+    unsafe_allow_html=True
+)
+
+# --- SIDEBAR ---
+st.sidebar.markdown('<h2 style="color:#022af2; font-size: 32px;">Controls</h2>', unsafe_allow_html=True)
+
+# Placeholder for your new data selection
+data_mode = st.sidebar.selectbox("Select Feature Set:", ["Overview", "New Analysis", "Experimental"])
+
+# --- MAIN CONTENT ---
+st.markdown(f'<h3 style="color:#022af2;"><b>{data_mode} Mode</b></h3>', unsafe_allow_html=True)
+
+# Example placeholder for your future interactive logic
+st.info("Ready for new data and features. Baseline UI is locked in.")
