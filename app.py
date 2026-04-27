@@ -52,14 +52,21 @@ except json.JSONDecodeError:
 if dataset_choice == "Wideband Dipole Chamber Comparison":
     # --- Logic for the Multi-Chamber Comparison Data ---
     
-    st.subheader("Analyzing: Wideband Dipole Chamber Comparison")
-    st.markdown("**Test Dates:** " + ", ".join([f"{k}: {v.get('Date', 'N/A')}" for k, v in raw_data.items()]))
+    # Add the dropdown specifically for this view to maintain UI consistency
+    selected_antenna = st.sidebar.selectbox("Select Antenna:", ["Proxicast Dipole #4"])
+    
+    st.subheader(f"Analyzing: {selected_antenna} (Chamber Comparison)")
+    
+    # Safely extract and format dates
+    dates = [f"{k}: {v.get('Date', 'N/A')}" for k, v in raw_data.items() if isinstance(v, dict)]
+    if dates:
+        st.markdown("**Test Dates:** " + " | ".join(dates))
     
     fig = go.Figure()
     
     # Loop through each chamber in the JSON (Satimo1, Satimo 2, Satimo 3)
     for chamber_name, chamber_data in raw_data.items():
-        if "Data" in chamber_data:
+        if isinstance(chamber_data, dict) and "Data" in chamber_data:
             # Extract frequency and efficiency
             freqs = []
             effs = []
@@ -143,21 +150,21 @@ else:
         st.stop()
 
     try:
-        dut_names = [d.get('dipole_name', 'Unknown DUT') for d in data]
+        antenna_names = [d.get('dipole_name', 'Unknown Antenna') for d in data]
     except (TypeError, KeyError):
         st.error("Data structure error: The JSON file is missing the identifying names.")
         st.stop()
 
-    # DUT Selection
-    selected_dut = st.sidebar.selectbox("Select Device Under Test (DUT):", dut_names)
+    # 2. Antenna Selection
+    selected_antenna = st.sidebar.selectbox("Select Antenna:", antenna_names)
 
     # Filter dataset
-    selected_data = next((item for item in data if item.get("dipole_name") == selected_dut), None)
+    selected_data = next((item for item in data if item.get("dipole_name") == selected_antenna), None)
 
     if selected_data and 'measurements' in selected_data:
         df = pd.DataFrame(selected_data['measurements'])
 
-        st.subheader(f"Analyzing: {selected_dut} ({dataset_choice})")
+        st.subheader(f"Analyzing: {selected_antenna} ({dataset_choice})")
         st.markdown(f"**Reference Source:** {selected_data.get('reference', 'N/A')} | **Test Date:** {selected_data.get('date', 'N/A')}")
 
         fig = go.Figure()
@@ -186,4 +193,4 @@ else:
 
         st.plotly_chart(fig, use_container_width=True)
     else:
-        st.warning("No measurements found for the selected device.")
+        st.warning("No measurements found for the selected antenna.")
