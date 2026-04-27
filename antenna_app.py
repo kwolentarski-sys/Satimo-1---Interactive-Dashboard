@@ -2,70 +2,47 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-# UI Config
-st.set_page_config(page_title="Antenna Efficiency Dashboard", layout="wide")
+st.set_page_config(page_title="Antenna Lab: GitHub Integrated", layout="wide")
 
-st.title("📡 Antenna Lab: Efficiency Analyzer")
-st.markdown("---")
+# --- CONFIGURATION ---
+# REPLACE THIS URL with the "Raw" link you copied in Step 1
+GITHUB_CSV_URL = "https://raw.githubusercontent.com/YOUR_USER/YOUR_REPO/main/your_file.csv"
 
-# 1. File Upload
-uploaded_file = st.sidebar.file_uploader("Upload your antenna CSV", type="csv")
+st.title("📡 Live Antenna Efficiency Dashboard")
 
-if uploaded_file:
-    # Attempt to read the file
+# --- DATA LOADING LOGIC ---
+@st.cache_data # This keeps the app fast by not re-downloading every second
+def load_github_data(url):
     try:
-        # Sneaky check for delimiter (commas vs semicolons)
-        df = pd.read_csv(uploaded_file, sep=None, engine='python')
-        
-        st.sidebar.success("File loaded successfully!")
-        
-        # 2. Column Selection
-        cols = df.columns.tolist()
-        freq_col = st.sidebar.selectbox("Which column is Frequency?", cols)
-        eff_col = st.sidebar.selectbox("Which column is Efficiency?", cols)
-        
-        # 3. Efficiency Unit Correction
-        st.sidebar.markdown("---")
-        unit = st.sidebar.radio("Data format:", ["Decimal (0.0-1.0)", "Percentage (0-100%)", "dB"])
-
-        if unit == "Decimal (0.0-1.0)":
-            df['Plot_Eff'] = df[eff_col] * 100
-        elif unit == "dB":
-            df['Plot_Eff'] = (10**(df[eff_col]/10)) * 100
-        else:
-            df['Plot_Eff'] = df[eff_col]
-
-        # 4. The Visuals
-        col1, col2 = st.columns([3, 1])
-
-        with col1:
-            st.subheader("Efficiency Sweep")
-            fig = px.line(df, x=freq_col, y='Plot_Eff', 
-                         labels={'Plot_Eff': 'Efficiency (%)', freq_col: 'Frequency'},
-                         template="plotly_dark")
-            
-            # Add 'Success' markers
-            fig.add_hrect(y0=70, y1=100, fillcolor="green", opacity=0.1, annotation_text="High Perf")
-            fig.update_traces(line_color='#00d1b2', line_width=3)
-            st.plotly_chart(fig, use_container_width=True)
-
-        with col2:
-            st.subheader("Summary Metrics")
-            peak_val = df['Plot_Eff'].max()
-            peak_freq = df.loc[df['Plot_Eff'].idxmax(), freq_col]
-            avg_val = df['Plot_Eff'].mean()
-
-            st.metric("Peak Efficiency", f"{peak_val:.2f}%")
-            st.metric("at Frequency", f"{peak_freq}")
-            st.metric("Average", f"{avg_val:.2f}%")
-
-        # 5. Data Preview
-        with st.expander("View Raw Data Table"):
-            st.dataframe(df)
-
+        return pd.read_csv(url)
     except Exception as e:
-        st.error(f"Error reading file: {e}")
-        st.info("Tip: Make sure the file isn't currently open in Excel!")
+        st.error(f"Could not fetch data from GitHub: {e}")
+        return None
 
+# Sidebar option to switch between GitHub and Manual Upload
+data_source = st.sidebar.radio("Data Source", ["GitHub (Auto)", "Manual Upload"])
+
+if data_source == "GitHub (Auto)":
+    df = load_github_data(GITHUB_CSV_URL)
 else:
-    st.info("👈 Please upload your .csv file in the sidebar to begin.")
+    uploaded_file = st.sidebar.file_uploader("Upload local CSV", type="csv")
+    if uploaded_file:
+        df = pd.read_csv(uploaded_file)
+    else:
+        df = None
+
+# --- VISUALIZATION ---
+if df is not None:
+    # Auto-mapping columns (Assuming common names, otherwise use sidebar selectbox)
+    cols = df.columns.tolist()
+    freq_col = st.sidebar.selectbox("Frequency Column", cols, index=0)
+    eff_col = st.sidebar.selectbox("Efficiency Column", cols, index=1)
+
+    # Simple Graph
+    fig = px.line(df, x=freq_col, y=eff_col, title="Total Efficiency vs. Frequency")
+    fig.update_traces(line_color='#00d1b2')
+    st.plotly_chart(fig, use_container_width=True)
+    
+    st.success(f"Viewing data from: {data_source}")
+else:
+    st.info("Awaiting data...")
