@@ -6,7 +6,7 @@ import json
 # Configure the dashboard layout
 st.set_page_config(page_title="Antenna Efficiency Dashboard", layout="wide")
 
-st.title("📡 Antenna Test Data: Frequency vs. Efficiency")
+st.title("📡 Satimo 2 Chamber Performance - Interactive Dashboard")
 
 # Load the JSON data
 @st.cache_data
@@ -24,7 +24,7 @@ except FileNotFoundError:
 dipole_names = [d['dipole_name'] for d in data]
 
 # Sidebar for test configuration and selection
-st.sidebar.header("Test Configuration")
+st.sidebar.header("Dashboard Controls")
 selected_dipole = st.sidebar.selectbox("Select Device Under Test (DUT)", dipole_names)
 
 # Filter the dataset based on user selection
