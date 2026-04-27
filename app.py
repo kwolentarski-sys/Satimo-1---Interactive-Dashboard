@@ -112,6 +112,8 @@ if dataset_choice == "Wideband Dipole Chamber Comparison":
         fig.update_layout(
             xaxis_title="Frequency (MHz)",
             yaxis_title="Efficiency (dB)",
+            xaxis_title_font=dict(size=16, color="#000000"),
+            yaxis_title_font=dict(size=16, color="#000000"),
             hovermode="x unified",
             margin=dict(l=20, r=20, t=40, b=20)
         )
@@ -202,6 +204,8 @@ else:
         fig.update_layout(
             xaxis_title="Frequency (MHz)",
             yaxis_title="Efficiency (dB)",
+            xaxis_title_font=dict(size=16, color="#000000"),
+            yaxis_title_font=dict(size=16, color="#000000"),
             hovermode="x unified",
             margin=dict(l=20, r=20, t=40, b=20)
         )
