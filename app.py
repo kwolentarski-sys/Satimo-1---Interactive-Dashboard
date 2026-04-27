@@ -8,23 +8,38 @@ st.set_page_config(page_title="Antenna Efficiency Dashboard", layout="wide")
 
 st.title("📡 Satimo 2 Chamber Performance - Interactive Dashboard")
 
-# Load the JSON data
+# Function to load JSON data efficiently
 @st.cache_data
-def load_data():
-    with open('Satimo 2 Chamber_Passive Trend Charts_Dipoles Yearly.json', 'r') as f:
+def load_data(filename):
+    with open(filename, 'r') as f:
         return json.load(f)
 
+# Sidebar for Dashboard Controls
+st.sidebar.header("Dashboard Controls")
+
+# 1. Dataset Selection Toggle
+dataset_choice = st.sidebar.radio(
+    "Select Test Cadence",
+    ("Yearly Dipoles", "Quarterly Dipoles")
+)
+
+# Map selection to the correct JSON file
+if dataset_choice == "Yearly Dipoles":
+    target_file = 'Satimo 2 Chamber_Passive Trend Charts_Dipoles Yearly.json'
+else:
+    target_file = 'Satimo2_Passive Trends_Dipoles_Quarterly.json'
+
+# Load the selected dataset
 try:
-    data = load_data()
+    data = load_data(target_file)
 except FileNotFoundError:
-    st.error("Please ensure your 'Satimo 2 Chamber_Passive Trend Charts_Dipoles Yearly.json' file is in the same directory as this script.")
+    st.error(f"Please ensure '{target_file}' is in the same directory as this script.")
     st.stop()
 
-# Extract dipole names to populate the dropdown
+# Extract dipole names based on the currently loaded dataset
 dipole_names = [d['dipole_name'] for d in data]
 
-# Sidebar for test configuration and selection
-st.sidebar.header("Dashboard Controls")
+# 2. DUT Selection (Dynamically populates based on dataset)
 selected_dipole = st.sidebar.selectbox("Select Device Under Test (DUT)", dipole_names)
 
 # Filter the dataset based on user selection
@@ -32,7 +47,7 @@ selected_data = next(item for item in data if item["dipole_name"] == selected_di
 df = pd.DataFrame(selected_data['measurements'])
 
 # Display key metrics for the active DUT
-st.subheader(f"Analyzing: {selected_dipole}")
+st.subheader(f"Analyzing: {selected_dipole} ({dataset_choice})")
 st.markdown(f"**Reference Source:** {selected_data['reference']} | **Test Date:** {selected_data['date']}")
 
 # Build the interactive Plotly chart
