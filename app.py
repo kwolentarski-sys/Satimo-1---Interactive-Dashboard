@@ -39,36 +39,47 @@ except FileNotFoundError:
     st.error(f"Please ensure the file '{target_file}' is saved in the same directory as this script.")
     st.stop()
 except json.JSONDecodeError:
-    st.error(f"Error reading '{target_file}'. Please ensure it is valid JSON.")
+    st.error(f"Error reading '{target_file}'. Please ensure it is valid JSON syntax.")
     st.stop()
 
-# --- ROBUST DATA NORMALIZER ---
-# This ensures that no matter how the JSON was saved (list, single dict, or wrapped dict), 
-# it gets converted into a flat list of dipole dictionaries.
+# --- ULTRA-ROBUST DATA NORMALIZER ---
 data = []
+
+# 1. Catch double-encoded JSON (where the data was saved as a literal string)
+if isinstance(raw_data, str):
+    try:
+        raw_data = json.loads(raw_data)
+    except json.JSONDecodeError:
+        pass # Let the next steps catch the error
+
+# 2. Extract the data based on its shape
 if isinstance(raw_data, list):
     data = raw_data
 elif isinstance(raw_data, dict):
+    # Check if it's a single dipole dict
     if "dipole_name" in raw_data:
-        # It's a single dipole object, wrap it in a list
         data = [raw_data]
     else:
-        # It is wrapped in a parent object (e.g., {"dipoles": [...]})
+        # Check if the list of dipoles is wrapped inside a parent object (e.g., {"data": [...]})
         for key, value in raw_data.items():
-            if isinstance(value, list):
+            if isinstance(value, list) and len(value) > 0 and isinstance(value[0], dict):
                 data = value
                 break
 
+# 3. Trigger Debugger if all extractions fail
 if not data:
-    st.error("Could not find valid dipole data in the selected file. Please check the JSON structure.")
+    st.error(f"⚠️ **Data Structure Error in `{target_file}`**")
+    st.warning("The app could not find a valid list of dipoles. Here is exactly what Streamlit sees inside your file:")
+    st.write("**Data Type Detected:**", type(raw_data).__name__)
+    st.write("**Raw Content Preview:**", raw_data)
     st.stop()
-# ------------------------------
+# ------------------------------------
 
 # Extract dipole names safely
 try:
     dipole_names = [d['dipole_name'] for d in data]
-except TypeError:
-    st.error("Data structure error: The JSON file contains unexpected formatting that could not be normalized.")
+except (TypeError, KeyError):
+    st.error("Data structure error: The JSON file contains a list, but it is missing the 'dipole_name' keys.")
     st.stop()
 
 # 2. DUT Selection
