@@ -11,13 +11,13 @@ st.title("📡 Antenna Test Data: Frequency vs. Efficiency")
 # Load the JSON data
 @st.cache_data
 def load_data():
-    with open('data.json', 'r') as f:
+    with open('Satimo 2 Chamber_Passive Trend Charts_Dipoles Yearly.json', 'r') as f:
         return json.load(f)
 
 try:
     data = load_data()
 except FileNotFoundError:
-    st.error("Please ensure your 'data.json' file is in the same directory as this script.")
+    st.error("Please ensure your 'Satimo 2 Chamber_Passive Trend Charts_Dipoles Yearly.json' file is in the same directory as this script.")
     st.stop()
 
 # Extract dipole names to populate the dropdown
