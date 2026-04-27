@@ -6,9 +6,21 @@ import json
 # Configure the dashboard layout
 st.set_page_config(page_title="Antenna Efficiency Dashboard", layout="wide")
 
-# Inject custom HTML/CSS to shrink the main title and fit it on one line
+# Inject custom HTML/CSS for title shrinking and Sidebar Background Color
 st.markdown(
-    "<h1 style='font-size: 2.2rem;'>📡 Satimo 2 Chamber Performance - Interactive Dashboard</h1>", 
+    """
+    <style>
+        /* Shrink the main title to fit on one line */
+        h1 {
+            font-size: 2.2rem !important;
+        }
+        
+        /* Change the Sidebar Background Color */
+        [data-testid="stSidebar"] {
+            background-color: #cbcbcb;
+        }
+    </style>
+    """, 
     unsafe_allow_html=True
 )
 
@@ -17,7 +29,7 @@ def load_data(filename):
     with open(filename, 'r', encoding='utf-8') as f:
         return json.load(f)
 
-# Sidebar for Dashboard Controls (Updated with custom HTML for size and color)
+# Sidebar for Dashboard Controls
 st.sidebar.markdown(
     "<h2 style='font-size: 1.5rem; color: #0000ff;'>Dashboard Controls</h2>", 
     unsafe_allow_html=True
@@ -48,6 +60,7 @@ except FileNotFoundError:
 except json.JSONDecodeError:
     st.error(f"Error reading '{target_file}'. Please ensure it is valid JSON syntax.")
     st.stop()
+
 
 # --- ROUTING LOGIC BASED ON DATASET TYPE ---
 
