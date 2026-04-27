@@ -23,14 +23,16 @@ st.sidebar.header("Dashboard Controls")
 # 1. Dataset Selection Toggle
 dataset_choice = st.sidebar.selectbox(
     "Select Passive Validation Type:",
-    ("Yearly Dipoles", "Quarterly Dipoles")
+    ("Yearly Dipoles", "Quarterly Dipoles", "Monthly Horns")
 )
 
 # Map selection to the exact JSON files
 if dataset_choice == "Yearly Dipoles":
     target_file = 'Satimo2_Dipoles_Yearly.json'
-else:
+elif dataset_choice == "Quarterly Dipoles":
     target_file = 'Satimo2_Dipoles_Quarterly.json'
+else:
+    target_file = 'Satimo2_Horns_Monthly.json'
 
 # Load the selected dataset
 try:
@@ -45,54 +47,72 @@ except json.JSONDecodeError:
 # --- ULTRA-ROBUST DATA NORMALIZER ---
 data = []
 
-# 1. Catch double-encoded JSON (where the data was saved as a literal string)
+# Catch double-encoded JSON
 if isinstance(raw_data, str):
     try:
         raw_data = json.loads(raw_data)
     except json.JSONDecodeError:
-        pass # Let the next steps catch the error
+        pass 
 
-# 2. Extract the data based on its shape
 if isinstance(raw_data, list):
+    # Standard format (Yearly/Quarterly Dipoles)
     data = raw_data
 elif isinstance(raw_data, dict):
-    # Check if it's a single dipole dict
-    if "dipole_name" in raw_data:
+    # NEW: Catch the Monthly Horns format (Nested dictionary)
+    if any(isinstance(v, dict) and "Data" in v for v in raw_data.values()):
+        for dev_name, dev_info in raw_data.items():
+            measurements = []
+            for row in dev_info.get("Data", []):
+                try:
+                    # Map the capitalized keys and convert strings to floats
+                    measurements.append({
+                        "frequency_mhz": float(row.get("Frequency (MHz)", 0)),
+                        "efficiency_db_ref": float(row.get("Efficiency (dB)", 0)),
+                        "efficiency_db_measured": float(row.get("Efficiency (dB)_3", 0))
+                    })
+                except (ValueError, TypeError):
+                    continue # Skip invalid rows
+            
+            data.append({
+                "dipole_name": dev_name, # Keeping key name consistent for the downstream code
+                "reference": dev_info.get("Reference", "N/A"),
+                "date": dev_info.get("Date", "N/A"),
+                "measurements": measurements
+            })
+    # Catch a single unwrapped dictionary
+    elif "dipole_name" in raw_data:
         data = [raw_data]
+    # Catch a list wrapped in a generic parent object
     else:
-        # Check if the list of dipoles is wrapped inside a parent object (e.g., {"data": [...]})
         for key, value in raw_data.items():
             if isinstance(value, list) and len(value) > 0 and isinstance(value[0], dict):
                 data = value
                 break
 
-# 3. Trigger Debugger if all extractions fail
 if not data:
     st.error(f"⚠️ **Data Structure Error in `{target_file}`**")
-    st.warning("The app could not find a valid list of dipoles. Here is exactly what Streamlit sees inside your file:")
-    st.write("**Data Type Detected:**", type(raw_data).__name__)
-    st.write("**Raw Content Preview:**", raw_data)
+    st.warning("The app could not find valid measurement data. Please check the file formatting.")
     st.stop()
 # ------------------------------------
 
-# Extract dipole names safely
+# Extract device names safely
 try:
-    dipole_names = [d['dipole_name'] for d in data]
+    dut_names = [d.get('dipole_name', 'Unknown DUT') for d in data]
 except (TypeError, KeyError):
-    st.error("Data structure error: The JSON file contains a list, but it is missing the 'dipole_name' keys.")
+    st.error("Data structure error: The JSON file is missing the identifying names.")
     st.stop()
 
 # 2. DUT Selection
-selected_dipole = st.sidebar.selectbox("Select Dipole:", dipole_names)
+selected_dut = st.sidebar.selectbox("Select Device Under Test (DUT):", dut_names)
 
 # Filter the dataset based on user selection
-selected_data = next((item for item in data if item.get("dipole_name") == selected_dipole), None)
+selected_data = next((item for item in data if item.get("dipole_name") == selected_dut), None)
 
 if selected_data and 'measurements' in selected_data:
     df = pd.DataFrame(selected_data['measurements'])
 
     # Display key metrics for the active DUT
-    st.subheader(f"Analyzing: {selected_dipole} ({dataset_choice})")
+    st.subheader(f"Analyzing: {selected_dut} ({dataset_choice})")
     st.markdown(f"**Reference Source:** {selected_data.get('reference', 'N/A')} | **Test Date:** {selected_data.get('date', 'N/A')}")
 
     # Build the interactive Plotly chart
@@ -126,4 +146,4 @@ if selected_data and 'measurements' in selected_data:
     # Render the chart
     st.plotly_chart(fig, use_container_width=True)
 else:
-    st.warning("No measurements found for the selected dipole.")
+    st.warning("No measurements found for the selected device.")
