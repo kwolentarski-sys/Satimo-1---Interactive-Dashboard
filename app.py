@@ -23,7 +23,7 @@ st.sidebar.header("Dashboard Controls")
 # 1. Dataset Selection Toggle
 dataset_choice = st.sidebar.selectbox(
     "Select Passive Validation Type:",
-    ("Yearly Dipoles", "Quarterly Dipoles", "Monthly Horns")
+    ("Yearly Dipoles", "Quarterly Dipoles", "Monthly Horns", "Wideband Dipole Chamber Comparison")
 )
 
 # Map selection to the exact JSON files
@@ -31,8 +31,10 @@ if dataset_choice == "Yearly Dipoles":
     target_file = 'Satimo2_Dipoles_Yearly.json'
 elif dataset_choice == "Quarterly Dipoles":
     target_file = 'Satimo2_Dipoles_Quarterly.json'
-else:
+elif dataset_choice == "Monthly Horns":
     target_file = 'Satimo2_Horns_Monthly.json'
+else:
+    target_file = 'Chambers_Wideband_Dipole_Comparison.json'
 
 # Load the selected dataset
 try:
@@ -44,106 +46,144 @@ except json.JSONDecodeError:
     st.error(f"Error reading '{target_file}'. Please ensure it is valid JSON syntax.")
     st.stop()
 
-# --- ULTRA-ROBUST DATA NORMALIZER ---
-data = []
 
-# Catch double-encoded JSON
-if isinstance(raw_data, str):
-    try:
-        raw_data = json.loads(raw_data)
-    except json.JSONDecodeError:
-        pass 
+# --- ROUTING LOGIC BASED ON DATASET TYPE ---
 
-if isinstance(raw_data, list):
-    # Standard format (Yearly/Quarterly Dipoles)
-    data = raw_data
-elif isinstance(raw_data, dict):
-    # NEW: Catch the Monthly Horns format (Nested dictionary)
-    if any(isinstance(v, dict) and "Data" in v for v in raw_data.values()):
-        for dev_name, dev_info in raw_data.items():
-            measurements = []
-            for row in dev_info.get("Data", []):
-                try:
-                    # Map the capitalized keys and convert strings to floats
-                    measurements.append({
-                        "frequency_mhz": float(row.get("Frequency (MHz)", 0)),
-                        "efficiency_db_ref": float(row.get("Efficiency (dB)", 0)),
-                        "efficiency_db_measured": float(row.get("Efficiency (dB)_3", 0))
-                    })
-                except (ValueError, TypeError):
-                    continue # Skip invalid rows
-            
-            data.append({
-                "dipole_name": dev_name, # Keeping key name consistent for the downstream code
-                "reference": dev_info.get("Reference", "N/A"),
-                "date": dev_info.get("Date", "N/A"),
-                "measurements": measurements
-            })
-    # Catch a single unwrapped dictionary
-    elif "dipole_name" in raw_data:
-        data = [raw_data]
-    # Catch a list wrapped in a generic parent object
-    else:
-        for key, value in raw_data.items():
-            if isinstance(value, list) and len(value) > 0 and isinstance(value[0], dict):
-                data = value
-                break
-
-if not data:
-    st.error(f"⚠️ **Data Structure Error in `{target_file}`**")
-    st.warning("The app could not find valid measurement data. Please check the file formatting.")
-    st.stop()
-# ------------------------------------
-
-# Extract device names safely
-try:
-    dut_names = [d.get('dipole_name', 'Unknown DUT') for d in data]
-except (TypeError, KeyError):
-    st.error("Data structure error: The JSON file is missing the identifying names.")
-    st.stop()
-
-# 2. DUT Selection
-selected_dut = st.sidebar.selectbox("Select Device Under Test (DUT):", dut_names)
-
-# Filter the dataset based on user selection
-selected_data = next((item for item in data if item.get("dipole_name") == selected_dut), None)
-
-if selected_data and 'measurements' in selected_data:
-    df = pd.DataFrame(selected_data['measurements'])
-
-    # Display key metrics for the active DUT
-    st.subheader(f"Analyzing: {selected_dut} ({dataset_choice})")
-    st.markdown(f"**Reference Source:** {selected_data.get('reference', 'N/A')} | **Test Date:** {selected_data.get('date', 'N/A')}")
-
-    # Build the interactive Plotly chart
+if dataset_choice == "Wideband Dipole Chamber Comparison":
+    # --- Logic for the Multi-Chamber Comparison Data ---
+    
+    st.subheader("Analyzing: Wideband Dipole Chamber Comparison")
+    st.markdown("**Test Dates:** " + ", ".join([f"{k}: {v.get('Date', 'N/A')}" for k, v in raw_data.items()]))
+    
     fig = go.Figure()
+    
+    # Loop through each chamber in the JSON (Satimo1, Satimo 2, Satimo 3)
+    for chamber_name, chamber_data in raw_data.items():
+        if "Data" in chamber_data:
+            # Extract frequency and efficiency
+            freqs = []
+            effs = []
+            for row in chamber_data["Data"]:
+                try:
+                    # Catch 'Frequency (Mhz)' or 'Frequency (MHz)'
+                    f_key = next((k for k in row.keys() if 'Frequency' in k), None)
+                    e_key = next((k for k in row.keys() if 'Efficiency' in k), None)
+                    
+                    if f_key and e_key:
+                        freqs.append(float(row[f_key]))
+                        effs.append(float(row[e_key]))
+                except (ValueError, TypeError):
+                    continue
+            
+            # Add a trace for this specific chamber
+            if freqs and effs:
+                fig.add_trace(go.Scatter(
+                    x=freqs, 
+                    y=effs,
+                    mode='lines+markers',
+                    name=chamber_name
+                ))
+    
+    if not fig.data:
+        st.warning("No valid measurement data could be parsed for the chamber comparison.")
+    else:
+        fig.update_layout(
+            xaxis_title="Frequency (MHz)",
+            yaxis_title="Efficiency (dB)",
+            hovermode="x unified",
+            margin=dict(l=20, r=20, t=40, b=20)
+        )
+        st.plotly_chart(fig, use_container_width=True)
 
-    # Plot Reference Data
-    fig.add_trace(go.Scatter(
-        x=df['frequency_mhz'], 
-        y=df['efficiency_db_ref'],
-        mode='lines+markers',
-        name='Reference Efficiency (dB)',
-        line=dict(dash='dash')
-    ))
-
-    # Plot Measured Data
-    fig.add_trace(go.Scatter(
-        x=df['frequency_mhz'], 
-        y=df['efficiency_db_measured'],
-        mode='lines+markers',
-        name='Measured Efficiency (dB)'
-    ))
-
-    # Format the chart axes and layout
-    fig.update_layout(
-        xaxis_title="Frequency (MHz)",
-        yaxis_title="Efficiency (dB)",
-        hovermode="x unified",
-        margin=dict(l=20, r=20, t=40, b=20)
-    )
-
-    # Render the chart
-    st.plotly_chart(fig, use_container_width=True)
 else:
-    st.warning("No measurements found for the selected device.")
+    # --- Standard Logic for Dipoles & Horns (Ref vs Measured) ---
+    
+    data = []
+    
+    # Catch double-encoded JSON
+    if isinstance(raw_data, str):
+        try:
+            raw_data = json.loads(raw_data)
+        except json.JSONDecodeError:
+            pass 
+
+    if isinstance(raw_data, list):
+        data = raw_data
+    elif isinstance(raw_data, dict):
+        if any(isinstance(v, dict) and "Data" in v for v in raw_data.values()):
+            for dev_name, dev_info in raw_data.items():
+                measurements = []
+                for row in dev_info.get("Data", []):
+                    try:
+                        measurements.append({
+                            "frequency_mhz": float(row.get("Frequency (MHz)", 0)),
+                            "efficiency_db_ref": float(row.get("Efficiency (dB)", 0)),
+                            "efficiency_db_measured": float(row.get("Efficiency (dB)_3", 0))
+                        })
+                    except (ValueError, TypeError):
+                        continue
+                
+                data.append({
+                    "dipole_name": dev_name,
+                    "reference": dev_info.get("Reference", "N/A"),
+                    "date": dev_info.get("Date", "N/A"),
+                    "measurements": measurements
+                })
+        elif "dipole_name" in raw_data:
+            data = [raw_data]
+        else:
+            for key, value in raw_data.items():
+                if isinstance(value, list) and len(value) > 0 and isinstance(value[0], dict):
+                    data = value
+                    break
+
+    if not data:
+        st.error(f"⚠️ **Data Structure Error in `{target_file}`**")
+        st.warning("The app could not find valid measurement data. Please check the file formatting.")
+        st.stop()
+
+    try:
+        dut_names = [d.get('dipole_name', 'Unknown DUT') for d in data]
+    except (TypeError, KeyError):
+        st.error("Data structure error: The JSON file is missing the identifying names.")
+        st.stop()
+
+    # DUT Selection
+    selected_dut = st.sidebar.selectbox("Select Device Under Test (DUT):", dut_names)
+
+    # Filter dataset
+    selected_data = next((item for item in data if item.get("dipole_name") == selected_dut), None)
+
+    if selected_data and 'measurements' in selected_data:
+        df = pd.DataFrame(selected_data['measurements'])
+
+        st.subheader(f"Analyzing: {selected_dut} ({dataset_choice})")
+        st.markdown(f"**Reference Source:** {selected_data.get('reference', 'N/A')} | **Test Date:** {selected_data.get('date', 'N/A')}")
+
+        fig = go.Figure()
+
+        fig.add_trace(go.Scatter(
+            x=df['frequency_mhz'], 
+            y=df['efficiency_db_ref'],
+            mode='lines+markers',
+            name='Reference Efficiency (dB)',
+            line=dict(dash='dash')
+        ))
+
+        fig.add_trace(go.Scatter(
+            x=df['frequency_mhz'], 
+            y=df['efficiency_db_measured'],
+            mode='lines+markers',
+            name='Measured Efficiency (dB)'
+        ))
+
+        fig.update_layout(
+            xaxis_title="Frequency (MHz)",
+            yaxis_title="Efficiency (dB)",
+            hovermode="x unified",
+            margin=dict(l=20, r=20, t=40, b=20)
+        )
+
+        st.plotly_chart(fig, use_container_width=True)
+    else:
+        st.warning("No measurements found for the selected device.")
