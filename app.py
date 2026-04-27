@@ -28,9 +28,9 @@ dataset_choice = st.sidebar.selectbox(
 
 # Map selection to the exact JSON files
 if dataset_choice == "Yearly Dipoles":
-    target_file = 'Satimo 2 Chamber_Passive Trend Charts_Dipoles Yearly.json'
+    target_file = 'Satimo2_Dipoles_Yearly.json'
 else:
-    target_file = 'Satimo2_Passive Trends_Dipoles_Quarterly.json'
+    target_file = 'Satimo2_Dipoles_Quarterly.json'
 
 # Load the selected dataset
 try:
