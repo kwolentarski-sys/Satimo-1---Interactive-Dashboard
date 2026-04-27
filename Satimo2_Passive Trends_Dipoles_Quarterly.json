@@ -1,0 +1,1981 @@
+{
+  "Dipole SD665": {
+    "Reference": "Reference Data - NIST",
+    "Date": "3/10/26",
+    "Data": [
+      {
+        "Frequency (MHz)": "625",
+        "Efficiency (dB)": "-0.37",
+        "Efficiency (dB)_2": "-0.69"
+      },
+      {
+        "Frequency (MHz)": "630",
+        "Efficiency (dB)": "-0.39",
+        "Efficiency (dB)_2": "-0.54"
+      },
+      {
+        "Frequency (MHz)": "635",
+        "Efficiency (dB)": "-0.42",
+        "Efficiency (dB)_2": "-0.36"
+      },
+      {
+        "Frequency (MHz)": "640",
+        "Efficiency (dB)": "-0.43",
+        "Efficiency (dB)_2": "-0.51"
+      },
+      {
+        "Frequency (MHz)": "645",
+        "Efficiency (dB)": "-0.41",
+        "Efficiency (dB)_2": "-0.69"
+      },
+      {
+        "Frequency (MHz)": "650",
+        "Efficiency (dB)": "-0.37",
+        "Efficiency (dB)_2": "-0.49"
+      },
+      {
+        "Frequency (MHz)": "660",
+        "Efficiency (dB)": "-0.35",
+        "Efficiency (dB)_2": "-0.47"
+      },
+      {
+        "Frequency (MHz)": "665",
+        "Efficiency (dB)": "-0.35",
+        "Efficiency (dB)_2": "-0.45"
+      },
+      {
+        "Frequency (MHz)": "670",
+        "Efficiency (dB)": "-0.32",
+        "Efficiency (dB)_2": "-0.41"
+      },
+      {
+        "Frequency (MHz)": "675",
+        "Efficiency (dB)": "-0.33",
+        "Efficiency (dB)_2": "0.1"
+      },
+      {
+        "Frequency (MHz)": "680",
+        "Efficiency (dB)": "-0.3",
+        "Efficiency (dB)_2": "-0.39"
+      },
+      {
+        "Frequency (MHz)": "685",
+        "Efficiency (dB)": "-0.3",
+        "Efficiency (dB)_2": "-0.15"
+      },
+      {
+        "Frequency (MHz)": "690",
+        "Efficiency (dB)": "-0.28",
+        "Efficiency (dB)_2": "-0.4"
+      },
+      {
+        "Frequency (MHz)": "695",
+        "Efficiency (dB)": "-0.31",
+        "Efficiency (dB)_2": "-0.2"
+      },
+      {
+        "Frequency (MHz)": "700",
+        "Efficiency (dB)": "-0.33",
+        "Efficiency (dB)_2": "-0.54"
+      }
+    ]
+  },
+  "Dipole SD740": {
+    "Reference": "Reference Data - NIST",
+    "Date": "3/10/26",
+    "Data": [
+      {
+        "Frequency (MHz)": "690",
+        "Efficiency (dB)": "-0.38",
+        "Efficiency (dB)_2": "-0.39"
+      },
+      {
+        "Frequency (MHz)": "695",
+        "Efficiency (dB)": "-0.32",
+        "Efficiency (dB)_2": "-0.18"
+      },
+      {
+        "Frequency (MHz)": "700",
+        "Efficiency (dB)": "-0.44",
+        "Efficiency (dB)_2": "-0.48"
+      },
+      {
+        "Frequency (MHz)": "705",
+        "Efficiency (dB)": "-0.42",
+        "Efficiency (dB)_2": "-0.41"
+      },
+      {
+        "Frequency (MHz)": "710",
+        "Efficiency (dB)": "-0.56",
+        "Efficiency (dB)_2": "-0.53"
+      },
+      {
+        "Frequency (MHz)": "715",
+        "Efficiency (dB)": "-0.54",
+        "Efficiency (dB)_2": "-0.53"
+      },
+      {
+        "Frequency (MHz)": "720",
+        "Efficiency (dB)": "-0.66",
+        "Efficiency (dB)_2": "-0.54"
+      },
+      {
+        "Frequency (MHz)": "725",
+        "Efficiency (dB)": "-0.61",
+        "Efficiency (dB)_2": "-0.28"
+      },
+      {
+        "Frequency (MHz)": "730",
+        "Efficiency (dB)": "-0.67",
+        "Efficiency (dB)_2": "-0.48"
+      },
+      {
+        "Frequency (MHz)": "735",
+        "Efficiency (dB)": "-0.81",
+        "Efficiency (dB)_2": "-0.42"
+      },
+      {
+        "Frequency (MHz)": "740",
+        "Efficiency (dB)": "-0.72",
+        "Efficiency (dB)_2": "-0.37"
+      },
+      {
+        "Frequency (MHz)": "745",
+        "Efficiency (dB)": "-0.72",
+        "Efficiency (dB)_2": "-0.07"
+      },
+      {
+        "Frequency (MHz)": "750",
+        "Efficiency (dB)": "-0.76",
+        "Efficiency (dB)_2": "-0.27"
+      },
+      {
+        "Frequency (MHz)": "755",
+        "Efficiency (dB)": "-0.87",
+        "Efficiency (dB)_2": "-0.3"
+      },
+      {
+        "Frequency (MHz)": "760",
+        "Efficiency (dB)": "-0.79",
+        "Efficiency (dB)_2": "-0.24"
+      },
+      {
+        "Frequency (MHz)": "765",
+        "Efficiency (dB)": "-0.87",
+        "Efficiency (dB)_2": "-0.05"
+      },
+      {
+        "Frequency (MHz)": "770",
+        "Efficiency (dB)": "-0.76",
+        "Efficiency (dB)_2": "-0.25"
+      },
+      {
+        "Frequency (MHz)": "775",
+        "Efficiency (dB)": "-0.78",
+        "Efficiency (dB)_2": "-0.38"
+      },
+      {
+        "Frequency (MHz)": "780",
+        "Efficiency (dB)": "-0.72",
+        "Efficiency (dB)_2": "-0.3"
+      },
+      {
+        "Frequency (MHz)": "785",
+        "Efficiency (dB)": "-0.73",
+        "Efficiency (dB)_2": "-0.35"
+      },
+      {
+        "Frequency (MHz)": "790",
+        "Efficiency (dB)": "-0.71",
+        "Efficiency (dB)_2": "-0.37"
+      },
+      {
+        "Frequency (MHz)": "795",
+        "Efficiency (dB)": "-0.68",
+        "Efficiency (dB)_2": "-0.67"
+      },
+      {
+        "Frequency (MHz)": "800",
+        "Efficiency (dB)": "-0.62",
+        "Efficiency (dB)_2": "-0.63"
+      }
+    ]
+  },
+  "Dipole SD836": {
+    "Reference": "Reference Data - NIST",
+    "Date": "3/10/26",
+    "Data": [
+      {
+        "Frequency (MHz)": "810",
+        "Efficiency (dB)": "-0.78",
+        "Efficiency (dB)_2": "-0.64"
+      },
+      {
+        "Frequency (MHz)": "815",
+        "Efficiency (dB)": "-0.76",
+        "Efficiency (dB)_2": "-0.72"
+      },
+      {
+        "Frequency (MHz)": "820",
+        "Efficiency (dB)": "-0.76",
+        "Efficiency (dB)_2": "-0.43"
+      },
+      {
+        "Frequency (MHz)": "825",
+        "Efficiency (dB)": "-0.88",
+        "Efficiency (dB)_2": "-0.6"
+      },
+      {
+        "Frequency (MHz)": "830",
+        "Efficiency (dB)": "-0.9",
+        "Efficiency (dB)_2": "-0.33"
+      },
+      {
+        "Frequency (MHz)": "835",
+        "Efficiency (dB)": "-0.89",
+        "Efficiency (dB)_2": "-0.39"
+      },
+      {
+        "Frequency (MHz)": "840",
+        "Efficiency (dB)": "-0.89",
+        "Efficiency (dB)_2": "-0.29"
+      },
+      {
+        "Frequency (MHz)": "845",
+        "Efficiency (dB)": "-0.84",
+        "Efficiency (dB)_2": "-0.54"
+      },
+      {
+        "Frequency (MHz)": "850",
+        "Efficiency (dB)": "-0.85",
+        "Efficiency (dB)_2": "-0.31"
+      },
+      {
+        "Frequency (MHz)": "855",
+        "Efficiency (dB)": "-0.93",
+        "Efficiency (dB)_2": "-0.32"
+      }
+    ]
+  },
+  "Dipole SD880": {
+    "Reference": "Reference Data - NIST",
+    "Date": "3/10/26",
+    "Data": [
+      {
+        "Frequency (MHz)": "860",
+        "Efficiency (dB)": "-0.89",
+        "Efficiency (dB)_2": "-0.4"
+      },
+      {
+        "Frequency (MHz)": "865",
+        "Efficiency (dB)": "-0.89",
+        "Efficiency (dB)_2": "-0.48"
+      },
+      {
+        "Frequency (MHz)": "870",
+        "Efficiency (dB)": "-0.81",
+        "Efficiency (dB)_2": "-0.34"
+      },
+      {
+        "Frequency (MHz)": "875",
+        "Efficiency (dB)": "-0.81",
+        "Efficiency (dB)_2": "-0.25"
+      },
+      {
+        "Frequency (MHz)": "880",
+        "Efficiency (dB)": "-0.76",
+        "Efficiency (dB)_2": "-0.38"
+      },
+      {
+        "Frequency (MHz)": "885",
+        "Efficiency (dB)": "-0.72",
+        "Efficiency (dB)_2": "-0.51"
+      },
+      {
+        "Frequency (MHz)": "890",
+        "Efficiency (dB)": "-0.62",
+        "Efficiency (dB)_2": "-0.47"
+      },
+      {
+        "Frequency (MHz)": "895",
+        "Efficiency (dB)": "-0.46",
+        "Efficiency (dB)_2": "-0.37"
+      },
+      {
+        "Frequency (MHz)": "900",
+        "Efficiency (dB)": "-0.35",
+        "Efficiency (dB)_2": "-0.54"
+      },
+      {
+        "Frequency (MHz)": "905",
+        "Efficiency (dB)": "-0.28",
+        "Efficiency (dB)_2": "-0.48"
+      },
+      {
+        "Frequency (MHz)": "910",
+        "Efficiency (dB)": "-0.34",
+        "Efficiency (dB)_2": "-0.57"
+      },
+      {
+        "Frequency (MHz)": "915",
+        "Efficiency (dB)": "-0.29",
+        "Efficiency (dB)_2": "-0.47"
+      },
+      {
+        "Frequency (MHz)": "920",
+        "Efficiency (dB)": "-0.47",
+        "Efficiency (dB)_2": "-0.42"
+      }
+    ]
+  },
+  "Dipole SD1800": {
+    "Reference": "Reference Data - NIST",
+    "Date": "3/10/26",
+    "Data": [
+      {
+        "Frequency (MHz)": "1710",
+        "Efficiency (dB)": "-0.46",
+        "Efficiency (dB)_2": "-0.63"
+      },
+      {
+        "Frequency (MHz)": "1715",
+        "Efficiency (dB)": "-0.44",
+        "Efficiency (dB)_2": "-0.66"
+      },
+      {
+        "Frequency (MHz)": "1720",
+        "Efficiency (dB)": "-0.37",
+        "Efficiency (dB)_2": "-0.62"
+      },
+      {
+        "Frequency (MHz)": "1725",
+        "Efficiency (dB)": "-0.42",
+        "Efficiency (dB)_2": "-0.59"
+      },
+      {
+        "Frequency (MHz)": "1730",
+        "Efficiency (dB)": "-0.25",
+        "Efficiency (dB)_2": "-0.54"
+      },
+      {
+        "Frequency (MHz)": "1735",
+        "Efficiency (dB)": "-0.25",
+        "Efficiency (dB)_2": "-0.43"
+      },
+      {
+        "Frequency (MHz)": "1740",
+        "Efficiency (dB)": "-0.2",
+        "Efficiency (dB)_2": "-0.47"
+      },
+      {
+        "Frequency (MHz)": "1745",
+        "Efficiency (dB)": "-0.27",
+        "Efficiency (dB)_2": "-0.47"
+      },
+      {
+        "Frequency (MHz)": "1750",
+        "Efficiency (dB)": "-0.24",
+        "Efficiency (dB)_2": "-0.44"
+      },
+      {
+        "Frequency (MHz)": "1755",
+        "Efficiency (dB)": "-0.28",
+        "Efficiency (dB)_2": "-0.42"
+      },
+      {
+        "Frequency (MHz)": "1760",
+        "Efficiency (dB)": "-0.31",
+        "Efficiency (dB)_2": "-0.4"
+      },
+      {
+        "Frequency (MHz)": "1765",
+        "Efficiency (dB)": "-0.26",
+        "Efficiency (dB)_2": "-0.45"
+      },
+      {
+        "Frequency (MHz)": "1770",
+        "Efficiency (dB)": "-0.27",
+        "Efficiency (dB)_2": "-0.44"
+      },
+      {
+        "Frequency (MHz)": "1775",
+        "Efficiency (dB)": "-0.27",
+        "Efficiency (dB)_2": "-0.41"
+      },
+      {
+        "Frequency (MHz)": "1780",
+        "Efficiency (dB)": "-0.36",
+        "Efficiency (dB)_2": "-0.38"
+      },
+      {
+        "Frequency (MHz)": "1785",
+        "Efficiency (dB)": "-0.3",
+        "Efficiency (dB)_2": "-0.13"
+      },
+      {
+        "Frequency (MHz)": "1790",
+        "Efficiency (dB)": "-0.39",
+        "Efficiency (dB)_2": "-0.39"
+      },
+      {
+        "Frequency (MHz)": "1795",
+        "Efficiency (dB)": "-0.38",
+        "Efficiency (dB)_2": "-0.2"
+      },
+      {
+        "Frequency (MHz)": "1800",
+        "Efficiency (dB)": "-0.38",
+        "Efficiency (dB)_2": "-0.35"
+      },
+      {
+        "Frequency (MHz)": "1805",
+        "Efficiency (dB)": "-0.33",
+        "Efficiency (dB)_2": "-0.3"
+      },
+      {
+        "Frequency (MHz)": "1810",
+        "Efficiency (dB)": "-0.36",
+        "Efficiency (dB)_2": "-0.36"
+      },
+      {
+        "Frequency (MHz)": "1815",
+        "Efficiency (dB)": "-0.42",
+        "Efficiency (dB)_2": "-0.29"
+      },
+      {
+        "Frequency (MHz)": "1820",
+        "Efficiency (dB)": "-0.32",
+        "Efficiency (dB)_2": "-0.4"
+      },
+      {
+        "Frequency (MHz)": "1825",
+        "Efficiency (dB)": "-0.3",
+        "Efficiency (dB)_2": "-0.5"
+      },
+      {
+        "Frequency (MHz)": "1830",
+        "Efficiency (dB)": "-0.31",
+        "Efficiency (dB)_2": "-0.4"
+      },
+      {
+        "Frequency (MHz)": "1835",
+        "Efficiency (dB)": "-0.46",
+        "Efficiency (dB)_2": "-0.51"
+      },
+      {
+        "Frequency (MHz)": "1840",
+        "Efficiency (dB)": "-0.46",
+        "Efficiency (dB)_2": "-0.51"
+      },
+      {
+        "Frequency (MHz)": "1845",
+        "Efficiency (dB)": "-0.57",
+        "Efficiency (dB)_2": "-0.33"
+      },
+      {
+        "Frequency (MHz)": "1850",
+        "Efficiency (dB)": "-0.65",
+        "Efficiency (dB)_2": "-0.39"
+      },
+      {
+        "Frequency (MHz)": "1855",
+        "Efficiency (dB)": "-0.7",
+        "Efficiency (dB)_2": "-0.58"
+      },
+      {
+        "Frequency (MHz)": "1860",
+        "Efficiency (dB)": "-0.79",
+        "Efficiency (dB)_2": "-0.48"
+      },
+      {
+        "Frequency (MHz)": "1865",
+        "Efficiency (dB)": "-0.87",
+        "Efficiency (dB)_2": "-0.42"
+      },
+      {
+        "Frequency (MHz)": "1870",
+        "Efficiency (dB)": "-0.95",
+        "Efficiency (dB)_2": "-0.39"
+      },
+      {
+        "Frequency (MHz)": "1875",
+        "Efficiency (dB)": "-0.89",
+        "Efficiency (dB)_2": "-0.49"
+      },
+      {
+        "Frequency (MHz)": "1880",
+        "Efficiency (dB)": "-0.92",
+        "Efficiency (dB)_2": "-0.42"
+      },
+      {
+        "Frequency (MHz)": "1885",
+        "Efficiency (dB)": "-0.9",
+        "Efficiency (dB)_2": "-0.54"
+      },
+      {
+        "Frequency (MHz)": "1890",
+        "Efficiency (dB)": "-0.91",
+        "Efficiency (dB)_2": "-0.49"
+      },
+      {
+        "Frequency (MHz)": "1895",
+        "Efficiency (dB)": "-0.93",
+        "Efficiency (dB)_2": "-0.47"
+      },
+      {
+        "Frequency (MHz)": "1900",
+        "Efficiency (dB)": "-0.96",
+        "Efficiency (dB)_2": "-0.49"
+      },
+      {
+        "Frequency (MHz)": "1905",
+        "Efficiency (dB)": "-0.98",
+        "Efficiency (dB)_2": "-0.62"
+      },
+      {
+        "Frequency (MHz)": "1910",
+        "Efficiency (dB)": "-0.76",
+        "Efficiency (dB)_2": "-0.57"
+      },
+      {
+        "Frequency (MHz)": "1915",
+        "Efficiency (dB)": "-0.68",
+        "Efficiency (dB)_2": "-0.33"
+      }
+    ]
+  },
+  "Dipole SD1900": {
+    "Reference": "Reference Data - NIST",
+    "Date": "3/10/26",
+    "Data": [
+      {
+        "Frequency (MHz)": "1920",
+        "Efficiency (dB)": "-0.55",
+        "Efficiency (dB)_2": "-0.29"
+      },
+      {
+        "Frequency (MHz)": "1925",
+        "Efficiency (dB)": "-0.58",
+        "Efficiency (dB)_2": "-0.21"
+      },
+      {
+        "Frequency (MHz)": "1930",
+        "Efficiency (dB)": "-0.58",
+        "Efficiency (dB)_2": "-0.28"
+      },
+      {
+        "Frequency (MHz)": "1935",
+        "Efficiency (dB)": "-0.72",
+        "Efficiency (dB)_2": "-0.06"
+      },
+      {
+        "Frequency (MHz)": "1940",
+        "Efficiency (dB)": "-0.74",
+        "Efficiency (dB)_2": "-0.25"
+      },
+      {
+        "Frequency (MHz)": "1945",
+        "Efficiency (dB)": "-0.65",
+        "Efficiency (dB)_2": "-0.16"
+      },
+      {
+        "Frequency (MHz)": "1950",
+        "Efficiency (dB)": "-0.72",
+        "Efficiency (dB)_2": "-0.31"
+      },
+      {
+        "Frequency (MHz)": "1955",
+        "Efficiency (dB)": "-0.71",
+        "Efficiency (dB)_2": "-0.28"
+      },
+      {
+        "Frequency (MHz)": "1960",
+        "Efficiency (dB)": "-0.69",
+        "Efficiency (dB)_2": "-0.33"
+      },
+      {
+        "Frequency (MHz)": "1965",
+        "Efficiency (dB)": "-0.68",
+        "Efficiency (dB)_2": "-0.31"
+      },
+      {
+        "Frequency (MHz)": "1970",
+        "Efficiency (dB)": "-0.66",
+        "Efficiency (dB)_2": "-0.37"
+      },
+      {
+        "Frequency (MHz)": "1975",
+        "Efficiency (dB)": "-0.55",
+        "Efficiency (dB)_2": "-0.61"
+      },
+      {
+        "Frequency (MHz)": "1980",
+        "Efficiency (dB)": "-0.56",
+        "Efficiency (dB)_2": "-0.37"
+      },
+      {
+        "Frequency (MHz)": "1985",
+        "Efficiency (dB)": "-0.53",
+        "Efficiency (dB)_2": "-0.28"
+      },
+      {
+        "Frequency (MHz)": "1990",
+        "Efficiency (dB)": "-0.47",
+        "Efficiency (dB)_2": "-0.4"
+      },
+      {
+        "Frequency (MHz)": "1995",
+        "Efficiency (dB)": "-0.55",
+        "Efficiency (dB)_2": "-0.52"
+      },
+      {
+        "Frequency (MHz)": "2000",
+        "Efficiency (dB)": "-0.4",
+        "Efficiency (dB)_2": "-0.42"
+      }
+    ]
+  },
+  "Dipole SD2450": {
+    "Reference": "Reference Data - NIST",
+    "Date": "3/10/26",
+    "Data": [
+      {
+        "Frequency (MHz)": "2335",
+        "Efficiency (dB)": "-0.25",
+        "Efficiency (dB)_2": "-0.51"
+      },
+      {
+        "Frequency (MHz)": "2340",
+        "Efficiency (dB)": "-0.32",
+        "Efficiency (dB)_2": "-0.52"
+      },
+      {
+        "Frequency (MHz)": "2345",
+        "Efficiency (dB)": "-0.34",
+        "Efficiency (dB)_2": "-0.51"
+      },
+      {
+        "Frequency (MHz)": "2350",
+        "Efficiency (dB)": "-0.4",
+        "Efficiency (dB)_2": "-0.57"
+      },
+      {
+        "Frequency (MHz)": "2355",
+        "Efficiency (dB)": "-0.41",
+        "Efficiency (dB)_2": "-0.54"
+      },
+      {
+        "Frequency (MHz)": "2360",
+        "Efficiency (dB)": "-0.47",
+        "Efficiency (dB)_2": "-0.57"
+      },
+      {
+        "Frequency (MHz)": "2365",
+        "Efficiency (dB)": "-0.45",
+        "Efficiency (dB)_2": "-0.39"
+      },
+      {
+        "Frequency (MHz)": "2370",
+        "Efficiency (dB)": "-0.45",
+        "Efficiency (dB)_2": "-0.4"
+      },
+      {
+        "Frequency (MHz)": "2375",
+        "Efficiency (dB)": "-0.44",
+        "Efficiency (dB)_2": "-0.28"
+      },
+      {
+        "Frequency (MHz)": "2380",
+        "Efficiency (dB)": "-0.4",
+        "Efficiency (dB)_2": "-0.42"
+      },
+      {
+        "Frequency (MHz)": "2385",
+        "Efficiency (dB)": "-0.39",
+        "Efficiency (dB)_2": "-0.32"
+      },
+      {
+        "Frequency (MHz)": "2390",
+        "Efficiency (dB)": "-0.36",
+        "Efficiency (dB)_2": "-0.43"
+      },
+      {
+        "Frequency (MHz)": "2395",
+        "Efficiency (dB)": "-0.36",
+        "Efficiency (dB)_2": "-0.58"
+      },
+      {
+        "Frequency (MHz)": "2400",
+        "Efficiency (dB)": "-0.31",
+        "Efficiency (dB)_2": "-0.66"
+      },
+      {
+        "Frequency (MHz)": "2405",
+        "Efficiency (dB)": "-0.34",
+        "Efficiency (dB)_2": "-0.39"
+      },
+      {
+        "Frequency (MHz)": "2410",
+        "Efficiency (dB)": "-0.37",
+        "Efficiency (dB)_2": "-0.57"
+      },
+      {
+        "Frequency (MHz)": "2415",
+        "Efficiency (dB)": "-0.41",
+        "Efficiency (dB)_2": "-0.63"
+      },
+      {
+        "Frequency (MHz)": "2420",
+        "Efficiency (dB)": "-0.4",
+        "Efficiency (dB)_2": "-0.53"
+      },
+      {
+        "Frequency (MHz)": "2425",
+        "Efficiency (dB)": "-0.37",
+        "Efficiency (dB)_2": "-0.45"
+      },
+      {
+        "Frequency (MHz)": "2430",
+        "Efficiency (dB)": "-0.39",
+        "Efficiency (dB)_2": "-0.42"
+      },
+      {
+        "Frequency (MHz)": "2435",
+        "Efficiency (dB)": "-0.37",
+        "Efficiency (dB)_2": "-0.46"
+      },
+      {
+        "Frequency (MHz)": "2440",
+        "Efficiency (dB)": "-0.42",
+        "Efficiency (dB)_2": "-0.49"
+      },
+      {
+        "Frequency (MHz)": "2445",
+        "Efficiency (dB)": "-0.45",
+        "Efficiency (dB)_2": "-0.67"
+      },
+      {
+        "Frequency (MHz)": "2450",
+        "Efficiency (dB)": "-0.53",
+        "Efficiency (dB)_2": "-0.43"
+      },
+      {
+        "Frequency (MHz)": "2455",
+        "Efficiency (dB)": "-0.53",
+        "Efficiency (dB)_2": "-0.35"
+      },
+      {
+        "Frequency (MHz)": "2460",
+        "Efficiency (dB)": "-0.55",
+        "Efficiency (dB)_2": "-0.37"
+      },
+      {
+        "Frequency (MHz)": "2465",
+        "Efficiency (dB)": "-0.53",
+        "Efficiency (dB)_2": "-0.56"
+      },
+      {
+        "Frequency (MHz)": "2470",
+        "Efficiency (dB)": "-0.48",
+        "Efficiency (dB)_2": "-0.42"
+      },
+      {
+        "Frequency (MHz)": "2475",
+        "Efficiency (dB)": "-0.47",
+        "Efficiency (dB)_2": "-0.41"
+      },
+      {
+        "Frequency (MHz)": "2480",
+        "Efficiency (dB)": "-0.42",
+        "Efficiency (dB)_2": "-0.43"
+      },
+      {
+        "Frequency (MHz)": "2485",
+        "Efficiency (dB)": "-0.4",
+        "Efficiency (dB)_2": "-0.41"
+      },
+      {
+        "Frequency (MHz)": "2490",
+        "Efficiency (dB)": "-0.34",
+        "Efficiency (dB)_2": "-0.53"
+      },
+      {
+        "Frequency (MHz)": "2495",
+        "Efficiency (dB)": "-0.35",
+        "Efficiency (dB)_2": "-0.51"
+      },
+      {
+        "Frequency (MHz)": "2500",
+        "Efficiency (dB)": "-0.34",
+        "Efficiency (dB)_2": "-0.39"
+      },
+      {
+        "Frequency (MHz)": "2505",
+        "Efficiency (dB)": "-0.38",
+        "Efficiency (dB)_2": "-0.23"
+      },
+      {
+        "Frequency (MHz)": "2510",
+        "Efficiency (dB)": "-0.4",
+        "Efficiency (dB)_2": "-0.34"
+      },
+      {
+        "Frequency (MHz)": "2515",
+        "Efficiency (dB)": "-0.4",
+        "Efficiency (dB)_2": "-0.37"
+      },
+      {
+        "Frequency (MHz)": "2520",
+        "Efficiency (dB)": "-0.46",
+        "Efficiency (dB)_2": "-0.32"
+      },
+      {
+        "Frequency (MHz)": "2525",
+        "Efficiency (dB)": "-0.45",
+        "Efficiency (dB)_2": "-0.28"
+      },
+      {
+        "Frequency (MHz)": "2530",
+        "Efficiency (dB)": "-0.51",
+        "Efficiency (dB)_2": "-0.34"
+      },
+      {
+        "Frequency (MHz)": "2535",
+        "Efficiency (dB)": "-0.54",
+        "Efficiency (dB)_2": "-0.32"
+      },
+      {
+        "Frequency (MHz)": "2540",
+        "Efficiency (dB)": "-0.61",
+        "Efficiency (dB)_2": "-0.35"
+      },
+      {
+        "Frequency (MHz)": "2545",
+        "Efficiency (dB)": "-0.6",
+        "Efficiency (dB)_2": "-0.31"
+      },
+      {
+        "Frequency (MHz)": "2550",
+        "Efficiency (dB)": "-0.66",
+        "Efficiency (dB)_2": "-0.37"
+      },
+      {
+        "Frequency (MHz)": "2555",
+        "Efficiency (dB)": "-0.69",
+        "Efficiency (dB)_2": "-0.25"
+      },
+      {
+        "Frequency (MHz)": "2560",
+        "Efficiency (dB)": "-0.7",
+        "Efficiency (dB)_2": "-0.33"
+      },
+      {
+        "Frequency (MHz)": "2565",
+        "Efficiency (dB)": "-0.7",
+        "Efficiency (dB)_2": "-0.45"
+      },
+      {
+        "Frequency (MHz)": "2570",
+        "Efficiency (dB)": "-0.7",
+        "Efficiency (dB)_2": "-0.37"
+      },
+      {
+        "Frequency (MHz)": "2575",
+        "Efficiency (dB)": "-0.7",
+        "Efficiency (dB)_2": "-0.3"
+      },
+      {
+        "Frequency (MHz)": "2580",
+        "Efficiency (dB)": "-0.64",
+        "Efficiency (dB)_2": "-0.4"
+      },
+      {
+        "Frequency (MHz)": "2585",
+        "Efficiency (dB)": "-0.59",
+        "Efficiency (dB)_2": "-0.37"
+      },
+      {
+        "Frequency (MHz)": "2590",
+        "Efficiency (dB)": "-0.51",
+        "Efficiency (dB)_2": "-0.44"
+      },
+      {
+        "Frequency (MHz)": "2595",
+        "Efficiency (dB)": "-0.52",
+        "Efficiency (dB)_2": "-0.38"
+      },
+      {
+        "Frequency (MHz)": "2600",
+        "Efficiency (dB)": "-0.55",
+        "Efficiency (dB)_2": "-0.33"
+      },
+      {
+        "Frequency (MHz)": "2605",
+        "Efficiency (dB)": "-0.67",
+        "Efficiency (dB)_2": "-0.33"
+      },
+      {
+        "Frequency (MHz)": "2610",
+        "Efficiency (dB)": "-0.8",
+        "Efficiency (dB)_2": "-0.36"
+      },
+      {
+        "Frequency (MHz)": "2615",
+        "Efficiency (dB)": "-0.79",
+        "Efficiency (dB)_2": "-0.39"
+      },
+      {
+        "Frequency (MHz)": "2620",
+        "Efficiency (dB)": "-0.79",
+        "Efficiency (dB)_2": "-0.37"
+      },
+      {
+        "Frequency (MHz)": "2625",
+        "Efficiency (dB)": "-0.72",
+        "Efficiency (dB)_2": "-0.4"
+      },
+      {
+        "Frequency (MHz)": "2630",
+        "Efficiency (dB)": "-0.75",
+        "Efficiency (dB)_2": "-0.4"
+      },
+      {
+        "Frequency (MHz)": "2635",
+        "Efficiency (dB)": "-0.72",
+        "Efficiency (dB)_2": "-0.4"
+      },
+      {
+        "Frequency (MHz)": "2640",
+        "Efficiency (dB)": "-0.8",
+        "Efficiency (dB)_2": "-0.44"
+      },
+      {
+        "Frequency (MHz)": "2645",
+        "Efficiency (dB)": "-0.79",
+        "Efficiency (dB)_2": "-0.52"
+      },
+      {
+        "Frequency (MHz)": "2650",
+        "Efficiency (dB)": "-0.68",
+        "Efficiency (dB)_2": "-0.53"
+      }
+    ]
+  },
+  "Dipole SD5150": {
+    "Reference": "Reference Data - NIST",
+    "Date": "3/10/26",
+    "Data": [
+      {
+        "Frequency (MHz)": "4900",
+        "Efficiency (dB)": "-0.46",
+        "Efficiency (dB)_2": "-0.05"
+      },
+      {
+        "Frequency (MHz)": "4905",
+        "Efficiency (dB)": "-0.39",
+        "Efficiency (dB)_2": "-0.04"
+      },
+      {
+        "Frequency (MHz)": "4910",
+        "Efficiency (dB)": "-0.36",
+        "Efficiency (dB)_2": "0"
+      },
+      {
+        "Frequency (MHz)": "4915",
+        "Efficiency (dB)": "-0.42",
+        "Efficiency (dB)_2": "0.03"
+      },
+      {
+        "Frequency (MHz)": "4920",
+        "Efficiency (dB)": "-0.43",
+        "Efficiency (dB)_2": "-0.03"
+      },
+      {
+        "Frequency (MHz)": "4925",
+        "Efficiency (dB)": "-0.4",
+        "Efficiency (dB)_2": "0.02"
+      },
+      {
+        "Frequency (MHz)": "4930",
+        "Efficiency (dB)": "-0.33",
+        "Efficiency (dB)_2": "-0.06"
+      },
+      {
+        "Frequency (MHz)": "4935",
+        "Efficiency (dB)": "-0.28",
+        "Efficiency (dB)_2": "0.07"
+      },
+      {
+        "Frequency (MHz)": "4940",
+        "Efficiency (dB)": "-0.33",
+        "Efficiency (dB)_2": "-0.02"
+      },
+      {
+        "Frequency (MHz)": "4945",
+        "Efficiency (dB)": "-0.41",
+        "Efficiency (dB)_2": "-0.11"
+      },
+      {
+        "Frequency (MHz)": "4950",
+        "Efficiency (dB)": "-0.42",
+        "Efficiency (dB)_2": "-0.07"
+      },
+      {
+        "Frequency (MHz)": "4955",
+        "Efficiency (dB)": "-0.39",
+        "Efficiency (dB)_2": "-0.06"
+      },
+      {
+        "Frequency (MHz)": "4960",
+        "Efficiency (dB)": "-0.37",
+        "Efficiency (dB)_2": "-0.04"
+      },
+      {
+        "Frequency (MHz)": "4965",
+        "Efficiency (dB)": "-0.48",
+        "Efficiency (dB)_2": "-0.16"
+      },
+      {
+        "Frequency (MHz)": "4970",
+        "Efficiency (dB)": "-0.47",
+        "Efficiency (dB)_2": "-0.08"
+      },
+      {
+        "Frequency (MHz)": "4975",
+        "Efficiency (dB)": "-0.4",
+        "Efficiency (dB)_2": "-0.12"
+      },
+      {
+        "Frequency (MHz)": "4980",
+        "Efficiency (dB)": "-0.43",
+        "Efficiency (dB)_2": "-0.1"
+      },
+      {
+        "Frequency (MHz)": "4985",
+        "Efficiency (dB)": "-0.53",
+        "Efficiency (dB)_2": "-0.06"
+      },
+      {
+        "Frequency (MHz)": "4990",
+        "Efficiency (dB)": "-0.44",
+        "Efficiency (dB)_2": "-0.14"
+      },
+      {
+        "Frequency (MHz)": "4995",
+        "Efficiency (dB)": "-0.34",
+        "Efficiency (dB)_2": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "5000",
+        "Efficiency (dB)": "-0.33",
+        "Efficiency (dB)_2": "-0.07"
+      },
+      {
+        "Frequency (MHz)": "5005",
+        "Efficiency (dB)": "-0.33",
+        "Efficiency (dB)_2": "-0.01"
+      },
+      {
+        "Frequency (MHz)": "5010",
+        "Efficiency (dB)": "-0.38",
+        "Efficiency (dB)_2": "-0.06"
+      },
+      {
+        "Frequency (MHz)": "5015",
+        "Efficiency (dB)": "-0.42",
+        "Efficiency (dB)_2": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "5020",
+        "Efficiency (dB)": "-0.34",
+        "Efficiency (dB)_2": "-0.09"
+      },
+      {
+        "Frequency (MHz)": "5025",
+        "Efficiency (dB)": "-0.27",
+        "Efficiency (dB)_2": "-0.23"
+      },
+      {
+        "Frequency (MHz)": "5030",
+        "Efficiency (dB)": "-0.31",
+        "Efficiency (dB)_2": "-0.14"
+      },
+      {
+        "Frequency (MHz)": "5035",
+        "Efficiency (dB)": "-0.34",
+        "Efficiency (dB)_2": "-0.14"
+      },
+      {
+        "Frequency (MHz)": "5040",
+        "Efficiency (dB)": "-0.3",
+        "Efficiency (dB)_2": "-0.2"
+      },
+      {
+        "Frequency (MHz)": "5045",
+        "Efficiency (dB)": "-0.33",
+        "Efficiency (dB)_2": "-0.24"
+      },
+      {
+        "Frequency (MHz)": "5050",
+        "Efficiency (dB)": "-0.37",
+        "Efficiency (dB)_2": "-0.28"
+      },
+      {
+        "Frequency (MHz)": "5055",
+        "Efficiency (dB)": "-0.39",
+        "Efficiency (dB)_2": "-0.14"
+      },
+      {
+        "Frequency (MHz)": "5060",
+        "Efficiency (dB)": "-0.39",
+        "Efficiency (dB)_2": "-0.32"
+      },
+      {
+        "Frequency (MHz)": "5065",
+        "Efficiency (dB)": "-0.35",
+        "Efficiency (dB)_2": "-0.31"
+      },
+      {
+        "Frequency (MHz)": "5070",
+        "Efficiency (dB)": "-0.38",
+        "Efficiency (dB)_2": "-0.36"
+      },
+      {
+        "Frequency (MHz)": "5075",
+        "Efficiency (dB)": "-0.43",
+        "Efficiency (dB)_2": "-0.37"
+      },
+      {
+        "Frequency (MHz)": "5080",
+        "Efficiency (dB)": "-0.41",
+        "Efficiency (dB)_2": "-0.38"
+      },
+      {
+        "Frequency (MHz)": "5085",
+        "Efficiency (dB)": "-0.26",
+        "Efficiency (dB)_2": "-0.4"
+      },
+      {
+        "Frequency (MHz)": "5090",
+        "Efficiency (dB)": "-0.26",
+        "Efficiency (dB)_2": "-0.39"
+      },
+      {
+        "Frequency (MHz)": "5095",
+        "Efficiency (dB)": "-0.27",
+        "Efficiency (dB)_2": "-0.39"
+      },
+      {
+        "Frequency (MHz)": "5100",
+        "Efficiency (dB)": "-0.26",
+        "Efficiency (dB)_2": "-0.29"
+      },
+      {
+        "Frequency (MHz)": "5105",
+        "Efficiency (dB)": "-0.27",
+        "Efficiency (dB)_2": "-0.28"
+      },
+      {
+        "Frequency (MHz)": "5110",
+        "Efficiency (dB)": "-0.22",
+        "Efficiency (dB)_2": "-0.29"
+      },
+      {
+        "Frequency (MHz)": "5115",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_2": "-0.3"
+      },
+      {
+        "Frequency (MHz)": "5120",
+        "Efficiency (dB)": "-0.22",
+        "Efficiency (dB)_2": "-0.26"
+      },
+      {
+        "Frequency (MHz)": "5125",
+        "Efficiency (dB)": "-0.23",
+        "Efficiency (dB)_2": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "5130",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_2": "-0.21"
+      },
+      {
+        "Frequency (MHz)": "5135",
+        "Efficiency (dB)": "-0.18",
+        "Efficiency (dB)_2": "-0.29"
+      },
+      {
+        "Frequency (MHz)": "5140",
+        "Efficiency (dB)": "-0.29",
+        "Efficiency (dB)_2": "-0.26"
+      },
+      {
+        "Frequency (MHz)": "5145",
+        "Efficiency (dB)": "-0.33",
+        "Efficiency (dB)_2": "-0.19"
+      },
+      {
+        "Frequency (MHz)": "5150",
+        "Efficiency (dB)": "-0.28",
+        "Efficiency (dB)_2": "-0.15"
+      },
+      {
+        "Frequency (MHz)": "5155",
+        "Efficiency (dB)": "-0.31",
+        "Efficiency (dB)_2": "-0.13"
+      },
+      {
+        "Frequency (MHz)": "5160",
+        "Efficiency (dB)": "-0.36",
+        "Efficiency (dB)_2": "-0.16"
+      },
+      {
+        "Frequency (MHz)": "5165",
+        "Efficiency (dB)": "-0.36",
+        "Efficiency (dB)_2": "-0.23"
+      },
+      {
+        "Frequency (MHz)": "5170",
+        "Efficiency (dB)": "-0.35",
+        "Efficiency (dB)_2": "-0.16"
+      },
+      {
+        "Frequency (MHz)": "5175",
+        "Efficiency (dB)": "-0.31",
+        "Efficiency (dB)_2": "-0.1"
+      },
+      {
+        "Frequency (MHz)": "5180",
+        "Efficiency (dB)": "-0.3",
+        "Efficiency (dB)_2": "-0.12"
+      },
+      {
+        "Frequency (MHz)": "5185",
+        "Efficiency (dB)": "-0.32",
+        "Efficiency (dB)_2": "-0.11"
+      },
+      {
+        "Frequency (MHz)": "5190",
+        "Efficiency (dB)": "-0.3",
+        "Efficiency (dB)_2": "-0.14"
+      },
+      {
+        "Frequency (MHz)": "5195",
+        "Efficiency (dB)": "-0.25",
+        "Efficiency (dB)_2": "-0.04"
+      },
+      {
+        "Frequency (MHz)": "5200",
+        "Efficiency (dB)": "-0.2",
+        "Efficiency (dB)_2": "-0.14"
+      },
+      {
+        "Frequency (MHz)": "5205",
+        "Efficiency (dB)": "-0.22",
+        "Efficiency (dB)_2": "0.02"
+      },
+      {
+        "Frequency (MHz)": "5210",
+        "Efficiency (dB)": "-0.2",
+        "Efficiency (dB)_2": "-0.04"
+      },
+      {
+        "Frequency (MHz)": "5215",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_2": "0"
+      },
+      {
+        "Frequency (MHz)": "5220",
+        "Efficiency (dB)": "-0.1",
+        "Efficiency (dB)_2": "-0.04"
+      },
+      {
+        "Frequency (MHz)": "5225",
+        "Efficiency (dB)": "-0.06",
+        "Efficiency (dB)_2": "-0.08"
+      },
+      {
+        "Frequency (MHz)": "5230",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_2": "-0.05"
+      },
+      {
+        "Frequency (MHz)": "5235",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_2": "-0.13"
+      },
+      {
+        "Frequency (MHz)": "5240",
+        "Efficiency (dB)": "-0.08",
+        "Efficiency (dB)_2": "-0.03"
+      },
+      {
+        "Frequency (MHz)": "5245",
+        "Efficiency (dB)": "-0.1",
+        "Efficiency (dB)_2": "0"
+      },
+      {
+        "Frequency (MHz)": "5250",
+        "Efficiency (dB)": "-0.18",
+        "Efficiency (dB)_2": "-0.13"
+      },
+      {
+        "Frequency (MHz)": "5255",
+        "Efficiency (dB)": "-0.19",
+        "Efficiency (dB)_2": "-0.1"
+      },
+      {
+        "Frequency (MHz)": "5260",
+        "Efficiency (dB)": "-0.15",
+        "Efficiency (dB)_2": "-0.14"
+      },
+      {
+        "Frequency (MHz)": "5265",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_2": "-0.16"
+      },
+      {
+        "Frequency (MHz)": "5270",
+        "Efficiency (dB)": "-0.15",
+        "Efficiency (dB)_2": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "5275",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_2": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "5280",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_2": "-0.23"
+      },
+      {
+        "Frequency (MHz)": "5285",
+        "Efficiency (dB)": "-0.07",
+        "Efficiency (dB)_2": "-0.34"
+      },
+      {
+        "Frequency (MHz)": "5290",
+        "Efficiency (dB)": "-0.03",
+        "Efficiency (dB)_2": "-0.23"
+      },
+      {
+        "Frequency (MHz)": "5295",
+        "Efficiency (dB)": "-0.05",
+        "Efficiency (dB)_2": "-0.25"
+      },
+      {
+        "Frequency (MHz)": "5300",
+        "Efficiency (dB)": "-0.11",
+        "Efficiency (dB)_2": "-0.21"
+      },
+      {
+        "Frequency (MHz)": "5305",
+        "Efficiency (dB)": "-0.1",
+        "Efficiency (dB)_2": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "5310",
+        "Efficiency (dB)": "-0.09",
+        "Efficiency (dB)_2": "-0.23"
+      },
+      {
+        "Frequency (MHz)": "5315",
+        "Efficiency (dB)": "-0.04",
+        "Efficiency (dB)_2": "-0.23"
+      },
+      {
+        "Frequency (MHz)": "5320",
+        "Efficiency (dB)": "-0.06",
+        "Efficiency (dB)_2": "-0.3"
+      },
+      {
+        "Frequency (MHz)": "5325",
+        "Efficiency (dB)": "-0.1",
+        "Efficiency (dB)_2": "-0.23"
+      },
+      {
+        "Frequency (MHz)": "5330",
+        "Efficiency (dB)": "-0.07",
+        "Efficiency (dB)_2": "-0.29"
+      },
+      {
+        "Frequency (MHz)": "5335",
+        "Efficiency (dB)": "-0.1",
+        "Efficiency (dB)_2": "-0.27"
+      },
+      {
+        "Frequency (MHz)": "5340",
+        "Efficiency (dB)": "-0.22",
+        "Efficiency (dB)_2": "-0.33"
+      },
+      {
+        "Frequency (MHz)": "5345",
+        "Efficiency (dB)": "-0.19",
+        "Efficiency (dB)_2": "-0.32"
+      },
+      {
+        "Frequency (MHz)": "5350",
+        "Efficiency (dB)": "-0.15",
+        "Efficiency (dB)_2": "-0.33"
+      },
+      {
+        "Frequency (MHz)": "5355",
+        "Efficiency (dB)": "-0.15",
+        "Efficiency (dB)_2": "-0.28"
+      },
+      {
+        "Frequency (MHz)": "5360",
+        "Efficiency (dB)": "-0.2",
+        "Efficiency (dB)_2": "-0.29"
+      },
+      {
+        "Frequency (MHz)": "5365",
+        "Efficiency (dB)": "-0.2",
+        "Efficiency (dB)_2": "-0.27"
+      },
+      {
+        "Frequency (MHz)": "5370",
+        "Efficiency (dB)": "-0.22",
+        "Efficiency (dB)_2": "-0.34"
+      },
+      {
+        "Frequency (MHz)": "5375",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_2": "-0.39"
+      },
+      {
+        "Frequency (MHz)": "5380",
+        "Efficiency (dB)": "-0.11",
+        "Efficiency (dB)_2": "-0.37"
+      },
+      {
+        "Frequency (MHz)": "5385",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_2": "-0.36"
+      },
+      {
+        "Frequency (MHz)": "5390",
+        "Efficiency (dB)": "-0.11",
+        "Efficiency (dB)_2": "-0.4"
+      },
+      {
+        "Frequency (MHz)": "5395",
+        "Efficiency (dB)": "-0.08",
+        "Efficiency (dB)_2": "-0.39"
+      },
+      {
+        "Frequency (MHz)": "5400",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_2": "-0.47"
+      }
+    ]
+  },
+  "Dipole SD5650": {
+    "Reference": "Reference Data - NIST",
+    "Date": "3/10/26",
+    "Data": [
+      {
+        "Frequency (MHz)": "5405",
+        "Efficiency (dB)": "-0.48",
+        "Efficiency (dB)_2": "-1.04"
+      },
+      {
+        "Frequency (MHz)": "5410",
+        "Efficiency (dB)": "-0.47",
+        "Efficiency (dB)_2": "-1.01"
+      },
+      {
+        "Frequency (MHz)": "5415",
+        "Efficiency (dB)": "-0.52",
+        "Efficiency (dB)_2": "-0.97"
+      },
+      {
+        "Frequency (MHz)": "5420",
+        "Efficiency (dB)": "-0.57",
+        "Efficiency (dB)_2": "-0.85"
+      },
+      {
+        "Frequency (MHz)": "5425",
+        "Efficiency (dB)": "-0.56",
+        "Efficiency (dB)_2": "-0.87"
+      },
+      {
+        "Frequency (MHz)": "5430",
+        "Efficiency (dB)": "-0.56",
+        "Efficiency (dB)_2": "-0.75"
+      },
+      {
+        "Frequency (MHz)": "5435",
+        "Efficiency (dB)": "-0.56",
+        "Efficiency (dB)_2": "-0.91"
+      },
+      {
+        "Frequency (MHz)": "5440",
+        "Efficiency (dB)": "-0.58",
+        "Efficiency (dB)_2": "-0.72"
+      },
+      {
+        "Frequency (MHz)": "5445",
+        "Efficiency (dB)": "-0.59",
+        "Efficiency (dB)_2": "-0.62"
+      },
+      {
+        "Frequency (MHz)": "5450",
+        "Efficiency (dB)": "-0.56",
+        "Efficiency (dB)_2": "-0.5"
+      },
+      {
+        "Frequency (MHz)": "5455",
+        "Efficiency (dB)": "-0.55",
+        "Efficiency (dB)_2": "-0.5"
+      },
+      {
+        "Frequency (MHz)": "5460",
+        "Efficiency (dB)": "-0.61",
+        "Efficiency (dB)_2": "-0.48"
+      },
+      {
+        "Frequency (MHz)": "5465",
+        "Efficiency (dB)": "-0.55",
+        "Efficiency (dB)_2": "-0.4"
+      },
+      {
+        "Frequency (MHz)": "5470",
+        "Efficiency (dB)": "-0.53",
+        "Efficiency (dB)_2": "-0.33"
+      },
+      {
+        "Frequency (MHz)": "5475",
+        "Efficiency (dB)": "-0.48",
+        "Efficiency (dB)_2": "-0.26"
+      },
+      {
+        "Frequency (MHz)": "5480",
+        "Efficiency (dB)": "-0.51",
+        "Efficiency (dB)_2": "-0.26"
+      },
+      {
+        "Frequency (MHz)": "5485",
+        "Efficiency (dB)": "-0.56",
+        "Efficiency (dB)_2": "-0.27"
+      },
+      {
+        "Frequency (MHz)": "5490",
+        "Efficiency (dB)": "-0.6",
+        "Efficiency (dB)_2": "-0.33"
+      },
+      {
+        "Frequency (MHz)": "5495",
+        "Efficiency (dB)": "-0.57",
+        "Efficiency (dB)_2": "-0.36"
+      },
+      {
+        "Frequency (MHz)": "5500",
+        "Efficiency (dB)": "-0.59",
+        "Efficiency (dB)_2": "-0.33"
+      },
+      {
+        "Frequency (MHz)": "5505",
+        "Efficiency (dB)": "-0.64",
+        "Efficiency (dB)_2": "-0.32"
+      },
+      {
+        "Frequency (MHz)": "5510",
+        "Efficiency (dB)": "-0.59",
+        "Efficiency (dB)_2": "-0.38"
+      },
+      {
+        "Frequency (MHz)": "5515",
+        "Efficiency (dB)": "-0.57",
+        "Efficiency (dB)_2": "-0.2"
+      },
+      {
+        "Frequency (MHz)": "5520",
+        "Efficiency (dB)": "-0.54",
+        "Efficiency (dB)_2": "-0.45"
+      },
+      {
+        "Frequency (MHz)": "5525",
+        "Efficiency (dB)": "-0.51",
+        "Efficiency (dB)_2": "-0.4"
+      },
+      {
+        "Frequency (MHz)": "5530",
+        "Efficiency (dB)": "-0.49",
+        "Efficiency (dB)_2": "-0.37"
+      },
+      {
+        "Frequency (MHz)": "5535",
+        "Efficiency (dB)": "-0.45",
+        "Efficiency (dB)_2": "-0.32"
+      },
+      {
+        "Frequency (MHz)": "5540",
+        "Efficiency (dB)": "-0.42",
+        "Efficiency (dB)_2": "-0.32"
+      },
+      {
+        "Frequency (MHz)": "5545",
+        "Efficiency (dB)": "-0.44",
+        "Efficiency (dB)_2": "-0.32"
+      },
+      {
+        "Frequency (MHz)": "5550",
+        "Efficiency (dB)": "-0.46",
+        "Efficiency (dB)_2": "-0.36"
+      },
+      {
+        "Frequency (MHz)": "5555",
+        "Efficiency (dB)": "-0.46",
+        "Efficiency (dB)_2": "-0.49"
+      },
+      {
+        "Frequency (MHz)": "5560",
+        "Efficiency (dB)": "-0.41",
+        "Efficiency (dB)_2": "-0.36"
+      },
+      {
+        "Frequency (MHz)": "5565",
+        "Efficiency (dB)": "-0.42",
+        "Efficiency (dB)_2": "-0.38"
+      },
+      {
+        "Frequency (MHz)": "5570",
+        "Efficiency (dB)": "-0.41",
+        "Efficiency (dB)_2": "-0.4"
+      },
+      {
+        "Frequency (MHz)": "5575",
+        "Efficiency (dB)": "-0.43",
+        "Efficiency (dB)_2": "-0.47"
+      },
+      {
+        "Frequency (MHz)": "5580",
+        "Efficiency (dB)": "-0.41",
+        "Efficiency (dB)_2": "-0.49"
+      },
+      {
+        "Frequency (MHz)": "5585",
+        "Efficiency (dB)": "-0.37",
+        "Efficiency (dB)_2": "-0.55"
+      },
+      {
+        "Frequency (MHz)": "5590",
+        "Efficiency (dB)": "-0.42",
+        "Efficiency (dB)_2": "-0.57"
+      },
+      {
+        "Frequency (MHz)": "5595",
+        "Efficiency (dB)": "-0.51",
+        "Efficiency (dB)_2": "-0.6"
+      },
+      {
+        "Frequency (MHz)": "5600",
+        "Efficiency (dB)": "-0.45",
+        "Efficiency (dB)_2": "-0.64"
+      },
+      {
+        "Frequency (MHz)": "5605",
+        "Efficiency (dB)": "-0.47",
+        "Efficiency (dB)_2": "-0.7"
+      },
+      {
+        "Frequency (MHz)": "5610",
+        "Efficiency (dB)": "-0.46",
+        "Efficiency (dB)_2": "-0.69"
+      },
+      {
+        "Frequency (MHz)": "5615",
+        "Efficiency (dB)": "-0.46",
+        "Efficiency (dB)_2": "-0.71"
+      },
+      {
+        "Frequency (MHz)": "5620",
+        "Efficiency (dB)": "-0.41",
+        "Efficiency (dB)_2": "-0.69"
+      },
+      {
+        "Frequency (MHz)": "5625",
+        "Efficiency (dB)": "-0.38",
+        "Efficiency (dB)_2": "-0.71"
+      },
+      {
+        "Frequency (MHz)": "5630",
+        "Efficiency (dB)": "-0.28",
+        "Efficiency (dB)_2": "-0.65"
+      },
+      {
+        "Frequency (MHz)": "5635",
+        "Efficiency (dB)": "-0.32",
+        "Efficiency (dB)_2": "-0.61"
+      },
+      {
+        "Frequency (MHz)": "5640",
+        "Efficiency (dB)": "-0.3",
+        "Efficiency (dB)_2": "-0.7"
+      },
+      {
+        "Frequency (MHz)": "5645",
+        "Efficiency (dB)": "-0.29",
+        "Efficiency (dB)_2": "-0.83"
+      },
+      {
+        "Frequency (MHz)": "5650",
+        "Efficiency (dB)": "-0.29",
+        "Efficiency (dB)_2": "-0.7"
+      },
+      {
+        "Frequency (MHz)": "5655",
+        "Efficiency (dB)": "-0.3",
+        "Efficiency (dB)_2": "-0.59"
+      },
+      {
+        "Frequency (MHz)": "5660",
+        "Efficiency (dB)": "-0.32",
+        "Efficiency (dB)_2": "-0.62"
+      },
+      {
+        "Frequency (MHz)": "5665",
+        "Efficiency (dB)": "-0.4",
+        "Efficiency (dB)_2": "-0.49"
+      },
+      {
+        "Frequency (MHz)": "5670",
+        "Efficiency (dB)": "-0.35",
+        "Efficiency (dB)_2": "-0.64"
+      },
+      {
+        "Frequency (MHz)": "5675",
+        "Efficiency (dB)": "-0.39",
+        "Efficiency (dB)_2": "-0.71"
+      },
+      {
+        "Frequency (MHz)": "5680",
+        "Efficiency (dB)": "-0.42",
+        "Efficiency (dB)_2": "-0.57"
+      },
+      {
+        "Frequency (MHz)": "5685",
+        "Efficiency (dB)": "-0.48",
+        "Efficiency (dB)_2": "-0.41"
+      },
+      {
+        "Frequency (MHz)": "5690",
+        "Efficiency (dB)": "-0.41",
+        "Efficiency (dB)_2": "-0.54"
+      },
+      {
+        "Frequency (MHz)": "5695",
+        "Efficiency (dB)": "-0.46",
+        "Efficiency (dB)_2": "-0.68"
+      },
+      {
+        "Frequency (MHz)": "5700",
+        "Efficiency (dB)": "-0.44",
+        "Efficiency (dB)_2": "-0.53"
+      },
+      {
+        "Frequency (MHz)": "5705",
+        "Efficiency (dB)": "-0.47",
+        "Efficiency (dB)_2": "-0.67"
+      },
+      {
+        "Frequency (MHz)": "5710",
+        "Efficiency (dB)": "-0.48",
+        "Efficiency (dB)_2": "-0.49"
+      },
+      {
+        "Frequency (MHz)": "5715",
+        "Efficiency (dB)": "-0.42",
+        "Efficiency (dB)_2": "-0.38"
+      },
+      {
+        "Frequency (MHz)": "5720",
+        "Efficiency (dB)": "-0.32",
+        "Efficiency (dB)_2": "-0.48"
+      },
+      {
+        "Frequency (MHz)": "5725",
+        "Efficiency (dB)": "-0.35",
+        "Efficiency (dB)_2": "-0.65"
+      },
+      {
+        "Frequency (MHz)": "5730",
+        "Efficiency (dB)": "-0.34",
+        "Efficiency (dB)_2": "-0.53"
+      },
+      {
+        "Frequency (MHz)": "5735",
+        "Efficiency (dB)": "-0.33",
+        "Efficiency (dB)_2": "-0.48"
+      },
+      {
+        "Frequency (MHz)": "5740",
+        "Efficiency (dB)": "-0.32",
+        "Efficiency (dB)_2": "-0.55"
+      },
+      {
+        "Frequency (MHz)": "5745",
+        "Efficiency (dB)": "-0.33",
+        "Efficiency (dB)_2": "-0.57"
+      },
+      {
+        "Frequency (MHz)": "5750",
+        "Efficiency (dB)": "-0.33",
+        "Efficiency (dB)_2": "-0.54"
+      },
+      {
+        "Frequency (MHz)": "5755",
+        "Efficiency (dB)": "-0.41",
+        "Efficiency (dB)_2": "-0.63"
+      },
+      {
+        "Frequency (MHz)": "5760",
+        "Efficiency (dB)": "-0.41",
+        "Efficiency (dB)_2": "-0.63"
+      },
+      {
+        "Frequency (MHz)": "5765",
+        "Efficiency (dB)": "-0.45",
+        "Efficiency (dB)_2": "-0.7"
+      },
+      {
+        "Frequency (MHz)": "5770",
+        "Efficiency (dB)": "-0.56",
+        "Efficiency (dB)_2": "-0.6"
+      },
+      {
+        "Frequency (MHz)": "5775",
+        "Efficiency (dB)": "-0.43",
+        "Efficiency (dB)_2": "-0.64"
+      },
+      {
+        "Frequency (MHz)": "5780",
+        "Efficiency (dB)": "-0.46",
+        "Efficiency (dB)_2": "-0.54"
+      },
+      {
+        "Frequency (MHz)": "5785",
+        "Efficiency (dB)": "-0.46",
+        "Efficiency (dB)_2": "-0.36"
+      },
+      {
+        "Frequency (MHz)": "5790",
+        "Efficiency (dB)": "-0.49",
+        "Efficiency (dB)_2": "-0.53"
+      },
+      {
+        "Frequency (MHz)": "5795",
+        "Efficiency (dB)": "-0.47",
+        "Efficiency (dB)_2": "-0.55"
+      },
+      {
+        "Frequency (MHz)": "5800",
+        "Efficiency (dB)": "-0.59",
+        "Efficiency (dB)_2": "-0.47"
+      },
+      {
+        "Frequency (MHz)": "5805",
+        "Efficiency (dB)": "-0.49",
+        "Efficiency (dB)_2": "-0.29"
+      },
+      {
+        "Frequency (MHz)": "5810",
+        "Efficiency (dB)": "-0.5",
+        "Efficiency (dB)_2": "-0.46"
+      },
+      {
+        "Frequency (MHz)": "5815",
+        "Efficiency (dB)": "-0.46",
+        "Efficiency (dB)_2": "-0.33"
+      },
+      {
+        "Frequency (MHz)": "5820",
+        "Efficiency (dB)": "-0.48",
+        "Efficiency (dB)_2": "-0.54"
+      },
+      {
+        "Frequency (MHz)": "5825",
+        "Efficiency (dB)": "-0.44",
+        "Efficiency (dB)_2": "-0.69"
+      },
+      {
+        "Frequency (MHz)": "5830",
+        "Efficiency (dB)": "-0.47",
+        "Efficiency (dB)_2": "-0.58"
+      },
+      {
+        "Frequency (MHz)": "5835",
+        "Efficiency (dB)": "-0.46",
+        "Efficiency (dB)_2": "-0.52"
+      },
+      {
+        "Frequency (MHz)": "5840",
+        "Efficiency (dB)": "-0.46",
+        "Efficiency (dB)_2": "-0.59"
+      },
+      {
+        "Frequency (MHz)": "5845",
+        "Efficiency (dB)": "-0.47",
+        "Efficiency (dB)_2": "-0.73"
+      },
+      {
+        "Frequency (MHz)": "5850",
+        "Efficiency (dB)": "-0.4",
+        "Efficiency (dB)_2": "-0.64"
+      },
+      {
+        "Frequency (MHz)": "5855",
+        "Efficiency (dB)": "-0.44",
+        "Efficiency (dB)_2": "-0.66"
+      },
+      {
+        "Frequency (MHz)": "5860",
+        "Efficiency (dB)": "-0.57",
+        "Efficiency (dB)_2": "-0.54"
+      },
+      {
+        "Frequency (MHz)": "5865",
+        "Efficiency (dB)": "-0.55",
+        "Efficiency (dB)_2": "-0.37"
+      },
+      {
+        "Frequency (MHz)": "5870",
+        "Efficiency (dB)": "-0.52",
+        "Efficiency (dB)_2": "-0.47"
+      },
+      {
+        "Frequency (MHz)": "5875",
+        "Efficiency (dB)": "-0.54",
+        "Efficiency (dB)_2": "-0.43"
+      },
+      {
+        "Frequency (MHz)": "5880",
+        "Efficiency (dB)": "-0.58",
+        "Efficiency (dB)_2": "-0.44"
+      },
+      {
+        "Frequency (MHz)": "5885",
+        "Efficiency (dB)": "-0.51",
+        "Efficiency (dB)_2": "-0.47"
+      },
+      {
+        "Frequency (MHz)": "5890",
+        "Efficiency (dB)": "-0.7",
+        "Efficiency (dB)_2": "-0.41"
+      },
+      {
+        "Frequency (MHz)": "5895",
+        "Efficiency (dB)": "-0.68",
+        "Efficiency (dB)_2": "-0.53"
+      },
+      {
+        "Frequency (MHz)": "5900",
+        "Efficiency (dB)": "-0.71",
+        "Efficiency (dB)_2": "-0.47"
+      }
+    ]
+  }
+}
