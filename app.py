@@ -6,7 +6,11 @@ import json
 # Configure the dashboard layout
 st.set_page_config(page_title="Antenna Efficiency Dashboard", layout="wide")
 
-st.title("📡 Satimo 2 Chamber Performance - Interactive Dashboard")
+# Inject custom HTML/CSS to shrink the title and fit it on one line
+st.markdown(
+    "<h1 style='font-size: 2.2rem;'>📡 Satimo 2 Chamber Performance - Interactive Dashboard</h1>", 
+    unsafe_allow_html=True
+)
 
 # Function to load JSON data efficiently
 @st.cache_data
@@ -17,9 +21,9 @@ def load_data(filename):
 # Sidebar for Dashboard Controls
 st.sidebar.header("Dashboard Controls")
 
-# 1. Dataset Selection Toggle
-dataset_choice = st.sidebar.radio(
-    "Select Test Cadence",
+# 1. Dataset Selection Toggle (Now a Dropdown)
+dataset_choice = st.sidebar.selectbox(
+    "Select Passive Validation Type:",
     ("Yearly Dipoles", "Quarterly Dipoles")
 )
 
