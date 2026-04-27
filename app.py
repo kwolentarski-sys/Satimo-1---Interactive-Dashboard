@@ -12,39 +12,38 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Function to load JSON data efficiently
-@st.cache_data
+# Function to load JSON data (Caching removed to prevent stale data loads!)
 def load_data(filename):
-    with open(filename, 'r') as f:
+    with open(filename, 'r', encoding='utf-8') as f:
         return json.load(f)
 
 # Sidebar for Dashboard Controls
 st.sidebar.header("Dashboard Controls")
 
-# 1. Dataset Selection Toggle (Now a Dropdown)
+# 1. Dataset Selection Toggle
 dataset_choice = st.sidebar.selectbox(
     "Select Passive Validation Type:",
-    ("Yearly Dipoles", "Quarterly Dipoles")
+    ("Yearly Dipoles", "Quarterly Dipole")
 )
 
-# Map selection to the correct JSON file
+# Map selection to the exact JSON files
 if dataset_choice == "Yearly Dipoles":
     target_file = 'Satimo 2 Chamber_Passive Trend Charts_Dipoles Yearly.json'
-else:
+elif dataset_choice == "Quarterly Dipole":
     target_file = 'Satimo2_Passive Trends_Dipoles_Quarterly.json'
 
 # Load the selected dataset
 try:
     data = load_data(target_file)
 except FileNotFoundError:
-    st.error(f"Please ensure '{target_file}' is in the same directory as this script.")
+    st.error(f"Please ensure the file '{target_file}' is saved in the same directory as this script.")
     st.stop()
 
 # Extract dipole names based on the currently loaded dataset
 dipole_names = [d['dipole_name'] for d in data]
 
 # 2. DUT Selection (Dynamically populates based on dataset)
-selected_dipole = st.sidebar.selectbox("Select Device Under Test (DUT)", dipole_names)
+selected_dipole = st.sidebar.selectbox("Select Dipole:", dipole_names)
 
 # Filter the dataset based on user selection
 selected_data = next(item for item in data if item["dipole_name"] == selected_dipole)
