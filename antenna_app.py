@@ -6,7 +6,7 @@ st.set_page_config(page_title="Antenna Lab: GitHub Integrated", layout="wide")
 
 # --- CONFIGURATION ---
 # REPLACE THIS URL with the "Raw" link you copied in Step 1
-GITHUB_CSV_URL = "https://raw.githubusercontent.com/YOUR_USER/YOUR_REPO/main/your_file.csv"
+GITHUB_CSV_URL = "https://raw.githubusercontent.com/kwolentarski-sys/Satimo-1---Interactive-Dashboard/refs/heads/Satimo2/Satimo%202%20Chamber%20-%20Passive%20Trend%20Charts%20-%20Dipoles%20Yearly.csv"
 
 st.title("📡 Live Antenna Efficiency Dashboard")
 
