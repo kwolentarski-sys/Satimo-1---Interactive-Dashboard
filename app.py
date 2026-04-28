@@ -97,13 +97,13 @@ if dataset_choice == "Wideband Dipole Chamber Comparison":
                 except (ValueError, TypeError):
                     continue
             
-            # Add a trace for this specific chamber
+            # Add a trace for this specific chamber, with bolded name
             if freqs and effs:
                 fig.add_trace(go.Scatter(
                     x=freqs, 
                     y=effs,
                     mode='lines+markers',
-                    name=chamber_name
+                    name=f"<b>{chamber_name}</b>"
                 ))
     
     if not fig.data:
@@ -112,12 +112,13 @@ if dataset_choice == "Wideband Dipole Chamber Comparison":
         # Add a bold 0 dB horizontal reference line
         fig.add_hline(y=0, line_width=3, line_color="black")
         
-        # Update layout for Axis Titles and Background Color
+        # Update layout for Axis Titles, Background Color, and Legend Font
         fig.update_layout(
             xaxis_title="<b>Frequency (MHz)</b>",
             yaxis_title="<b>Efficiency (dB)</b>",
             xaxis_title_font=dict(size=16, color="#000000"),
             yaxis_title_font=dict(size=16, color="#000000"),
+            legend=dict(font=dict(size=14, color="#000000")),
             hovermode="x unified",
             plot_bgcolor="#e9f1ff",
             margin=dict(l=20, r=20, t=40, b=20)
@@ -200,35 +201,40 @@ else:
     if selected_data and 'measurements' in selected_data:
         df = pd.DataFrame(selected_data['measurements'])
 
+        test_date = selected_data.get('date', 'N/A')
+
         st.subheader(f"Analyzing: {selected_antenna} ({dataset_choice})")
-        st.markdown(f"**Reference Source:** {selected_data.get('reference', 'N/A')} | **Test Date:** {selected_data.get('date', 'N/A')}")
+        st.markdown(f"**Reference Source:** {selected_data.get('reference', 'N/A')} | **Test Date:** {test_date}")
 
         fig = go.Figure()
 
+        # Added HTML tags to bold the trace name
         fig.add_trace(go.Scatter(
             x=df['frequency_mhz'], 
             y=df['efficiency_db_ref'],
             mode='lines+markers',
-            name='Reference Efficiency (dB)',
+            name='<b>Reference Efficiency - NIST (dB)</b>',
             line=dict(dash='dash')
         ))
 
+        # Dynamically inject the date and bold the trace name
         fig.add_trace(go.Scatter(
             x=df['frequency_mhz'], 
             y=df['efficiency_db_measured'],
             mode='lines+markers',
-            name='Measured Efficiency (dB)'
+            name=f'<b>Measured Efficiency {test_date}</b>'
         ))
 
         # Add a bold 0 dB horizontal reference line
         fig.add_hline(y=0, line_width=3, line_color="black")
 
-        # Update layout for Axis Titles and Background Color
+        # Update layout for Axis Titles, Background Color, and Legend Font
         fig.update_layout(
             xaxis_title="<b>Frequency (MHz)</b>",
             yaxis_title="<b>Efficiency (dB)</b>",
             xaxis_title_font=dict(size=16, color="#000000"),
             yaxis_title_font=dict(size=16, color="#000000"),
+            legend=dict(font=dict(size=14, color="#000000")),
             hovermode="x unified",
             plot_bgcolor="#e9f1ff",
             margin=dict(l=20, r=20, t=40, b=20)
