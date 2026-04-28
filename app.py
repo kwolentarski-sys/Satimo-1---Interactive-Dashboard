@@ -275,6 +275,14 @@ else:
         else:
             st.markdown("#### Maximum Overshoot Above 0 dB: None")
 
+        # Calculate Maximum Delta from Reference NIST
+        max_delta_idx = (df['efficiency_db_measured'] - df['efficiency_db_ref']).abs().idxmax()
+        max_delta_val = abs(df.loc[max_delta_idx, 'efficiency_db_measured'] - df.loc[max_delta_idx, 'efficiency_db_ref'])
+        max_delta_freq = df.loc[max_delta_idx, 'frequency_mhz']
+        
+        # Display the Maximum Delta Subtitle and Result on one line
+        st.markdown(f"#### Maximum Delta - Reference NIST: {max_delta_val:.2f} dB at {max_delta_freq:g} MHz")
+
         fig = go.Figure()
 
         fig.add_trace(go.Scatter(
