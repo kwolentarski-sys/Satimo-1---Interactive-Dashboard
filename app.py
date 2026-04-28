@@ -132,23 +132,22 @@ if active_dataset_choice == "LTE TRP":
         st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - LTE TRP Validation Measurements</h3>", unsafe_allow_html=True)
         st.markdown(f"**Device:** {device_name} | **Test Date:** {test_date}")
         
+        # --- First Graph: Frequency vs TRP (Main Dashboard) ---
         fig = go.Figure()
         
-        # Plot TRP Data
         fig.add_trace(go.Scatter(
             x=df['Frequency (Mhz)'], 
             y=df['TRP (dBm)'],
             mode='lines+markers',
             name=f'<b>TRP (dBm) {test_date}</b>',
-            text=df['Band Chan'], # Add the band/channel text for hover data
+            text=df['Band Chan'],
             hovertemplate="<b>%{text}</b><br>Freq: %{x} MHz<br>TRP: %{y:.2f} dBm<extra></extra>",
             line=dict(color='#0000ff'),
             marker=dict(color='#0000ff', size=8)
         ))
         
-        chart_title_text = f"<b>{selected_range} - Active TRP Trend</b>"
+        chart_title_text = f"<b>{selected_range} - Active TRP Trend (Frequency)</b>"
         
-        # Update layout mirroring the rest of the dashboard
         fig.update_layout(
             title=dict(
                 text=chart_title_text, 
@@ -181,6 +180,57 @@ if active_dataset_choice == "LTE TRP":
         )
 
         st.plotly_chart(fig, use_container_width=True)
+        
+        # --- Second Graph: Band/Channel vs TRP (Moved to Sidebar) ---
+        fig2 = go.Figure()
+        
+        fig2.add_trace(go.Scatter(
+            x=df['Band Chan'], 
+            y=df['TRP (dBm)'],
+            mode='lines+markers',
+            name=f'<b>TRP</b>',
+            text=df['Frequency (Mhz)'],
+            hovertemplate="<b>%{x}</b><br>Freq: %{text} MHz<br>TRP: %{y:.2f} dBm<extra></extra>",
+            line=dict(color='#0000ff'),
+            marker=dict(color='#0000ff', size=6)
+        ))
+        
+        chart_title_text2 = f"<b>{selected_range} (Band/Chan)</b>"
+        
+        fig2.update_layout(
+            title=dict(
+                text=chart_title_text2, 
+                font=dict(size=16, color="#000000"), # Scaled down for sidebar
+                x=0.5,
+                xanchor='center'
+            ),
+            xaxis_title="<b>Band / Channel</b>",
+            yaxis_title="<b>TRP (dBm)</b>",
+            xaxis_title_font=dict(size=13, color="#000000"),
+            yaxis_title_font=dict(size=13, color="#000000"),
+            showlegend=False, # Hidden for space
+            hovermode="x unified",
+            plot_bgcolor="#e9f1ff",
+            paper_bgcolor="#cbcbcb", # Blends smoothly with the sidebar background
+            margin=dict(l=10, r=10, t=40, b=20) # Tightened margins
+        )
+        
+        fig2.update_xaxes(
+            tickfont=dict(size=11, color="#000000"), 
+            tickprefix="<b>", ticksuffix="</b>",
+            showline=True, linewidth=1, linecolor='black', mirror=True,
+            showgrid=True, gridcolor='#999999'
+        )
+        fig2.update_yaxes(
+            tickfont=dict(size=11, color="#000000"), 
+            tickprefix="<b>", ticksuffix="</b>",
+            showline=True, linewidth=1, linecolor='black', mirror=True,
+            showgrid=True, gridcolor='#999999'
+        )
+
+        # Render directly in the sidebar
+        st.sidebar.plotly_chart(fig2, use_container_width=True)
+        
     else:
         st.warning("No measurements found for the selected frequency range.")
 
