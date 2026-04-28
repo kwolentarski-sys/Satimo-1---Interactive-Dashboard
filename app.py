@@ -139,73 +139,11 @@ if active_dataset_choice == "Pixel Phone S4 with Dipoles":
         delta_html = f"<b>Maximum Delta (Calc vs Meas):</b> {max_delta_val:.2f} dB at {max_delta_freq:g} MHz ({max_delta_band})"
         st.markdown(f"<div style='font-size: 18px; line-height: 1.4; margin-bottom: 10px;'>{delta_html}</div>", unsafe_allow_html=True)
         
-        # --- First Graph: Frequency vs TRP ---
-        fig1 = go.Figure()
+        # --- Graph: Band/Chan vs TRP ---
+        fig = go.Figure()
         
         # Calculated TRP (Red Dashed Line)
-        fig1.add_trace(go.Scatter(
-            x=df['Frequency (MHz)'], 
-            y=df['Calculated Total Radiated Power (dBm)'],
-            mode='lines+markers',
-            name='<b>Calculated TRP (dBm)</b>',
-            text=df['LTE Band'],
-            customdata=df['Delta (Calc vs Meas) (dB)'],
-            hovertemplate="<b>%{text}</b><br>Freq: %{x} MHz<br>Calc TRP: %{y:.2f} dBm<br>Delta: %{customdata:.2f} dB<extra></extra>",
-            line=dict(dash='dash', color='#ff0000'),
-            marker=dict(color='#ff0000', size=8)
-        ))
-        
-        # Measured TRP (Solid Blue Line)
-        fig1.add_trace(go.Scatter(
-            x=df['Frequency (MHz)'], 
-            y=df['Measured Total Radiated Power (dBm)'],
-            mode='lines+markers',
-            name='<b>Measured TRP (dBm)</b>',
-            text=df['LTE Band'],
-            customdata=df['Delta (Calc vs Meas) (dB)'],
-            hovertemplate="<b>%{text}</b><br>Freq: %{x} MHz<br>Meas TRP: %{y:.2f} dBm<br>Delta: %{customdata:.2f} dB<extra></extra>",
-            line=dict(color='#0000ff'),
-            marker=dict(color='#0000ff', size=8)
-        ))
-        
-        fig1.update_layout(
-            title=dict(
-                text="<b>Pixel Phone S4 - Calc vs Meas TRP (Frequency)</b>", 
-                font=dict(size=22, color="#000000"),
-                x=0.5,
-                xanchor='center'
-            ),
-            xaxis_title="<b>Frequency (MHz)</b>",
-            yaxis_title="<b>Total Radiated Power (dBm)</b>",
-            xaxis_title_font=dict(size=16, color="#000000"),
-            yaxis_title_font=dict(size=16, color="#000000"),
-            legend=dict(font=dict(size=14, color="#000000")),
-            hovermode="x unified",
-            plot_bgcolor="#e9f1ff",
-            paper_bgcolor="#e9f1ff",
-            margin=dict(l=20, r=20, t=60, b=20)
-        )
-        
-        fig1.update_xaxes(
-            tickfont=dict(size=14, color="#000000"), 
-            tickprefix="<b>", ticksuffix="</b>",
-            showline=True, linewidth=2, linecolor='black', mirror=True,
-            showgrid=True, gridcolor='#999999'
-        )
-        fig1.update_yaxes(
-            tickfont=dict(size=14, color="#000000"), 
-            tickprefix="<b>", ticksuffix="</b>",
-            showline=True, linewidth=2, linecolor='black', mirror=True,
-            showgrid=True, gridcolor='#999999'
-        )
-
-        st.plotly_chart(fig1, use_container_width=True)
-        
-        # --- Second Graph: Band/Chan vs TRP ---
-        fig2 = go.Figure()
-        
-        # Calculated TRP (Red Dashed Line)
-        fig2.add_trace(go.Scatter(
+        fig.add_trace(go.Scatter(
             x=df['LTE Band'], 
             y=df['Calculated Total Radiated Power (dBm)'],
             mode='lines+markers',
@@ -218,7 +156,7 @@ if active_dataset_choice == "Pixel Phone S4 with Dipoles":
         ))
         
         # Measured TRP (Solid Blue Line)
-        fig2.add_trace(go.Scatter(
+        fig.add_trace(go.Scatter(
             x=df['LTE Band'], 
             y=df['Measured Total Radiated Power (dBm)'],
             mode='lines+markers',
@@ -230,7 +168,7 @@ if active_dataset_choice == "Pixel Phone S4 with Dipoles":
             marker=dict(color='#0000ff', size=8)
         ))
         
-        fig2.update_layout(
+        fig.update_layout(
             title=dict(
                 text="<b>Pixel Phone S4 - Calc vs Meas TRP (LTE Band/Chan)</b>", 
                 font=dict(size=22, color="#000000"),
@@ -248,20 +186,20 @@ if active_dataset_choice == "Pixel Phone S4 with Dipoles":
             margin=dict(l=20, r=20, t=60, b=20)
         )
         
-        fig2.update_xaxes(
+        fig.update_xaxes(
             tickfont=dict(size=14, color="#000000"), 
             tickprefix="<b>", ticksuffix="</b>",
             showline=True, linewidth=2, linecolor='black', mirror=True,
             showgrid=True, gridcolor='#999999'
         )
-        fig2.update_yaxes(
+        fig.update_yaxes(
             tickfont=dict(size=14, color="#000000"), 
             tickprefix="<b>", ticksuffix="</b>",
             showline=True, linewidth=2, linecolor='black', mirror=True,
             showgrid=True, gridcolor='#999999'
         )
 
-        st.plotly_chart(fig2, use_container_width=True)
+        st.plotly_chart(fig, use_container_width=True)
         
     else:
         st.warning("No valid measurement data could be parsed for Pixel Phone S4.")
