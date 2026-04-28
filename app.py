@@ -124,11 +124,18 @@ if dataset_choice == "Wideband Dipole Chamber Comparison":
                 except (ValueError, TypeError):
                     continue
                     
-    # Display the Overshoot Subtitle and Result on one line
+    # Display the Overshoot Subtitle with smaller font
     if max_overshoot_val > 0:
-        st.markdown(f"#### Maximum Overshoot Above 0 dB: {max_overshoot_val:.2f} dB at {max_overshoot_freq:g} MHz ({max_overshoot_chamber})")
+        overshoot_html = f"<b>Maximum Overshoot Above 0 dB:</b> {max_overshoot_val:.2f} dB at {max_overshoot_freq:g} MHz ({max_overshoot_chamber})"
     else:
-        st.markdown("#### Maximum Overshoot Above 0 dB: None")
+        overshoot_html = "<b>Maximum Overshoot Above 0 dB:</b> None"
+        
+    st.markdown(
+        f"<div style='font-size: 18px; line-height: 1.4; margin-bottom: 10px;'>"
+        f"{overshoot_html}"
+        f"</div>", 
+        unsafe_allow_html=True
+    )
     
     fig = go.Figure()
     
@@ -266,22 +273,28 @@ else:
         # Calculate Maximum Overshoot
         overshoot_df = df[df['efficiency_db_measured'] > 0]
         
-        # Display the Overshoot Subtitle and Result on one line
         if not overshoot_df.empty:
             max_idx = overshoot_df['efficiency_db_measured'].idxmax()
             max_val = overshoot_df.loc[max_idx, 'efficiency_db_measured']
             max_freq = overshoot_df.loc[max_idx, 'frequency_mhz']
-            st.markdown(f"#### Maximum Overshoot Above 0 dB: {max_val:.2f} dB at {max_freq:g} MHz")
+            overshoot_html = f"<b>Maximum Overshoot Above 0 dB:</b> {max_val:.2f} dB at {max_freq:g} MHz"
         else:
-            st.markdown("#### Maximum Overshoot Above 0 dB: None")
+            overshoot_html = "<b>Maximum Overshoot Above 0 dB:</b> None"
 
         # Calculate Maximum Delta from Reference NIST
         max_delta_idx = (df['efficiency_db_measured'] - df['efficiency_db_ref']).abs().idxmax()
         max_delta_val = abs(df.loc[max_delta_idx, 'efficiency_db_measured'] - df.loc[max_delta_idx, 'efficiency_db_ref'])
         max_delta_freq = df.loc[max_delta_idx, 'frequency_mhz']
         
-        # Display the Maximum Delta Subtitle and Result on one line
-        st.markdown(f"#### Maximum Delta - Reference NIST: {max_delta_val:.2f} dB at {max_delta_freq:g} MHz")
+        delta_html = f"<b>Maximum Delta - Reference NIST:</b> {max_delta_val:.2f} dB at {max_delta_freq:g} MHz"
+        
+        # Display both subtitles with smaller font and no line spacing between them
+        st.markdown(
+            f"<div style='font-size: 18px; line-height: 1.4; margin-bottom: 10px;'>"
+            f"{overshoot_html}<br>{delta_html}"
+            f"</div>", 
+            unsafe_allow_html=True
+        )
 
         fig = go.Figure()
 
