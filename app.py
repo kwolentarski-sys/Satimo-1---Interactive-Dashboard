@@ -123,12 +123,11 @@ if dataset_choice == "Wideband Dipole Chamber Comparison":
                 except (ValueError, TypeError):
                     continue
                     
-    # Display the Overshoot Subtitle and Result
-    st.markdown("#### Maximum Overshoot Above 0 dB:")
+    # Display the Overshoot Subtitle and Result on one line
     if max_overshoot_val > 0:
-        st.markdown(f"{max_overshoot_val:.2f} dB at {max_overshoot_freq:g} MHz ({max_overshoot_chamber})")
+        st.markdown(f"#### Maximum Overshoot Above 0 dB: {max_overshoot_val:.2f} dB at {max_overshoot_freq:g} MHz ({max_overshoot_chamber})")
     else:
-        st.markdown("None")
+        st.markdown("#### Maximum Overshoot Above 0 dB: None")
     
     fig = go.Figure()
     
@@ -262,19 +261,17 @@ else:
         test_type_label = "Horn" if "Horn" in dataset_choice else "Dipole"
         st.subheader(f"{time_prefix} - {test_type_label} Validation Measurements")
         
-        st.markdown(f"**Reference Source:** {selected_data.get('reference', 'N/A')} | **Test Date:** {test_date}")
-
         # Calculate Maximum Overshoot
         overshoot_df = df[df['efficiency_db_measured'] > 0]
         
-        st.markdown("#### Maximum Overshoot Above 0 dB:")
+        # Display the Overshoot Subtitle and Result on one line
         if not overshoot_df.empty:
             max_idx = overshoot_df['efficiency_db_measured'].idxmax()
             max_val = overshoot_df.loc[max_idx, 'efficiency_db_measured']
             max_freq = overshoot_df.loc[max_idx, 'frequency_mhz']
-            st.markdown(f"{max_val:.2f} dB at {max_freq:g} MHz")
+            st.markdown(f"#### Maximum Overshoot Above 0 dB: {max_val:.2f} dB at {max_freq:g} MHz")
         else:
-            st.markdown("None")
+            st.markdown("#### Maximum Overshoot Above 0 dB: None")
 
         fig = go.Figure()
 
