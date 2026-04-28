@@ -98,10 +98,6 @@ if dataset_choice == "Wideband Dipole Chamber Comparison":
     selected_antenna = st.sidebar.selectbox("**Select Antenna:**", ["Proxicast Dipole #4"])
     
     st.markdown("<h3 style='color: #0000ff;'>Wideband - Chamber Comparison Measurements</h3>", unsafe_allow_html=True)
-    
-    dates = [f"{k}: {v.get('Date', 'N/A')}" for k, v in raw_data.items() if isinstance(v, dict)]
-    if dates:
-        st.markdown("**Test Dates:** " + " | ".join(dates))
         
     # Pre-calculate the maximum overshoot across all chambers
     max_overshoot_val = 0
@@ -142,6 +138,7 @@ if dataset_choice == "Wideband Dipole Chamber Comparison":
     # Loop through each chamber to plot the data
     for chamber_name, chamber_data in raw_data.items():
         if isinstance(chamber_data, dict) and "Data" in chamber_data:
+            chamber_date = chamber_data.get('Date', 'N/A')
             freqs = []
             effs = []
             for row in chamber_data["Data"]:
@@ -156,11 +153,12 @@ if dataset_choice == "Wideband Dipole Chamber Comparison":
                     continue
             
             if freqs and effs:
+                # Include the specific chamber's test date directly in the legend trace name
                 fig.add_trace(go.Scatter(
                     x=freqs, 
                     y=effs,
                     mode='lines+markers',
-                    name=f"<b>{chamber_name}</b>"
+                    name=f"<b>{chamber_name} ({chamber_date})</b>"
                 ))
     
     if not fig.data:
