@@ -96,7 +96,6 @@ if dataset_choice == "Wideband Dipole Chamber Comparison":
     
     selected_antenna = st.sidebar.selectbox("Select Antenna:", ["Proxicast Dipole #4"])
     
-    # Changed to HTML markdown for color formatting
     st.markdown("<h3 style='color: #0000ff;'>Wideband - Chamber Comparison Measurements</h3>", unsafe_allow_html=True)
     
     dates = [f"{k}: {v.get('Date', 'N/A')}" for k, v in raw_data.items() if isinstance(v, dict)]
@@ -124,11 +123,11 @@ if dataset_choice == "Wideband Dipole Chamber Comparison":
                 except (ValueError, TypeError):
                     continue
                     
-    # Display the Overshoot Subtitle with smaller font
+    # Display the Overshoot Subtitle with conditional color formatting
     if max_overshoot_val > 0:
-        overshoot_html = f"<b>Maximum Overshoot Above 0 dB:</b> {max_overshoot_val:.2f} dB at {max_overshoot_freq:g} MHz ({max_overshoot_chamber})"
+        overshoot_html = f"<b>Maximum Overshoot Above 0 dB:</b> <span style='color: #da0303;'>{max_overshoot_val:.2f} dB at {max_overshoot_freq:g} MHz ({max_overshoot_chamber})</span>"
     else:
-        overshoot_html = "<b>Maximum Overshoot Above 0 dB:</b> None"
+        overshoot_html = "<b>Maximum Overshoot Above 0 dB:</b> <span style='color: #7cb362;'>None</span>"
         
     st.markdown(
         f"<div style='font-size: 18px; line-height: 1.4; margin-bottom: 10px;'>"
@@ -267,19 +266,19 @@ else:
         time_prefix = dataset_choice.split()[0]
         test_type_label = "Horn" if "Horn" in dataset_choice else "Dipole"
         
-        # Changed to HTML markdown for color formatting
         st.markdown(f"<h3 style='color: #0000ff;'>{time_prefix} - {test_type_label} Validation Measurements</h3>", unsafe_allow_html=True)
         
         # Calculate Maximum Overshoot
         overshoot_df = df[df['efficiency_db_measured'] > 0]
         
+        # Apply conditional color formatting
         if not overshoot_df.empty:
             max_idx = overshoot_df['efficiency_db_measured'].idxmax()
             max_val = overshoot_df.loc[max_idx, 'efficiency_db_measured']
             max_freq = overshoot_df.loc[max_idx, 'frequency_mhz']
-            overshoot_html = f"<b>Maximum Overshoot Above 0 dB:</b> {max_val:.2f} dB at {max_freq:g} MHz"
+            overshoot_html = f"<b>Maximum Overshoot Above 0 dB:</b> <span style='color: #da0303;'>{max_val:.2f} dB at {max_freq:g} MHz</span>"
         else:
-            overshoot_html = "<b>Maximum Overshoot Above 0 dB:</b> None"
+            overshoot_html = "<b>Maximum Overshoot Above 0 dB:</b> <span style='color: #7cb362;'>None</span>"
 
         # Calculate Maximum Delta from Reference NIST
         max_delta_idx = (df['efficiency_db_measured'] - df['efficiency_db_ref']).abs().idxmax()
