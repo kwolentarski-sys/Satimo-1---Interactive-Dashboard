@@ -109,13 +109,14 @@ if dataset_choice == "Wideband Dipole Chamber Comparison":
     if not fig.data:
         st.warning("No valid measurement data could be parsed for the chamber comparison.")
     else:
-        # Update layout for Axis Titles
+        # Update layout for Axis Titles and Background Color
         fig.update_layout(
             xaxis_title="<b>Frequency (MHz)</b>",
             yaxis_title="<b>Efficiency (dB)</b>",
             xaxis_title_font=dict(size=16, color="#000000"),
             yaxis_title_font=dict(size=16, color="#000000"),
             hovermode="x unified",
+            plot_bgcolor="#e9f1ff",
             margin=dict(l=20, r=20, t=40, b=20)
         )
         # Update layout for Axis Numbers (Ticks) and Plot Border
@@ -214,13 +215,14 @@ else:
             name='Measured Efficiency (dB)'
         ))
 
-        # Update layout for Axis Titles
+        # Update layout for Axis Titles and Background Color
         fig.update_layout(
             xaxis_title="<b>Frequency (MHz)</b>",
             yaxis_title="<b>Efficiency (dB)</b>",
             xaxis_title_font=dict(size=16, color="#000000"),
             yaxis_title_font=dict(size=16, color="#000000"),
             hovermode="x unified",
+            plot_bgcolor="#e9f1ff",
             margin=dict(l=20, r=20, t=40, b=20)
         )
         # Update layout for Axis Numbers (Ticks) and Plot Border
