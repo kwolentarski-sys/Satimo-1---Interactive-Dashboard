@@ -74,7 +74,7 @@ dataset_choice = ph_passive_type.selectbox(
     ("None", "Yearly Dipoles", "Quarterly Dipoles", "Monthly Horns", "Wideband Dipole Chamber Comparison")
 )
 
-# 2. Active Dataset Selection Toggle (Added "LTE TIS")
+# 2. Active Dataset Selection Toggle 
 active_dataset_choice = ph_active_type.selectbox(
     "**Select Active Validation Type:**",
     ("None", "LTE TRP", "LTE TIS")
@@ -121,169 +121,157 @@ if active_dataset_choice == "LTE TRP":
     if not freq_ranges:
         st.error("⚠️ Invalid data structure for LTE TRP.")
         st.stop()
-    
-    # Add the "Band/Chan" option to trigger the aggregate view
-    freq_ranges.append("Band/Chan")
         
-    # Dropdown to filter by the frequency range, placed in the specific placeholder slot
+    # Dropdown to filter by the frequency range
     selected_range = ph_active_range.selectbox("**Select Frequency Range:**", freq_ranges)
+    selected_data = next((item for item in raw_data if item.get("Frequency_Range") == selected_range), None)
     
-    if selected_range == "Band/Chan":
-        # --- Aggregate: Band/Chan vs TRP View ---
-        all_measurements = []
-        test_date = 'N/A'
-        device_name = 'Unknown Device'
+    if selected_data and "Measurements" in selected_data:
+        df = pd.DataFrame(selected_data["Measurements"])
+        # Ensure data is plotted numerically
+        df['Frequency (Mhz)'] = df['Frequency (Mhz)'].astype(float)
+        df['TRP (dBm)'] = df['TRP (dBm)'].astype(float)
         
-        for item in raw_data:
-            if isinstance(item, dict):
-                test_date = item.get('Date', test_date)
-                device_name = item.get('Device', device_name)
-                if "Measurements" in item:
-                    all_measurements.extend(item["Measurements"])
-                    
-        if all_measurements:
-            df = pd.DataFrame(all_measurements)
-            df['Frequency (Mhz)'] = df['Frequency (Mhz)'].astype(float)
-            df['TRP (dBm)'] = df['TRP (dBm)'].astype(float)
-            
-            st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - LTE TRP Validation Measurements</h3>", unsafe_allow_html=True)
-            st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> {device_name} | <b>Test Date:</b> {test_date}</div>", unsafe_allow_html=True)
-            
-            fig = go.Figure()
-            
-            fig.add_trace(go.Scatter(
-                x=df['Band Chan'], 
-                y=df['TRP (dBm)'],
-                mode='lines+markers',
-                name=f'<b>TRP (dBm) {test_date}</b>',
-                text=df['Frequency (Mhz)'],
-                hovertemplate="<b>%{x}</b><br>Freq: %{text} MHz<br>TRP: %{y:.2f} dBm<extra></extra>",
-                line=dict(color='#0000ff'),
-                marker=dict(color='#0000ff', size=8)
-            ))
-            
-            chart_title_text = f"<b>All Frequencies - Active TRP Trend (Band/Chan)</b>"
-            
-            fig.update_layout(
-                title=dict(
-                    text=chart_title_text, 
-                    font=dict(size=22, color="#000000"),
-                    x=0.5,
-                    xanchor='center'
-                ),
-                xaxis_title="<b>Band / Channel</b>",
-                yaxis_title="<b>TRP (dBm)</b>",
-                xaxis_title_font=dict(size=16, color="#000000"),
-                yaxis_title_font=dict(size=16, color="#000000"),
-                legend=dict(font=dict(size=14, color="#000000")),
-                hovermode="x unified",
-                plot_bgcolor="#e9f1ff",
-                paper_bgcolor="#e9f1ff",
-                margin=dict(l=20, r=20, t=60, b=20)
-            )
-            
-            fig.update_xaxes(
-                tickfont=dict(size=14, color="#000000"), 
-                tickprefix="<b>", ticksuffix="</b>",
-                showline=True, linewidth=2, linecolor='black', mirror=True,
-                showgrid=True, gridcolor='#999999'
-            )
-            fig.update_yaxes(
-                tickfont=dict(size=14, color="#000000"), 
-                tickprefix="<b>", ticksuffix="</b>",
-                showline=True, linewidth=2, linecolor='black', mirror=True,
-                showgrid=True, gridcolor='#999999'
-            )
+        test_date = selected_data.get('Date', 'N/A')
+        device_name = selected_data.get('Device', 'Unknown Device')
+        
+        # Dashboard Headers
+        st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - LTE TRP Validation Measurements</h3>", unsafe_allow_html=True)
+        st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> {device_name} | <b>Test Date:</b> {test_date}</div>", unsafe_allow_html=True)
+        
+        # --- First Graph: Frequency vs TRP ---
+        fig = go.Figure()
+        
+        fig.add_trace(go.Scatter(
+            x=df['Frequency (Mhz)'], 
+            y=df['TRP (dBm)'],
+            mode='lines+markers',
+            name=f'<b>TRP (dBm) {test_date}</b>',
+            text=df['Band Chan'],
+            hovertemplate="<b>%{text}</b><br>Freq: %{x} MHz<br>TRP: %{y:.2f} dBm<extra></extra>",
+            line=dict(color='#0000ff'),
+            marker=dict(color='#0000ff', size=8)
+        ))
+        
+        chart_title_text = f"<b>{selected_range} - Active TRP Trend (Frequency)</b>"
+        
+        fig.update_layout(
+            title=dict(
+                text=chart_title_text, 
+                font=dict(size=22, color="#000000"),
+                x=0.5,
+                xanchor='center'
+            ),
+            xaxis_title="<b>Frequency (MHz)</b>",
+            yaxis_title="<b>TRP (dBm)</b>",
+            xaxis_title_font=dict(size=16, color="#000000"),
+            yaxis_title_font=dict(size=16, color="#000000"),
+            legend=dict(font=dict(size=14, color="#000000")),
+            hovermode="x unified",
+            plot_bgcolor="#e9f1ff",
+            paper_bgcolor="#e9f1ff",
+            margin=dict(l=20, r=20, t=60, b=20)
+        )
+        
+        fig.update_xaxes(
+            tickfont=dict(size=14, color="#000000"), 
+            tickprefix="<b>", ticksuffix="</b>",
+            showline=True, linewidth=2, linecolor='black', mirror=True,
+            showgrid=True, gridcolor='#999999'
+        )
+        fig.update_yaxes(
+            tickfont=dict(size=14, color="#000000"), 
+            tickprefix="<b>", ticksuffix="</b>",
+            showline=True, linewidth=2, linecolor='black', mirror=True,
+            showgrid=True, gridcolor='#999999'
+        )
 
-            st.plotly_chart(fig, use_container_width=True)
-        else:
-            st.warning("No measurements found.")
-            
+        st.plotly_chart(fig, use_container_width=True)
+        
+        # --- Second Graph: Band/Channel vs TRP ---
+        fig2 = go.Figure()
+        
+        fig2.add_trace(go.Scatter(
+            x=df['Band Chan'], 
+            y=df['TRP (dBm)'],
+            mode='lines+markers',
+            name=f'<b>TRP (dBm) {test_date}</b>',
+            text=df['Frequency (Mhz)'],
+            hovertemplate="<b>%{x}</b><br>Freq: %{text} MHz<br>TRP: %{y:.2f} dBm<extra></extra>",
+            line=dict(color='#0000ff'),
+            marker=dict(color='#0000ff', size=8)
+        ))
+        
+        chart_title_text2 = f"<b>{selected_range} - Active TRP Trend (Band/Chan)</b>"
+        
+        fig2.update_layout(
+            title=dict(
+                text=chart_title_text2, 
+                font=dict(size=22, color="#000000"),
+                x=0.5,
+                xanchor='center'
+            ),
+            xaxis_title="<b>Band / Channel</b>",
+            yaxis_title="<b>TRP (dBm)</b>",
+            xaxis_title_font=dict(size=16, color="#000000"),
+            yaxis_title_font=dict(size=16, color="#000000"),
+            legend=dict(font=dict(size=14, color="#000000")),
+            hovermode="x unified",
+            plot_bgcolor="#e9f1ff",
+            paper_bgcolor="#e9f1ff",
+            margin=dict(l=20, r=20, t=60, b=20)
+        )
+        
+        fig2.update_xaxes(
+            tickfont=dict(size=14, color="#000000"), 
+            tickprefix="<b>", ticksuffix="</b>",
+            showline=True, linewidth=2, linecolor='black', mirror=True,
+            showgrid=True, gridcolor='#999999'
+        )
+        fig2.update_yaxes(
+            tickfont=dict(size=14, color="#000000"), 
+            tickprefix="<b>", ticksuffix="</b>",
+            showline=True, linewidth=2, linecolor='black', mirror=True,
+            showgrid=True, gridcolor='#999999'
+        )
+
+        st.plotly_chart(fig2, use_container_width=True)
+        
     else:
-        # --- Standard Logic: Frequency vs TRP ---
-        selected_data = next((item for item in raw_data if item.get("Frequency_Range") == selected_range), None)
-        
-        if selected_data and "Measurements" in selected_data:
-            df = pd.DataFrame(selected_data["Measurements"])
-            df['Frequency (Mhz)'] = df['Frequency (Mhz)'].astype(float)
-            df['TRP (dBm)'] = df['TRP (dBm)'].astype(float)
-            
-            test_date = selected_data.get('Date', 'N/A')
-            device_name = selected_data.get('Device', 'Unknown Device')
-            
-            st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - LTE TRP Validation Measurements</h3>", unsafe_allow_html=True)
-            st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> {device_name} | <b>Test Date:</b> {test_date}</div>", unsafe_allow_html=True)
-            
-            fig = go.Figure()
-            
-            fig.add_trace(go.Scatter(
-                x=df['Frequency (Mhz)'], 
-                y=df['TRP (dBm)'],
-                mode='lines+markers',
-                name=f'<b>TRP (dBm) {test_date}</b>',
-                text=df['Band Chan'],
-                hovertemplate="<b>%{text}</b><br>Freq: %{x} MHz<br>TRP: %{y:.2f} dBm<extra></extra>",
-                line=dict(color='#0000ff'),
-                marker=dict(color='#0000ff', size=8)
-            ))
-            
-            chart_title_text = f"<b>{selected_range} - Active TRP Trend (Frequency)</b>"
-            
-            fig.update_layout(
-                title=dict(
-                    text=chart_title_text, 
-                    font=dict(size=22, color="#000000"),
-                    x=0.5,
-                    xanchor='center'
-                ),
-                xaxis_title="<b>Frequency (MHz)</b>",
-                yaxis_title="<b>TRP (dBm)</b>",
-                xaxis_title_font=dict(size=16, color="#000000"),
-                yaxis_title_font=dict(size=16, color="#000000"),
-                legend=dict(font=dict(size=14, color="#000000")),
-                hovermode="x unified",
-                plot_bgcolor="#e9f1ff",
-                paper_bgcolor="#e9f1ff",
-                margin=dict(l=20, r=20, t=60, b=20)
-            )
-            
-            fig.update_xaxes(
-                tickfont=dict(size=14, color="#000000"), 
-                tickprefix="<b>", ticksuffix="</b>",
-                showline=True, linewidth=2, linecolor='black', mirror=True,
-                showgrid=True, gridcolor='#999999'
-            )
-            fig.update_yaxes(
-                tickfont=dict(size=14, color="#000000"), 
-                tickprefix="<b>", ticksuffix="</b>",
-                showline=True, linewidth=2, linecolor='black', mirror=True,
-                showgrid=True, gridcolor='#999999'
-            )
-
-            st.plotly_chart(fig, use_container_width=True)
-            
-        else:
-            st.warning("No measurements found for the selected frequency range.")
+        st.warning("No measurements found for the selected frequency range.")
 
 elif active_dataset_choice == "LTE TIS":
-    # --- Logic for the New Active LTE TIS Data ---
+    # --- Logic for the Active LTE TIS Data ---
     
-    # Aggregate all measurements since Frequency_Range is not delineated in the TIS file
-    all_measurements = []
-    test_date = 'N/A'
-    device_name = 'Unknown Device'
+    # Fallback to assign Frequency_Range labels if they are missing in the JSON file
+    for i, item in enumerate(raw_data):
+        if isinstance(item, dict) and "Frequency_Range" not in item:
+            if i == 0:
+                item["Frequency_Range"] = "LTE Low Frequencies"
+            elif i == 1:
+                item["Frequency_Range"] = "LTE Mid Frequencies"
+            elif i == 2:
+                item["Frequency_Range"] = "LTE High Frequencies"
+            else:
+                item["Frequency_Range"] = f"Range {i+1}"
     
-    for item in raw_data:
-        if isinstance(item, dict):
-            test_date = item.get('Date', test_date)
-            device_name = item.get('Device', device_name)
-            if "Measurements" in item:
-                all_measurements.extend(item["Measurements"])
-                
-    if all_measurements:
-        df = pd.DataFrame(all_measurements)
+    # Extract the frequency ranges
+    freq_ranges = [d.get("Frequency_Range") for d in raw_data if isinstance(d, dict)]
+    if not freq_ranges:
+        st.error("⚠️ Invalid data structure for LTE TIS.")
+        st.stop()
+        
+    # Dropdown to filter by the frequency range
+    selected_range = ph_active_range.selectbox("**Select Frequency Range:**", freq_ranges)
+    selected_data = next((item for item in raw_data if item.get("Frequency_Range") == selected_range), None)
+
+    if selected_data and "Measurements" in selected_data:
+        df = pd.DataFrame(selected_data["Measurements"])
         df['Frequency (Mhz)'] = df['Frequency (Mhz)'].astype(float)
         df['TIS (dBm)'] = df['TIS (dBm)'].astype(float)
+        
+        test_date = selected_data.get('Date', 'N/A')
+        device_name = selected_data.get('Device', 'Unknown Device')
         
         st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - LTE TIS Validation Measurements</h3>", unsafe_allow_html=True)
         st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> {device_name} | <b>Test Date:</b> {test_date}</div>", unsafe_allow_html=True)
@@ -302,9 +290,11 @@ elif active_dataset_choice == "LTE TIS":
             marker=dict(color='#0000ff', size=8)
         ))
         
+        chart_title_text1 = f"<b>{selected_range} - Active TIS Trend (Frequency)</b>"
+        
         fig1.update_layout(
             title=dict(
-                text="<b>All Frequencies - Active TIS Trend (Frequency)</b>", 
+                text=chart_title_text1, 
                 font=dict(size=22, color="#000000"),
                 x=0.5,
                 xanchor='center'
@@ -349,9 +339,11 @@ elif active_dataset_choice == "LTE TIS":
             marker=dict(color='#0000ff', size=8)
         ))
         
+        chart_title_text2 = f"<b>{selected_range} - Active TIS Trend (Band/Chan)</b>"
+        
         fig2.update_layout(
             title=dict(
-                text="<b>All Frequencies - Active TIS Trend (Band/Chan)</b>", 
+                text=chart_title_text2, 
                 font=dict(size=22, color="#000000"),
                 x=0.5,
                 xanchor='center'
@@ -383,7 +375,7 @@ elif active_dataset_choice == "LTE TIS":
         st.plotly_chart(fig2, use_container_width=True)
 
     else:
-        st.warning("No TIS measurements could be loaded from the file.")
+        st.warning("No measurements found for the selected frequency range.")
 
 elif dataset_choice == "Wideband Dipole Chamber Comparison":
     # --- Logic for the Multi-Chamber Comparison Data ---
