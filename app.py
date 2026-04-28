@@ -297,12 +297,14 @@ else:
 
         fig = go.Figure()
 
+        # Updated to explicitly use #ff0000 (red) for the reference trace
         fig.add_trace(go.Scatter(
             x=df['frequency_mhz'], 
             y=df['efficiency_db_ref'],
             mode='lines+markers',
             name='<b>Reference Efficiency - NIST (dB)</b>',
-            line=dict(dash='dash')
+            line=dict(dash='dash', color='#ff0000'),
+            marker=dict(color='#ff0000')
         ))
 
         fig.add_trace(go.Scatter(
