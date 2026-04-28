@@ -101,9 +101,38 @@ if dataset_choice == "Wideband Dipole Chamber Comparison":
     dates = [f"{k}: {v.get('Date', 'N/A')}" for k, v in raw_data.items() if isinstance(v, dict)]
     if dates:
         st.markdown("**Test Dates:** " + " | ".join(dates))
+        
+    # Pre-calculate the maximum overshoot across all chambers
+    max_overshoot_val = 0
+    max_overshoot_freq = None
+    max_overshoot_chamber = None
+    
+    for chamber_name, chamber_data in raw_data.items():
+        if isinstance(chamber_data, dict) and "Data" in chamber_data:
+            for row in chamber_data["Data"]:
+                try:
+                    f_key = next((k for k in row.keys() if 'Frequency' in k), None)
+                    e_key = next((k for k in row.keys() if 'Efficiency' in k), None)
+                    if f_key and e_key:
+                        f_val = float(row[f_key])
+                        e_val = float(row[e_key])
+                        if e_val > 0 and e_val > max_overshoot_val:
+                            max_overshoot_val = e_val
+                            max_overshoot_freq = f_val
+                            max_overshoot_chamber = chamber_name
+                except (ValueError, TypeError):
+                    continue
+                    
+    # Display the Overshoot Subtitle and Result
+    st.markdown("#### Maximum Overshoot Above 0 dB:")
+    if max_overshoot_val > 0:
+        st.markdown(f"{max_overshoot_val:.2f} dB at {max_overshoot_freq:g} MHz ({max_overshoot_chamber})")
+    else:
+        st.markdown("None")
     
     fig = go.Figure()
     
+    # Loop through each chamber to plot the data
     for chamber_name, chamber_data in raw_data.items():
         if isinstance(chamber_data, dict) and "Data" in chamber_data:
             freqs = []
@@ -230,11 +259,22 @@ else:
         
         # Updated Subheader
         time_prefix = dataset_choice.split()[0]
-        # Dynamically determine if we are looking at Dipoles or Horns based on the dropdown
         test_type_label = "Horn" if "Horn" in dataset_choice else "Dipole"
         st.subheader(f"{time_prefix} - {test_type_label} Validation Measurements")
         
         st.markdown(f"**Reference Source:** {selected_data.get('reference', 'N/A')} | **Test Date:** {test_date}")
+
+        # Calculate Maximum Overshoot
+        overshoot_df = df[df['efficiency_db_measured'] > 0]
+        
+        st.markdown("#### Maximum Overshoot Above 0 dB:")
+        if not overshoot_df.empty:
+            max_idx = overshoot_df['efficiency_db_measured'].idxmax()
+            max_val = overshoot_df.loc[max_idx, 'efficiency_db_measured']
+            max_freq = overshoot_df.loc[max_idx, 'frequency_mhz']
+            st.markdown(f"{max_val:.2f} dB at {max_freq:g} MHz")
+        else:
+            st.markdown("None")
 
         fig = go.Figure()
 
@@ -250,14 +290,13 @@ else:
             x=df['frequency_mhz'], 
             y=df['efficiency_db_measured'],
             mode='lines+markers',
-            name=f'<b>Measured Efficiency {test_date}</b>'
+            name=f'<b>Measured Efficiency (dB) {test_date}</b>'
         ))
 
         fig.add_hline(y=0, line_width=3, line_color="black")
 
         # Build the dynamic title with frequency range
         freq_range = ANTENNA_RANGES.get(selected_antenna, "Passive Trend")
-        # Clean up the antenna name for the title (remove "Dipole " or "Horn " prefix)
         clean_antenna_name = selected_antenna.replace("Dipole ", "").replace("Horn ", "")
         chart_title_text = f"<b>{clean_antenna_name} ({freq_range}) - Passive Trend</b>"
 
