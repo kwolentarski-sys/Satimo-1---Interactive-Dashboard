@@ -184,6 +184,7 @@ if dataset_choice == "Wideband Dipole Chamber Comparison":
             legend=dict(font=dict(size=14, color="#000000")),
             hovermode="x unified",
             plot_bgcolor="#e9f1ff",
+            paper_bgcolor="#e9f1ff",  # Extended background color
             margin=dict(l=20, r=20, t=60, b=20)
         )
         
@@ -336,6 +337,7 @@ else:
             legend=dict(font=dict(size=14, color="#000000")),
             hovermode="x unified",
             plot_bgcolor="#e9f1ff",
+            paper_bgcolor="#e9f1ff",  # Extended background color
             margin=dict(l=20, r=20, t=60, b=20)
         )
         
