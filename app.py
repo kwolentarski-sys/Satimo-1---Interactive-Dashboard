@@ -96,7 +96,8 @@ if dataset_choice == "Wideband Dipole Chamber Comparison":
     
     selected_antenna = st.sidebar.selectbox("Select Antenna:", ["Proxicast Dipole #4"])
     
-    st.subheader("Wideband - Chamber Comparison Measurements")
+    # Changed to HTML markdown for color formatting
+    st.markdown("<h3 style='color: #0000ff;'>Wideband - Chamber Comparison Measurements</h3>", unsafe_allow_html=True)
     
     dates = [f"{k}: {v.get('Date', 'N/A')}" for k, v in raw_data.items() if isinstance(v, dict)]
     if dates:
@@ -256,10 +257,11 @@ else:
         df = pd.DataFrame(selected_data['measurements'])
         test_date = selected_data.get('date', 'N/A')
         
-        # Updated Subheader
         time_prefix = dataset_choice.split()[0]
         test_type_label = "Horn" if "Horn" in dataset_choice else "Dipole"
-        st.subheader(f"{time_prefix} - {test_type_label} Validation Measurements")
+        
+        # Changed to HTML markdown for color formatting
+        st.markdown(f"<h3 style='color: #0000ff;'>{time_prefix} - {test_type_label} Validation Measurements</h3>", unsafe_allow_html=True)
         
         # Calculate Maximum Overshoot
         overshoot_df = df[df['efficiency_db_measured'] > 0]
