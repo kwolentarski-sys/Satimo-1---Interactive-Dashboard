@@ -62,21 +62,30 @@ st.sidebar.markdown(
     unsafe_allow_html=True
 )
 
-# 1. Dataset Selection Toggle (Now Bold)
+# 1. Passive Dataset Selection Toggle (Now Bold)
 dataset_choice = st.sidebar.selectbox(
     "**Select Passive Validation Type:**",
     ("Yearly Dipoles", "Quarterly Dipoles", "Monthly Horns", "Wideband Dipole Chamber Comparison")
 )
 
-# Map selection to the exact JSON files
-if dataset_choice == "Yearly Dipoles":
-    target_file = 'Satimo2_Dipoles_Yearly.json'
-elif dataset_choice == "Quarterly Dipoles":
-    target_file = 'Satimo2_Dipoles_Quarterly.json'
-elif dataset_choice == "Monthly Horns":
-    target_file = 'Satimo2_Horns_Monthly.json'
+# 2. Active Dataset Selection Toggle (New)
+active_dataset_choice = st.sidebar.selectbox(
+    "**Select Active Validation Type:**",
+    ("None", "LTE TRP")
+)
+
+# Map selection to the exact JSON files based on active/passive choice
+if active_dataset_choice == "LTE TRP":
+    target_file = 'Satimo2_LTE_Reference_TRP_Quarterly.json'
 else:
-    target_file = 'Chambers_Wideband_Dipole_Comparison.json'
+    if dataset_choice == "Yearly Dipoles":
+        target_file = 'Satimo2_Dipoles_Yearly.json'
+    elif dataset_choice == "Quarterly Dipoles":
+        target_file = 'Satimo2_Dipoles_Quarterly.json'
+    elif dataset_choice == "Monthly Horns":
+        target_file = 'Satimo2_Horns_Monthly.json'
+    else:
+        target_file = 'Chambers_Wideband_Dipole_Comparison.json'
 
 # Load the selected dataset
 try:
@@ -91,7 +100,85 @@ except json.JSONDecodeError:
 
 # --- ROUTING LOGIC BASED ON DATASET TYPE ---
 
-if dataset_choice == "Wideband Dipole Chamber Comparison":
+if active_dataset_choice == "LTE TRP":
+    # --- Logic for the New Active LTE TRP Data ---
+    
+    # Extract the available frequency ranges from the JSON
+    freq_ranges = [d.get("Frequency_Range", "Unknown") for d in raw_data if isinstance(d, dict)]
+    if not freq_ranges:
+        st.error("⚠️ Invalid data structure for LTE TRP.")
+        st.stop()
+        
+    # Dropdown to filter by the frequency range
+    selected_range = st.sidebar.selectbox("**Select Frequency Range:**", freq_ranges)
+    selected_data = next((item for item in raw_data if item.get("Frequency_Range") == selected_range), None)
+    
+    if selected_data and "Measurements" in selected_data:
+        df = pd.DataFrame(selected_data["Measurements"])
+        # Ensure data is plotted numerically
+        df['Frequency (Mhz)'] = df['Frequency (Mhz)'].astype(float)
+        df['TRP (dBm)'] = df['TRP (dBm)'].astype(float)
+        
+        test_date = selected_data.get('Date', 'N/A')
+        device_name = selected_data.get('Device', 'Unknown Device')
+        
+        # Dashboard Headers
+        st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - LTE TRP Validation Measurements</h3>", unsafe_allow_html=True)
+        st.markdown(f"**Device:** {device_name} | **Test Date:** {test_date}")
+        
+        fig = go.Figure()
+        
+        # Plot TRP Data
+        fig.add_trace(go.Scatter(
+            x=df['Frequency (Mhz)'], 
+            y=df['TRP (dBm)'],
+            mode='lines+markers',
+            name=f'<b>TRP (dBm) {test_date}</b>',
+            text=df['Band Chan'], # Add the band/channel text for hover data
+            hovertemplate="<b>%{text}</b><br>Freq: %{x} MHz<br>TRP: %{y:.2f} dBm<extra></extra>",
+            line=dict(color='#0000ff'),
+            marker=dict(color='#0000ff', size=8)
+        ))
+        
+        chart_title_text = f"<b>{selected_range} - Active TRP Trend</b>"
+        
+        # Update layout mirroring the rest of the dashboard
+        fig.update_layout(
+            title=dict(
+                text=chart_title_text, 
+                font=dict(size=22, color="#000000"),
+                x=0.5,
+                xanchor='center'
+            ),
+            xaxis_title="<b>Frequency (MHz)</b>",
+            yaxis_title="<b>TRP (dBm)</b>",
+            xaxis_title_font=dict(size=16, color="#000000"),
+            yaxis_title_font=dict(size=16, color="#000000"),
+            legend=dict(font=dict(size=14, color="#000000")),
+            hovermode="x unified",
+            plot_bgcolor="#e9f1ff",
+            paper_bgcolor="#e9f1ff",
+            margin=dict(l=20, r=20, t=60, b=20)
+        )
+        
+        fig.update_xaxes(
+            tickfont=dict(size=14, color="#000000"), 
+            tickprefix="<b>", ticksuffix="</b>",
+            showline=True, linewidth=2, linecolor='black', mirror=True,
+            showgrid=True, gridcolor='#999999'
+        )
+        fig.update_yaxes(
+            tickfont=dict(size=14, color="#000000"), 
+            tickprefix="<b>", ticksuffix="</b>",
+            showline=True, linewidth=2, linecolor='black', mirror=True,
+            showgrid=True, gridcolor='#999999'
+        )
+
+        st.plotly_chart(fig, use_container_width=True)
+    else:
+        st.warning("No measurements found for the selected frequency range.")
+
+elif dataset_choice == "Wideband Dipole Chamber Comparison":
     # --- Logic for the Multi-Chamber Comparison Data ---
     
     # Antenna Selection Toggle (Now Bold)
