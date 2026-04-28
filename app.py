@@ -122,16 +122,18 @@ if dataset_choice == "Wideband Dipole Chamber Comparison":
             plot_bgcolor="#e9f1ff",
             margin=dict(l=20, r=20, t=40, b=20)
         )
-        # Update layout for Axis Numbers (Ticks) and Plot Border
+        # Update layout for Axis Numbers (Ticks), Plot Border, and Darker Grid Lines
         fig.update_xaxes(
             tickfont=dict(size=14, color="#000000"), 
             tickprefix="<b>", ticksuffix="</b>",
-            showline=True, linewidth=2, linecolor='black', mirror=True
+            showline=True, linewidth=2, linecolor='black', mirror=True,
+            showgrid=True, gridcolor='#999999'
         )
         fig.update_yaxes(
             tickfont=dict(size=14, color="#000000"), 
             tickprefix="<b>", ticksuffix="</b>",
-            showline=True, linewidth=2, linecolor='black', mirror=True
+            showline=True, linewidth=2, linecolor='black', mirror=True,
+            showgrid=True, gridcolor='#999999'
         )
         
         st.plotly_chart(fig, use_container_width=True)
@@ -231,16 +233,18 @@ else:
             plot_bgcolor="#e9f1ff",
             margin=dict(l=20, r=20, t=40, b=20)
         )
-        # Update layout for Axis Numbers (Ticks) and Plot Border
+        # Update layout for Axis Numbers (Ticks), Plot Border, and Darker Grid Lines
         fig.update_xaxes(
             tickfont=dict(size=14, color="#000000"), 
             tickprefix="<b>", ticksuffix="</b>",
-            showline=True, linewidth=2, linecolor='black', mirror=True
+            showline=True, linewidth=2, linecolor='black', mirror=True,
+            showgrid=True, gridcolor='#999999'
         )
         fig.update_yaxes(
             tickfont=dict(size=14, color="#000000"), 
             tickprefix="<b>", ticksuffix="</b>",
-            showline=True, linewidth=2, linecolor='black', mirror=True
+            showline=True, linewidth=2, linecolor='black', mirror=True,
+            showgrid=True, gridcolor='#999999'
         )
 
         st.plotly_chart(fig, use_container_width=True)
