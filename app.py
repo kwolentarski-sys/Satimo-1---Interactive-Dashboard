@@ -19,7 +19,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Add the main title to the top of the page with the requested font size (Emoji removed)
+# Add the main title to the top of the page
 st.markdown(
     "<h1 style='font-size: 29px;'>Satimo 2 Chamber Performance - Interactive Dashboard</h1>", 
     unsafe_allow_html=True
@@ -29,6 +29,32 @@ st.markdown(
 def load_data(filename):
     with open(filename, 'r', encoding='utf-8') as f:
         return json.load(f)
+
+# Dictionary to map antenna names to their frequency ranges for titles
+ANTENNA_RANGES = {
+    # Dipoles
+    "Dipole SD450": "400 - 500 MHz",
+    "Dipole SD665": "625 - 700 MHz",
+    "Dipole SD740": "690 - 790 MHz",
+    "Dipole SD850": "800 - 950 MHz",
+    "Dipole SD900": "850 - 950 MHz",
+    "Dipole SD1500": "1400 - 1600 MHz",
+    "Dipole SD1800": "1700 - 1900 MHz",
+    "Dipole SD1900": "1800 - 2000 MHz",
+    "Dipole SD2000": "1900 - 2100 MHz",
+    "Dipole SD2450": "2300 - 2600 MHz",
+    "Dipole SD2600": "2500 - 2800 MHz",
+    "Dipole SD3500": "3400 - 3600 MHz",
+    "Dipole SD5500": "5000 - 6000 MHz",
+    
+    # Horns
+    "Horn SH400": "400 - 6000 MHz",
+    "Horn SH2000": "2000 - 8500 MHz",
+    "Horn SH8000": "8000 - 40000 MHz",
+    
+    # Wideband
+    "Proxicast Dipole #4": "600 - 6000 MHz"
+}
 
 # Sidebar for Dashboard Controls
 st.sidebar.markdown(
@@ -68,28 +94,22 @@ except json.JSONDecodeError:
 if dataset_choice == "Wideband Dipole Chamber Comparison":
     # --- Logic for the Multi-Chamber Comparison Data ---
     
-    # Add the dropdown specifically for this view to maintain UI consistency
     selected_antenna = st.sidebar.selectbox("Select Antenna:", ["Proxicast Dipole #4"])
     
-    # Updated subheader for the chamber comparison view
-    st.subheader(f"Wideband - {selected_antenna} Chamber Comparison")
+    st.subheader("Wideband - Chamber Comparison Measurements")
     
-    # Safely extract and format dates
     dates = [f"{k}: {v.get('Date', 'N/A')}" for k, v in raw_data.items() if isinstance(v, dict)]
     if dates:
         st.markdown("**Test Dates:** " + " | ".join(dates))
     
     fig = go.Figure()
     
-    # Loop through each chamber in the JSON (Satimo1, Satimo 2, Satimo 3)
     for chamber_name, chamber_data in raw_data.items():
         if isinstance(chamber_data, dict) and "Data" in chamber_data:
-            # Extract frequency and efficiency
             freqs = []
             effs = []
             for row in chamber_data["Data"]:
                 try:
-                    # Catch 'Frequency (Mhz)' or 'Frequency (MHz)'
                     f_key = next((k for k in row.keys() if 'Frequency' in k), None)
                     e_key = next((k for k in row.keys() if 'Efficiency' in k), None)
                     
@@ -99,7 +119,6 @@ if dataset_choice == "Wideband Dipole Chamber Comparison":
                 except (ValueError, TypeError):
                     continue
             
-            # Add a trace for this specific chamber, with bolded name
             if freqs and effs:
                 fig.add_trace(go.Scatter(
                     x=freqs, 
@@ -111,11 +130,19 @@ if dataset_choice == "Wideband Dipole Chamber Comparison":
     if not fig.data:
         st.warning("No valid measurement data could be parsed for the chamber comparison.")
     else:
-        # Add a bold 0 dB horizontal reference line
         fig.add_hline(y=0, line_width=3, line_color="black")
         
-        # Update layout for Axis Titles, Background Color, and Legend Font
+        # Build the dynamic title with frequency range
+        freq_range = ANTENNA_RANGES.get(selected_antenna, "Passive Trend")
+        chart_title_text = f"<b>{selected_antenna.replace('Dipole ', '')} ({freq_range}) - Passive Trend</b>"
+        
         fig.update_layout(
+            title=dict(
+                text=chart_title_text, 
+                font=dict(size=22, color="#000000"),
+                x=0.5,
+                xanchor='center'
+            ),
             xaxis_title="<b>Frequency (MHz)</b>",
             yaxis_title="<b>Efficiency (dB)</b>",
             xaxis_title_font=dict(size=16, color="#000000"),
@@ -123,9 +150,9 @@ if dataset_choice == "Wideband Dipole Chamber Comparison":
             legend=dict(font=dict(size=14, color="#000000")),
             hovermode="x unified",
             plot_bgcolor="#e9f1ff",
-            margin=dict(l=20, r=20, t=40, b=20)
+            margin=dict(l=20, r=20, t=60, b=20)
         )
-        # Update layout for Axis Numbers (Ticks), Plot Border, and Darker Grid Lines
+        
         fig.update_xaxes(
             tickfont=dict(size=14, color="#000000"), 
             tickprefix="<b>", ticksuffix="</b>",
@@ -146,7 +173,6 @@ else:
     
     data = []
     
-    # Catch double-encoded JSON
     if isinstance(raw_data, str):
         try:
             raw_data = json.loads(raw_data)
@@ -194,26 +220,24 @@ else:
         st.error("Data structure error: The JSON file is missing the identifying names.")
         st.stop()
 
-    # 2. Antenna Selection
     selected_antenna = st.sidebar.selectbox("Select Antenna:", antenna_names)
 
-    # Filter dataset
     selected_data = next((item for item in data if item.get("dipole_name") == selected_antenna), None)
 
     if selected_data and 'measurements' in selected_data:
         df = pd.DataFrame(selected_data['measurements'])
-
         test_date = selected_data.get('date', 'N/A')
         
-        # Dynamically create the subheader based on the dropdown selection prefix (Yearly, Quarterly, Monthly)
+        # Updated Subheader
         time_prefix = dataset_choice.split()[0]
-        st.subheader(f"{time_prefix} - {selected_antenna} Validation Measurements")
+        # Dynamically determine if we are looking at Dipoles or Horns based on the dropdown
+        test_type_label = "Horn" if "Horn" in dataset_choice else "Dipole"
+        st.subheader(f"{time_prefix} - {test_type_label} Validation Measurements")
         
         st.markdown(f"**Reference Source:** {selected_data.get('reference', 'N/A')} | **Test Date:** {test_date}")
 
         fig = go.Figure()
 
-        # Added HTML tags to bold the trace name
         fig.add_trace(go.Scatter(
             x=df['frequency_mhz'], 
             y=df['efficiency_db_ref'],
@@ -222,7 +246,6 @@ else:
             line=dict(dash='dash')
         ))
 
-        # Dynamically inject the date and bold the trace name
         fig.add_trace(go.Scatter(
             x=df['frequency_mhz'], 
             y=df['efficiency_db_measured'],
@@ -230,11 +253,21 @@ else:
             name=f'<b>Measured Efficiency {test_date}</b>'
         ))
 
-        # Add a bold 0 dB horizontal reference line
         fig.add_hline(y=0, line_width=3, line_color="black")
 
-        # Update layout for Axis Titles, Background Color, and Legend Font
+        # Build the dynamic title with frequency range
+        freq_range = ANTENNA_RANGES.get(selected_antenna, "Passive Trend")
+        # Clean up the antenna name for the title (remove "Dipole " or "Horn " prefix)
+        clean_antenna_name = selected_antenna.replace("Dipole ", "").replace("Horn ", "")
+        chart_title_text = f"<b>{clean_antenna_name} ({freq_range}) - Passive Trend</b>"
+
         fig.update_layout(
+            title=dict(
+                text=chart_title_text, 
+                font=dict(size=22, color="#000000"),
+                x=0.5,
+                xanchor='center'
+            ),
             xaxis_title="<b>Frequency (MHz)</b>",
             yaxis_title="<b>Efficiency (dB)</b>",
             xaxis_title_font=dict(size=16, color="#000000"),
@@ -242,9 +275,9 @@ else:
             legend=dict(font=dict(size=14, color="#000000")),
             hovermode="x unified",
             plot_bgcolor="#e9f1ff",
-            margin=dict(l=20, r=20, t=40, b=20)
+            margin=dict(l=20, r=20, t=60, b=20)
         )
-        # Update layout for Axis Numbers (Ticks), Plot Border, and Darker Grid Lines
+        
         fig.update_xaxes(
             tickfont=dict(size=14, color="#000000"), 
             tickprefix="<b>", ticksuffix="</b>",
