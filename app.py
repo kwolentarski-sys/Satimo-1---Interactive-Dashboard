@@ -128,7 +128,7 @@ if dataset_choice == "Wideband Dipole Chamber Comparison":
     if max_overshoot_val > 0:
         overshoot_html = f"<b>Maximum Overshoot Above 0 dB:</b> <span style='color: #da0303;'>{max_overshoot_val:.2f} dB at {max_overshoot_freq:g} MHz ({max_overshoot_chamber})</span>"
     else:
-        overshoot_html = "<b>Maximum Overshoot Above 0 dB:</b> <span style='color: #7cb362;'>None</span>"
+        overshoot_html = "<b>Maximum Overshoot Above 0 dB:</b> <span style='color: #04c136; font-weight: bold;'>None</span>"
         
     st.markdown(
         f"<div style='font-size: 18px; line-height: 1.4; margin-bottom: 10px;'>"
@@ -280,7 +280,7 @@ else:
             max_freq = overshoot_df.loc[max_idx, 'frequency_mhz']
             overshoot_html = f"<b>Maximum Overshoot Above 0 dB:</b> <span style='color: #da0303;'>{max_val:.2f} dB at {max_freq:g} MHz</span>"
         else:
-            overshoot_html = "<b>Maximum Overshoot Above 0 dB:</b> <span style='color: #7cb362;'>None</span>"
+            overshoot_html = "<b>Maximum Overshoot Above 0 dB:</b> <span style='color: #04c136; font-weight: bold;'>None</span>"
 
         # Calculate Maximum Delta from Reference NIST
         max_delta_idx = (df['efficiency_db_measured'] - df['efficiency_db_ref']).abs().idxmax()
