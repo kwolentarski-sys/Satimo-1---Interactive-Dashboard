@@ -109,14 +109,27 @@ if dataset_choice == "Wideband Dipole Chamber Comparison":
     if not fig.data:
         st.warning("No valid measurement data could be parsed for the chamber comparison.")
     else:
+        # Update layout for Axis Titles
         fig.update_layout(
-            xaxis_title="Frequency (MHz)",
-            yaxis_title="Efficiency (dB)",
+            xaxis_title="<b>Frequency (MHz)</b>",
+            yaxis_title="<b>Efficiency (dB)</b>",
             xaxis_title_font=dict(size=16, color="#000000"),
             yaxis_title_font=dict(size=16, color="#000000"),
             hovermode="x unified",
             margin=dict(l=20, r=20, t=40, b=20)
         )
+        # Update layout for Axis Numbers (Ticks) and Plot Border
+        fig.update_xaxes(
+            tickfont=dict(size=14, color="#000000"), 
+            tickprefix="<b>", ticksuffix="</b>",
+            showline=True, linewidth=2, linecolor='black', mirror=True
+        )
+        fig.update_yaxes(
+            tickfont=dict(size=14, color="#000000"), 
+            tickprefix="<b>", ticksuffix="</b>",
+            showline=True, linewidth=2, linecolor='black', mirror=True
+        )
+        
         st.plotly_chart(fig, use_container_width=True)
 
 else:
@@ -201,13 +214,25 @@ else:
             name='Measured Efficiency (dB)'
         ))
 
+        # Update layout for Axis Titles
         fig.update_layout(
-            xaxis_title="Frequency (MHz)",
-            yaxis_title="Efficiency (dB)",
+            xaxis_title="<b>Frequency (MHz)</b>",
+            yaxis_title="<b>Efficiency (dB)</b>",
             xaxis_title_font=dict(size=16, color="#000000"),
             yaxis_title_font=dict(size=16, color="#000000"),
             hovermode="x unified",
             margin=dict(l=20, r=20, t=40, b=20)
+        )
+        # Update layout for Axis Numbers (Ticks) and Plot Border
+        fig.update_xaxes(
+            tickfont=dict(size=14, color="#000000"), 
+            tickprefix="<b>", ticksuffix="</b>",
+            showline=True, linewidth=2, linecolor='black', mirror=True
+        )
+        fig.update_yaxes(
+            tickfont=dict(size=14, color="#000000"), 
+            tickprefix="<b>", ticksuffix="</b>",
+            showline=True, linewidth=2, linecolor='black', mirror=True
         )
 
         st.plotly_chart(fig, use_container_width=True)
