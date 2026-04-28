@@ -19,12 +19,6 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Add the main title to the top of the page
-st.markdown(
-    "<h1 style='font-size: 29px;'>Satimo 2 Chamber Performance - Interactive Dashboard</h1>", 
-    unsafe_allow_html=True
-)
-
 # Function to load JSON data
 def load_data(filename):
     with open(filename, 'r', encoding='utf-8') as f:
@@ -69,10 +63,17 @@ ph_antenna = st.sidebar.empty()
 ph_active_type = st.sidebar.empty()
 ph_active_range = st.sidebar.empty()
 
-# 0. Chamber Selection Toggle (New)
+# 0. Chamber Selection Toggle
 chamber_choice = ph_chamber.selectbox(
     "**Select Chamber:**",
-    ("Satimo 1", "Satimo 2", "Satimo 3", "Rohde & Schwarz")
+    ("Satimo 1", "Satimo 2", "Satimo 3", "Rohde & Schwarz"),
+    index=1 # Defaults to Satimo 2
+)
+
+# Add the main title to the top of the page (Dynamically updates based on Chamber)
+st.markdown(
+    f"<h1 style='font-size: 29px;'>{chamber_choice} Chamber Performance - Interactive Dashboard</h1>", 
+    unsafe_allow_html=True
 )
 
 # 1. Passive Dataset Selection Toggle 
@@ -87,33 +88,45 @@ active_dataset_choice = ph_active_type.selectbox(
     ("None", "LTE TRP", "LTE TIS", "Pixel Phone S4 with Dipoles")
 )
 
-# Map selection to the exact JSON files based on active/passive choice
+# Map Chamber selection to file prefix
+prefix_map = {
+    "Satimo 1": "Satimo1_",
+    "Satimo 2": "Satimo2_",
+    "Satimo 3": "Satimo3_",
+    "Rohde & Schwarz": "RS_"
+}
+prefix = prefix_map.get(chamber_choice, "Satimo2_")
+
+# Map selection to the exact JSON files based on active/passive/chamber choice
 target_file = None
 if active_dataset_choice == "LTE TRP":
-    target_file = 'Satimo2_LTE_Reference_TRP_Quarterly.json'
+    target_file = f'{prefix}LTE_Reference_TRP_Quarterly.json'
 elif active_dataset_choice == "LTE TIS":
-    target_file = 'Satimo2_LTE_Reference_TIS_Quarterly.json'
+    target_file = f'{prefix}LTE_Reference_TIS_Quarterly.json'
 elif active_dataset_choice == "Pixel Phone S4 with Dipoles":
-    target_file = 'Satimo2_Pixel_Phone_S4_Dipoles_Quarterly.json'
+    target_file = f'{prefix}Pixel_Phone_S4_Dipoles_Quarterly.json'
 elif dataset_choice == "Yearly Dipoles":
-    target_file = 'Satimo2_Dipoles_Yearly.json'
+    target_file = f'{prefix}Dipoles_Yearly.json'
 elif dataset_choice == "Quarterly Dipoles":
-    target_file = 'Satimo2_Dipoles_Quarterly.json'
+    target_file = f'{prefix}Dipoles_Quarterly.json'
 elif dataset_choice == "Monthly Horns":
-    target_file = 'Satimo2_Horns_Monthly.json'
+    target_file = f'{prefix}Horns_Monthly.json'
 elif dataset_choice == "Wideband Dipole Chamber Comparison":
-    target_file = 'Chambers_Wideband_Dipole_Comparison.json'
+    target_file = 'Chambers_Wideband_Dipole_Comparison.json' # Global file
 
 # Stop execution and prompt the user if both are "None"
 if not target_file:
     st.info("👈 Please select an Active or Passive Validation Type from the sidebar to view data.")
     st.stop()
 
-# Load the selected dataset
+# Load the selected dataset with friendly fallback for missing files
 try:
     raw_data = load_data(target_file)
 except FileNotFoundError:
-    st.error(f"Please ensure the file '{target_file}' is saved in the same directory as this script.")
+    if chamber_choice != "Satimo 2" and target_file != 'Chambers_Wideband_Dipole_Comparison.json':
+        st.info(f"🏗️ **{chamber_choice} is under construction.**\n\nWhen ready, simply upload **`{target_file}`** to GitHub and this dashboard will populate automatically.")
+    else:
+        st.error(f"Please ensure the file '{target_file}' is saved in the same directory as this script.")
     st.stop()
 except json.JSONDecodeError:
     st.error(f"Error reading '{target_file}'. Please ensure it is valid JSON syntax.")
@@ -209,7 +222,7 @@ if active_dataset_choice == "Pixel Phone S4 with Dipoles":
         st.plotly_chart(fig, use_container_width=True)
         
     else:
-        st.warning("No valid measurement data could be parsed for Pixel Phone S4.")
+        st.warning(f"No valid measurement data could be parsed for Pixel Phone S4 in {chamber_choice}.")
 
 elif active_dataset_choice == "LTE TRP":
     # --- Logic for the Active LTE TRP Data ---
@@ -217,7 +230,7 @@ elif active_dataset_choice == "LTE TRP":
     # Extract the available frequency ranges from the JSON
     freq_ranges = [d.get("Frequency_Range", "Unknown") for d in raw_data if isinstance(d, dict)]
     if not freq_ranges:
-        st.error("⚠️ Invalid data structure for LTE TRP.")
+        st.error(f"⚠️ Invalid data structure for LTE TRP in {chamber_choice}.")
         st.stop()
     
     # Add the "LTE Band/Chan" option to trigger the new aggregate view
@@ -385,7 +398,7 @@ elif active_dataset_choice == "LTE TIS":
     # Extract the frequency ranges
     freq_ranges = [d.get("Frequency_Range") for d in raw_data if isinstance(d, dict)]
     if not freq_ranges:
-        st.error("⚠️ Invalid data structure for LTE TIS.")
+        st.error(f"⚠️ Invalid data structure for LTE TIS in {chamber_choice}.")
         st.stop()
         
     # Add the "LTE Band/Chan" option to trigger the aggregate view
@@ -690,7 +703,7 @@ else:
 
     if not data:
         st.error(f"⚠️ **Data Structure Error in `{target_file}`**")
-        st.warning("The app could not find valid measurement data. Please check the file formatting.")
+        st.warning(f"The app could not find valid measurement data in {chamber_choice}. Please check the file formatting.")
         st.stop()
 
     try:
