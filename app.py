@@ -74,10 +74,10 @@ dataset_choice = ph_passive_type.selectbox(
     ("None", "Yearly Dipoles", "Quarterly Dipoles", "Monthly Horns", "Wideband Dipole Chamber Comparison")
 )
 
-# 2. Active Dataset Selection Toggle 
+# 2. Active Dataset Selection Toggle (Added "Pixel Phone S4 with Dipoles")
 active_dataset_choice = ph_active_type.selectbox(
     "**Select Active Validation Type:**",
-    ("None", "LTE TRP", "LTE TIS")
+    ("None", "LTE TRP", "LTE TIS", "Pixel Phone S4 with Dipoles")
 )
 
 # Map selection to the exact JSON files based on active/passive choice
@@ -86,6 +86,8 @@ if active_dataset_choice == "LTE TRP":
     target_file = 'Satimo2_LTE_Reference_TRP_Quarterly.json'
 elif active_dataset_choice == "LTE TIS":
     target_file = 'Satimo2_LTE_Reference_TIS_Quarterly.json'
+elif active_dataset_choice == "Pixel Phone S4 with Dipoles":
+    target_file = 'Satimo2_Pixel_Phone_S4_Dipoles_Quarterly.json'
 elif dataset_choice == "Yearly Dipoles":
     target_file = 'Satimo2_Dipoles_Yearly.json'
 elif dataset_choice == "Quarterly Dipoles":
@@ -113,7 +115,158 @@ except json.JSONDecodeError:
 
 # --- ROUTING LOGIC BASED ON DATASET TYPE ---
 
-if active_dataset_choice == "LTE TRP":
+if active_dataset_choice == "Pixel Phone S4 with Dipoles":
+    # --- Logic for the Pixel Phone S4 Data ---
+    
+    if isinstance(raw_data, list) and len(raw_data) > 0:
+        df = pd.DataFrame(raw_data)
+        
+        # Ensure correct numerical types for plotting
+        df['Frequency (MHz)'] = df['Frequency (MHz)'].astype(float)
+        df['Calculated Total Radiated Power (dBm)'] = df['Calculated Total Radiated Power (dBm)'].astype(float)
+        df['Measured Total Radiated Power (dBm)'] = df['Measured Total Radiated Power (dBm)'].astype(float)
+        df['Delta (Calc vs Meas) (dB)'] = df['Delta (Calc vs Meas) (dB)'].astype(float)
+        
+        st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - Pixel Phone S4 Validation Measurements</h3>", unsafe_allow_html=True)
+        st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> Pixel Phone S4 with Dipoles</div>", unsafe_allow_html=True)
+        
+        # Calculate Maximum Delta
+        max_delta_idx = df['Delta (Calc vs Meas) (dB)'].abs().idxmax()
+        max_delta_val = df.loc[max_delta_idx, 'Delta (Calc vs Meas) (dB)']
+        max_delta_freq = df.loc[max_delta_idx, 'Frequency (MHz)']
+        max_delta_band = df.loc[max_delta_idx, 'LTE Band']
+        
+        delta_html = f"<b>Maximum Delta (Calc vs Meas):</b> {max_delta_val:.2f} dB at {max_delta_freq:g} MHz ({max_delta_band})"
+        st.markdown(f"<div style='font-size: 18px; line-height: 1.4; margin-bottom: 10px;'>{delta_html}</div>", unsafe_allow_html=True)
+        
+        # --- First Graph: Frequency vs TRP ---
+        fig1 = go.Figure()
+        
+        # Calculated TRP (Red Dashed Line)
+        fig1.add_trace(go.Scatter(
+            x=df['Frequency (MHz)'], 
+            y=df['Calculated Total Radiated Power (dBm)'],
+            mode='lines+markers',
+            name='<b>Calculated TRP (dBm)</b>',
+            text=df['LTE Band'],
+            customdata=df['Delta (Calc vs Meas) (dB)'],
+            hovertemplate="<b>%{text}</b><br>Freq: %{x} MHz<br>Calc TRP: %{y:.2f} dBm<br>Delta: %{customdata:.2f} dB<extra></extra>",
+            line=dict(dash='dash', color='#ff0000'),
+            marker=dict(color='#ff0000', size=8)
+        ))
+        
+        # Measured TRP (Solid Blue Line)
+        fig1.add_trace(go.Scatter(
+            x=df['Frequency (MHz)'], 
+            y=df['Measured Total Radiated Power (dBm)'],
+            mode='lines+markers',
+            name='<b>Measured TRP (dBm)</b>',
+            text=df['LTE Band'],
+            customdata=df['Delta (Calc vs Meas) (dB)'],
+            hovertemplate="<b>%{text}</b><br>Freq: %{x} MHz<br>Meas TRP: %{y:.2f} dBm<br>Delta: %{customdata:.2f} dB<extra></extra>",
+            line=dict(color='#0000ff'),
+            marker=dict(color='#0000ff', size=8)
+        ))
+        
+        fig1.update_layout(
+            title=dict(
+                text="<b>Pixel Phone S4 - Calc vs Meas TRP (Frequency)</b>", 
+                font=dict(size=22, color="#000000"),
+                x=0.5,
+                xanchor='center'
+            ),
+            xaxis_title="<b>Frequency (MHz)</b>",
+            yaxis_title="<b>Total Radiated Power (dBm)</b>",
+            xaxis_title_font=dict(size=16, color="#000000"),
+            yaxis_title_font=dict(size=16, color="#000000"),
+            legend=dict(font=dict(size=14, color="#000000")),
+            hovermode="x unified",
+            plot_bgcolor="#e9f1ff",
+            paper_bgcolor="#e9f1ff",
+            margin=dict(l=20, r=20, t=60, b=20)
+        )
+        
+        fig1.update_xaxes(
+            tickfont=dict(size=14, color="#000000"), 
+            tickprefix="<b>", ticksuffix="</b>",
+            showline=True, linewidth=2, linecolor='black', mirror=True,
+            showgrid=True, gridcolor='#999999'
+        )
+        fig1.update_yaxes(
+            tickfont=dict(size=14, color="#000000"), 
+            tickprefix="<b>", ticksuffix="</b>",
+            showline=True, linewidth=2, linecolor='black', mirror=True,
+            showgrid=True, gridcolor='#999999'
+        )
+
+        st.plotly_chart(fig1, use_container_width=True)
+        
+        # --- Second Graph: Band/Chan vs TRP ---
+        fig2 = go.Figure()
+        
+        # Calculated TRP (Red Dashed Line)
+        fig2.add_trace(go.Scatter(
+            x=df['LTE Band'], 
+            y=df['Calculated Total Radiated Power (dBm)'],
+            mode='lines+markers',
+            name='<b>Calculated TRP (dBm)</b>',
+            text=df['Frequency (MHz)'],
+            customdata=df['Delta (Calc vs Meas) (dB)'],
+            hovertemplate="<b>%{x}</b><br>Freq: %{text} MHz<br>Calc TRP: %{y:.2f} dBm<br>Delta: %{customdata:.2f} dB<extra></extra>",
+            line=dict(dash='dash', color='#ff0000'),
+            marker=dict(color='#ff0000', size=8)
+        ))
+        
+        # Measured TRP (Solid Blue Line)
+        fig2.add_trace(go.Scatter(
+            x=df['LTE Band'], 
+            y=df['Measured Total Radiated Power (dBm)'],
+            mode='lines+markers',
+            name='<b>Measured TRP (dBm)</b>',
+            text=df['Frequency (MHz)'],
+            customdata=df['Delta (Calc vs Meas) (dB)'],
+            hovertemplate="<b>%{x}</b><br>Freq: %{text} MHz<br>Meas TRP: %{y:.2f} dBm<br>Delta: %{customdata:.2f} dB<extra></extra>",
+            line=dict(color='#0000ff'),
+            marker=dict(color='#0000ff', size=8)
+        ))
+        
+        fig2.update_layout(
+            title=dict(
+                text="<b>Pixel Phone S4 - Calc vs Meas TRP (LTE Band/Chan)</b>", 
+                font=dict(size=22, color="#000000"),
+                x=0.5,
+                xanchor='center'
+            ),
+            xaxis_title="<b>LTE Band / Channel</b>",
+            yaxis_title="<b>Total Radiated Power (dBm)</b>",
+            xaxis_title_font=dict(size=16, color="#000000"),
+            yaxis_title_font=dict(size=16, color="#000000"),
+            legend=dict(font=dict(size=14, color="#000000")),
+            hovermode="x unified",
+            plot_bgcolor="#e9f1ff",
+            paper_bgcolor="#e9f1ff",
+            margin=dict(l=20, r=20, t=60, b=20)
+        )
+        
+        fig2.update_xaxes(
+            tickfont=dict(size=14, color="#000000"), 
+            tickprefix="<b>", ticksuffix="</b>",
+            showline=True, linewidth=2, linecolor='black', mirror=True,
+            showgrid=True, gridcolor='#999999'
+        )
+        fig2.update_yaxes(
+            tickfont=dict(size=14, color="#000000"), 
+            tickprefix="<b>", ticksuffix="</b>",
+            showline=True, linewidth=2, linecolor='black', mirror=True,
+            showgrid=True, gridcolor='#999999'
+        )
+
+        st.plotly_chart(fig2, use_container_width=True)
+        
+    else:
+        st.warning("No valid measurement data could be parsed for Pixel Phone S4.")
+
+elif active_dataset_choice == "LTE TRP":
     # --- Logic for the Active LTE TRP Data ---
     
     # Extract the available frequency ranges from the JSON
