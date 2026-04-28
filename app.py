@@ -62,14 +62,20 @@ st.sidebar.markdown(
     unsafe_allow_html=True
 )
 
-# 1. Passive Dataset Selection Toggle (Now Bold)
-dataset_choice = st.sidebar.selectbox(
+# Use placeholders to strictly control the vertical layout order
+ph_passive_type = st.sidebar.empty()
+ph_antenna = st.sidebar.empty()
+ph_active_type = st.sidebar.empty()
+ph_active_range = st.sidebar.empty()
+
+# 1. Passive Dataset Selection Toggle 
+dataset_choice = ph_passive_type.selectbox(
     "**Select Passive Validation Type:**",
     ("Yearly Dipoles", "Quarterly Dipoles", "Monthly Horns", "Wideband Dipole Chamber Comparison")
 )
 
-# 2. Active Dataset Selection Toggle (New)
-active_dataset_choice = st.sidebar.selectbox(
+# 2. Active Dataset Selection Toggle (Now visually sits below the Antenna selection)
+active_dataset_choice = ph_active_type.selectbox(
     "**Select Active Validation Type:**",
     ("None", "LTE TRP")
 )
@@ -109,8 +115,8 @@ if active_dataset_choice == "LTE TRP":
         st.error("⚠️ Invalid data structure for LTE TRP.")
         st.stop()
         
-    # Dropdown to filter by the frequency range
-    selected_range = st.sidebar.selectbox("**Select Frequency Range:**", freq_ranges)
+    # Dropdown to filter by the frequency range, placed in the specific placeholder slot
+    selected_range = ph_active_range.selectbox("**Select Frequency Range:**", freq_ranges)
     selected_data = next((item for item in raw_data if item.get("Frequency_Range") == selected_range), None)
     
     if selected_data and "Measurements" in selected_data:
@@ -181,8 +187,8 @@ if active_dataset_choice == "LTE TRP":
 elif dataset_choice == "Wideband Dipole Chamber Comparison":
     # --- Logic for the Multi-Chamber Comparison Data ---
     
-    # Antenna Selection Toggle (Now Bold)
-    selected_antenna = st.sidebar.selectbox("**Select Antenna:**", ["Proxicast Dipole #4"])
+    # Render Antenna Selection in its predefined slot above Active Validation
+    selected_antenna = ph_antenna.selectbox("**Select Antenna:**", ["Proxicast Dipole #4"])
     
     st.markdown("<h3 style='color: #0000ff;'>Wideband - Chamber Comparison Measurements</h3>", unsafe_allow_html=True)
         
@@ -342,8 +348,8 @@ else:
         st.error("Data structure error: The JSON file is missing the identifying names.")
         st.stop()
 
-    # Antenna Selection Toggle (Now Bold)
-    selected_antenna = st.sidebar.selectbox("**Select Antenna:**", antenna_names)
+    # Render Antenna Selection in its predefined slot above Active Validation
+    selected_antenna = ph_antenna.selectbox("**Select Antenna:**", antenna_names)
 
     selected_data = next((item for item in data if item.get("dipole_name") == selected_antenna), None)
 
