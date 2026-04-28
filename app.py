@@ -19,9 +19,9 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Add the main title to the top of the page with the requested font size
+# Add the main title to the top of the page with the requested font size (Emoji removed)
 st.markdown(
-    "<h1 style='font-size: 29px;'>📡 Satimo 2 Chamber Performance - Interactive Dashboard</h1>", 
+    "<h1 style='font-size: 29px;'>Satimo 2 Chamber Performance - Interactive Dashboard</h1>", 
     unsafe_allow_html=True
 )
 
@@ -71,7 +71,8 @@ if dataset_choice == "Wideband Dipole Chamber Comparison":
     # Add the dropdown specifically for this view to maintain UI consistency
     selected_antenna = st.sidebar.selectbox("Select Antenna:", ["Proxicast Dipole #4"])
     
-    st.subheader(f"Analyzing: {selected_antenna} (Chamber Comparison)")
+    # Updated subheader for the chamber comparison view
+    st.subheader(f"Wideband - {selected_antenna} Chamber Comparison")
     
     # Safely extract and format dates
     dates = [f"{k}: {v.get('Date', 'N/A')}" for k, v in raw_data.items() if isinstance(v, dict)]
@@ -203,8 +204,11 @@ else:
         df = pd.DataFrame(selected_data['measurements'])
 
         test_date = selected_data.get('date', 'N/A')
-
-        st.subheader(f"Analyzing: {selected_antenna} ({dataset_choice})")
+        
+        # Dynamically create the subheader based on the dropdown selection prefix (Yearly, Quarterly, Monthly)
+        time_prefix = dataset_choice.split()[0]
+        st.subheader(f"{time_prefix} - {selected_antenna} Validation Measurements")
+        
         st.markdown(f"**Reference Source:** {selected_data.get('reference', 'N/A')} | **Test Date:** {test_date}")
 
         fig = go.Figure()
