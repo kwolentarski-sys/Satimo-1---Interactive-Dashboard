@@ -4,7 +4,7 @@ import plotly.graph_objects as go
 import json
 
 # Configure the dashboard layout
-st.set_page_config(page_title="Antenna Efficiency Dashboard", layout="wide")
+st.set_page_config(page_title="San Diego Chambers Interactive Dashboard", layout="wide")
 
 # Inject custom HTML/CSS for the Sidebar Background Color
 st.markdown(
@@ -70,9 +70,9 @@ chamber_choice = ph_chamber.selectbox(
     index=1 # Defaults to Satimo 2
 )
 
-# Add the main title to the top of the page (Dynamically updates based on Chamber)
+# Add the main title to the top of the page
 st.markdown(
-    f"<h1 style='font-size: 29px;'>{chamber_choice} Chamber Performance - Interactive Dashboard</h1>", 
+    "<h1 style='font-size: 29px;'>San Diego Chambers - Interactive Dashboard</h1>", 
     unsafe_allow_html=True
 )
 
@@ -147,7 +147,7 @@ if active_dataset_choice == "Pixel Phone S4 with Dipoles":
         df['Measured Total Radiated Power (dBm)'] = df['Measured Total Radiated Power (dBm)'].astype(float)
         df['Delta (Calc vs Meas) (dB)'] = df['Delta (Calc vs Meas) (dB)'].astype(float)
         
-        st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - Pixel Phone S4 Validation Measurements</h3>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - Pixel Phone S4 Validation Measurements ({chamber_choice})</h3>", unsafe_allow_html=True)
         st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> Pixel Phone S4 with Dipoles</div>", unsafe_allow_html=True)
         
         # Calculate Maximum Delta
@@ -259,7 +259,7 @@ elif active_dataset_choice == "LTE TRP":
             df['TRP (dBm)'] = df['TRP (dBm)'].astype(float)
             
             # Dashboard Headers
-            st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - LTE TRP Validation Measurements</h3>", unsafe_allow_html=True)
+            st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - LTE TRP Validation Measurements ({chamber_choice})</h3>", unsafe_allow_html=True)
             st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> {device_name} | <b>Test Date:</b> {test_date}</div>", unsafe_allow_html=True)
             
             fig = go.Figure()
@@ -326,7 +326,7 @@ elif active_dataset_choice == "LTE TRP":
             device_name = selected_data.get('Device', 'Unknown Device')
             
             # Dashboard Headers
-            st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - LTE TRP Validation Measurements</h3>", unsafe_allow_html=True)
+            st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - LTE TRP Validation Measurements ({chamber_choice})</h3>", unsafe_allow_html=True)
             st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> {device_name} | <b>Test Date:</b> {test_date}</div>", unsafe_allow_html=True)
             
             fig = go.Figure()
@@ -427,7 +427,7 @@ elif active_dataset_choice == "LTE TIS":
             df['TIS (dBm)'] = df['TIS (dBm)'].astype(float)
             
             # Dashboard Headers
-            st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - LTE TIS Validation Measurements</h3>", unsafe_allow_html=True)
+            st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - LTE TIS Validation Measurements ({chamber_choice})</h3>", unsafe_allow_html=True)
             st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> {device_name} | <b>Test Date:</b> {test_date}</div>", unsafe_allow_html=True)
             
             fig = go.Figure()
@@ -494,7 +494,7 @@ elif active_dataset_choice == "LTE TIS":
             device_name = selected_data.get('Device', 'Unknown Device')
             
             # Dashboard Headers
-            st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - LTE TIS Validation Measurements</h3>", unsafe_allow_html=True)
+            st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - LTE TIS Validation Measurements ({chamber_choice})</h3>", unsafe_allow_html=True)
             st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> {device_name} | <b>Test Date:</b> {test_date}</div>", unsafe_allow_html=True)
             
             fig = go.Figure()
@@ -724,7 +724,7 @@ else:
         time_prefix = dataset_choice.split()[0]
         test_type_label = "Horn" if "Horn" in dataset_choice else "Dipole"
         
-        st.markdown(f"<h3 style='color: #0000ff;'>{time_prefix} - {test_type_label} Validation Measurements</h3>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='color: #0000ff;'>{time_prefix} - {test_type_label} Validation Measurements ({chamber_choice})</h3>", unsafe_allow_html=True)
         
         # Calculate Maximum Overshoot
         overshoot_df = df[df['efficiency_db_measured'] > 0]
