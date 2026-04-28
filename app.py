@@ -109,6 +109,9 @@ if dataset_choice == "Wideband Dipole Chamber Comparison":
     if not fig.data:
         st.warning("No valid measurement data could be parsed for the chamber comparison.")
     else:
+        # Add a bold 0 dB horizontal reference line
+        fig.add_hline(y=0, line_width=3, line_color="black")
+        
         # Update layout for Axis Titles and Background Color
         fig.update_layout(
             xaxis_title="<b>Frequency (MHz)</b>",
@@ -214,6 +217,9 @@ else:
             mode='lines+markers',
             name='Measured Efficiency (dB)'
         ))
+
+        # Add a bold 0 dB horizontal reference line
+        fig.add_hline(y=0, line_width=3, line_color="black")
 
         # Update layout for Axis Titles and Background Color
         fig.update_layout(
