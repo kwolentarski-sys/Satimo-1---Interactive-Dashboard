@@ -58,13 +58,13 @@ ANTENNA_RANGES = {
 
 # Sidebar for Dashboard Controls
 st.sidebar.markdown(
-    "<h2 style='font-size: 1.5rem; color: #0000ff;'>Dashboard Controls</h2>", 
+    "<h2 style='font-size: 2rem; color: #0000ff;'>Dashboard Controls</h2>", 
     unsafe_allow_html=True
 )
 
-# 1. Dataset Selection Toggle
+# 1. Dataset Selection Toggle (Now Bold)
 dataset_choice = st.sidebar.selectbox(
-    "Select Passive Validation Type:",
+    "**Select Passive Validation Type:**",
     ("Yearly Dipoles", "Quarterly Dipoles", "Monthly Horns", "Wideband Dipole Chamber Comparison")
 )
 
@@ -94,7 +94,8 @@ except json.JSONDecodeError:
 if dataset_choice == "Wideband Dipole Chamber Comparison":
     # --- Logic for the Multi-Chamber Comparison Data ---
     
-    selected_antenna = st.sidebar.selectbox("Select Antenna:", ["Proxicast Dipole #4"])
+    # Antenna Selection Toggle (Now Bold)
+    selected_antenna = st.sidebar.selectbox("**Select Antenna:**", ["Proxicast Dipole #4"])
     
     st.markdown("<h3 style='color: #0000ff;'>Wideband - Chamber Comparison Measurements</h3>", unsafe_allow_html=True)
     
@@ -255,7 +256,8 @@ else:
         st.error("Data structure error: The JSON file is missing the identifying names.")
         st.stop()
 
-    selected_antenna = st.sidebar.selectbox("Select Antenna:", antenna_names)
+    # Antenna Selection Toggle (Now Bold)
+    selected_antenna = st.sidebar.selectbox("**Select Antenna:**", antenna_names)
 
     selected_data = next((item for item in data if item.get("dipole_name") == selected_antenna), None)
 
@@ -297,7 +299,6 @@ else:
 
         fig = go.Figure()
 
-        # Updated to explicitly use #ff0000 (red) for the reference trace
         fig.add_trace(go.Scatter(
             x=df['frequency_mhz'], 
             y=df['efficiency_db_ref'],
@@ -311,7 +312,9 @@ else:
             x=df['frequency_mhz'], 
             y=df['efficiency_db_measured'],
             mode='lines+markers',
-            name=f'<b>Measured Efficiency (dB) {test_date}</b>'
+            name=f'<b>Measured Efficiency (dB) {test_date}</b>',
+            line=dict(color='#0000ff'),
+            marker=dict(color='#0000ff')
         ))
 
         fig.add_hline(y=0, line_width=3, line_color="black")
