@@ -112,8 +112,14 @@ if dataset_choice == "Wideband Dipole Chamber Comparison":
         # Add a bold 0 dB horizontal reference line
         fig.add_hline(y=0, line_width=3, line_color="black")
         
-        # Update layout for Axis Titles, Background Color, and Legend Font
+        # Update layout for Main Title, Axis Titles, Background Color, and Legend Font
         fig.update_layout(
+            title=dict(
+                text="<b>Satimo 2 Chamber Performance - Interactive Dashboard</b>", 
+                font=dict(size=22, color="#000000"),
+                x=0.5,
+                xanchor='center'
+            ),
             xaxis_title="<b>Frequency (MHz)</b>",
             yaxis_title="<b>Efficiency (dB)</b>",
             xaxis_title_font=dict(size=16, color="#000000"),
@@ -121,7 +127,7 @@ if dataset_choice == "Wideband Dipole Chamber Comparison":
             legend=dict(font=dict(size=14, color="#000000")),
             hovermode="x unified",
             plot_bgcolor="#e9f1ff",
-            margin=dict(l=20, r=20, t=40, b=20)
+            margin=dict(l=20, r=20, t=60, b=20)
         )
         # Update layout for Axis Numbers (Ticks), Plot Border, and Darker Grid Lines
         fig.update_xaxes(
@@ -228,8 +234,14 @@ else:
         # Add a bold 0 dB horizontal reference line
         fig.add_hline(y=0, line_width=3, line_color="black")
 
-        # Update layout for Axis Titles, Background Color, and Legend Font
+        # Update layout for Main Title, Axis Titles, Background Color, and Legend Font
         fig.update_layout(
+            title=dict(
+                text="<b>Satimo 2 Chamber Performance - Interactive Dashboard</b>", 
+                font=dict(size=22, color="#000000"),
+                x=0.5,
+                xanchor='center'
+            ),
             xaxis_title="<b>Frequency (MHz)</b>",
             yaxis_title="<b>Efficiency (dB)</b>",
             xaxis_title_font=dict(size=16, color="#000000"),
@@ -237,7 +249,7 @@ else:
             legend=dict(font=dict(size=14, color="#000000")),
             hovermode="x unified",
             plot_bgcolor="#e9f1ff",
-            margin=dict(l=20, r=20, t=40, b=20)
+            margin=dict(l=20, r=20, t=60, b=20)
         )
         # Update layout for Axis Numbers (Ticks), Plot Border, and Darker Grid Lines
         fig.update_xaxes(
