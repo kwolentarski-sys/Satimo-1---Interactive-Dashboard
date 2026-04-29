@@ -1,0 +1,26 @@
+[
+  {
+    "Device": "Reference: Samsung Galaxy J120P: IMEI: 8874",
+    "Date": "3/10/26",
+    "Measurements": [
+      {
+        "Band Chan": "LOW     ch:0",
+        "Frequency (Mhz)": "2402",
+        "TRP (dBm)": "3.47",
+        "TIS (dBm)": "-90.77"
+      },
+      {
+        "Band Chan": "MID     ch:39",
+        "Frequency (Mhz)": "2441",
+        "TRP (dBm)": "3.6",
+        "TIS (dBm)": "-90.82"
+      },
+      {
+        "Band Chan": "HIGH   ch:78",
+        "Frequency (Mhz)": "2480",
+        "TRP (dBm)": "3.29",
+        "TIS (dBm)": "-90.21"
+      }
+    ]
+  }
+]
