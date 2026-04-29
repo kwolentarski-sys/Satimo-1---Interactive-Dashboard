@@ -115,7 +115,7 @@ elif active_dataset_choice == "LTE TIS":
     target_file = f'{prefix}LTE_Reference_TIS_Quarterly.json'
 elif active_dataset_choice == "Pixel Phone S4 with Dipoles":
     if chamber_choice == "Satimo 1":
-        target_file = 'Satimo1_Pixel_S4_Dipoles_Quarterly.json'
+        target_file = 'Satimo1_Pixel_Phone_S4_Dipoles_Quarterly.json'
     else:
         target_file = f'{prefix}Pixel_Phone_S4_Dipoles_Quarterly.json'
 elif active_dataset_choice == "Phantom Wrist Dielectric Tracking":
@@ -139,7 +139,7 @@ known_files = [
     'Chambers_Wideband_Dipole_Comparison.json', 
     'Satimo1_Dipoles_Yearly.json', 
     'Satimo1_LTE_Reference_TRP_Quarterly.json', 
-    'Satimo1_Pixel_S4_Dipoles_Quarterly.json',
+    'Satimo1_Pixel_Phone_S4_Dipoles_Quarterly.json',
     'Satimo1_Phantom_Wrist_Dielectric_Quarterly.json'
 ]
 
@@ -192,44 +192,35 @@ if active_dataset_choice == "Phantom Wrist Dielectric Tracking":
         trp_cols = ['2-1659 TRP', '2-1660 TRP', '2-1621 TRP', 'Old 2-1010 TRP']
         for col in trp_cols:
             if col in df_phantom.columns:
-                df_phantom[col] = pd.to_numeric(df_phantom[col], errors='coerce')
+                df_phantom[col] = pd.to_numeric(df_phantom[col].replace("", float("NaN")), errors='coerce')
                 
         if '2-1659 TRP' in df_freespace.columns:
-            df_freespace['2-1659 TRP'] = pd.to_numeric(df_freespace['2-1659 TRP'], errors='coerce')
+            df_freespace['2-1659 TRP'] = pd.to_numeric(df_freespace['2-1659 TRP'].replace("FreeSpace", float("NaN")), errors='coerce')
 
         st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - Phantom Wrist Dielectric Tracking ({chamber_choice})</h3>", unsafe_allow_html=True)
         st.markdown(f"<div style='font-size: 20px; padding-bottom: 5px;'><b>Device:</b> {device_name}</div>", unsafe_allow_html=True)
         st.markdown(f"<div style='font-size: 16px; padding-bottom: 10px;'><b>Reference:</b> {ref_info} | <b>Test Date:</b> {test_date}</div>", unsafe_allow_html=True)
 
-        # --- First Graph: Frequency vs TRP ---
+        # --- First Graph: Phantom Dielectric Tracking (Frequency) ---
         fig1 = go.Figure()
         colors = ['#0000ff', '#00aa00', '#ff0000', '#ff8800'] # Blue, Green, Red, Orange
         
         for i, col in enumerate(trp_cols):
-            if col in df_phantom.columns and df_phantom[col].notna().any():
+            if col in df_phantom.columns:
+                has_data = df_phantom[col].notna().any()
+                trace_name = f'<b>{col}</b>' if has_data else f'<b>{col} (NA)</b>'
+                
+                # We still add the trace even if empty so it appears in the legend as NA
                 fig1.add_trace(go.Scatter(
                     x=df_phantom['Frequency (MHz)'], 
-                    y=df_phantom[col],
+                    y=df_phantom[col] if has_data else [None]*len(df_phantom),
                     mode='lines+markers',
-                    name=f'<b>{col}</b>',
+                    name=trace_name,
                     text=df_phantom['Band Chan'],
-                    hovertemplate="<b>%{text}</b><br>Freq: %{x} MHz<br>TRP: %{y:.2f} dBm<extra></extra>",
+                    hovertemplate="<b>%{text}</b><br>Freq: %{x} MHz<br>TRP: %{y:.2f} dBm<extra></extra>" if has_data else "<b>%{text}</b><br>Freq: %{x} MHz<br>No Data<extra></extra>",
                     line=dict(color=colors[i % len(colors)]),
                     marker=dict(size=8)
                 ))
-                
-        # Overlay the FreeSpace reference line if it exists
-        if not df_freespace.empty and '2-1659 TRP' in df_freespace.columns and df_freespace['2-1659 TRP'].notna().any():
-            fig1.add_trace(go.Scatter(
-                x=df_freespace['Frequency (MHz)'], 
-                y=df_freespace['2-1659 TRP'],
-                mode='lines+markers',
-                name='<b>FreeSpace TRP</b>',
-                text=df_freespace['Band Chan'],
-                hovertemplate="<b>%{text}</b><br>Freq: %{x} MHz<br>TRP: %{y:.2f} dBm<extra></extra>",
-                line=dict(dash='dash', color='#888888'),
-                marker=dict(size=8)
-            ))
             
         fig1.update_layout(
             title=dict(
@@ -264,42 +255,30 @@ if active_dataset_choice == "Phantom Wrist Dielectric Tracking":
 
         st.plotly_chart(fig1, use_container_width=True)
         
-        # --- Second Graph: Band/Chan vs TRP ---
+        # --- Second Graph: Free Space TRP (Frequency) ---
         fig2 = go.Figure()
         
-        for i, col in enumerate(trp_cols):
-            if col in df_phantom.columns and df_phantom[col].notna().any():
+        if not df_freespace.empty and '2-1659 TRP' in df_freespace.columns:
+            if df_freespace['2-1659 TRP'].notna().any():
                 fig2.add_trace(go.Scatter(
-                    x=df_phantom['Band Chan'], 
-                    y=df_phantom[col],
+                    x=df_freespace['Frequency (MHz)'], 
+                    y=df_freespace['2-1659 TRP'],
                     mode='lines+markers',
-                    name=f'<b>{col}</b>',
-                    text=df_phantom['Frequency (MHz)'],
-                    hovertemplate="<b>%{x}</b><br>Freq: %{text} MHz<br>TRP: %{y:.2f} dBm<extra></extra>",
-                    line=dict(color=colors[i % len(colors)]),
-                    marker=dict(size=8)
+                    name='<b>Free Space TRP</b>',
+                    text=df_freespace['Band Chan'],
+                    hovertemplate="<b>%{text}</b><br>Freq: %{x} MHz<br>TRP: %{y:.2f} dBm<extra></extra>",
+                    line=dict(color='#0000ff'),
+                    marker=dict(color='#0000ff', size=8)
                 ))
-                
-        if not df_freespace.empty and '2-1659 TRP' in df_freespace.columns and df_freespace['2-1659 TRP'].notna().any():
-            fig2.add_trace(go.Scatter(
-                x=df_freespace['Band Chan'], 
-                y=df_freespace['2-1659 TRP'],
-                mode='lines+markers',
-                name='<b>FreeSpace TRP</b>',
-                text=df_freespace['Frequency (MHz)'],
-                hovertemplate="<b>%{x}</b><br>Freq: %{text} MHz<br>TRP: %{y:.2f} dBm<extra></extra>",
-                line=dict(dash='dash', color='#888888'),
-                marker=dict(size=8)
-            ))
             
         fig2.update_layout(
             title=dict(
-                text="<b>Phantom Dielectric Tracking (LTE Band/Chan)</b>", 
+                text="<b>Free Space TRP (Frequency)</b>", 
                 font=dict(size=22, color="#000000"),
                 x=0.5,
                 xanchor='center'
             ),
-            xaxis_title="<b>LTE Band / Channel</b>",
+            xaxis_title="<b>Frequency (MHz)</b>",
             yaxis_title="<b>Total Radiated Power (dBm)</b>",
             xaxis_title_font=dict(size=16, color="#000000"),
             yaxis_title_font=dict(size=16, color="#000000"),
