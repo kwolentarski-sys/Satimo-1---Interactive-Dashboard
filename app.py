@@ -170,7 +170,126 @@ except json.JSONDecodeError:
 # --- ROUTING LOGIC BASED ON DATASET TYPE ---
 
 if active_dataset_choice == "Bluetooth BDR":
-    st.info("📡 **Bluetooth BDR data structure detected.** Please provide the JSON structure for this data so the custom graphs can be generated!")
+    # --- Logic for the Bluetooth BDR Data ---
+    
+    if isinstance(raw_data, list) and len(raw_data) > 0:
+        device_data = raw_data[0]
+        device_name = device_data.get("Device", "Unknown Device")
+        test_date = device_data.get("Date", "N/A")
+        measurements = device_data.get("Measurements", [])
+        
+        if measurements:
+            df = pd.DataFrame(measurements)
+            
+            # Clean and format the data
+            df['Frequency (Mhz)'] = pd.to_numeric(df['Frequency (Mhz)'], errors='coerce')
+            df['TRP (dBm)'] = pd.to_numeric(df['TRP (dBm)'], errors='coerce')
+            df['TIS (dBm)'] = pd.to_numeric(df['TIS (dBm)'], errors='coerce')
+            
+            # Dashboard Headers
+            st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - Active Validation Measurements - Bluetooth BDR</h3>", unsafe_allow_html=True)
+            st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> {device_name.replace('Reference: ', '')}</div>", unsafe_allow_html=True)
+            
+            # --- First Graph: TRP Trend ---
+            fig_trp = go.Figure()
+            
+            fig_trp.add_trace(go.Scatter(
+                x=df['Band Chan'], 
+                y=df['TRP (dBm)'],
+                mode='lines+markers',
+                name=f'<b>TRP (dBm) - {test_date}</b>',
+                text=df['Frequency (Mhz)'],
+                hovertemplate="<b>%{x}</b><br>Freq: %{text} MHz<br>TRP: %{y:.2f} dBm<extra></extra>",
+                line=dict(color='#0000ff'),
+                marker=dict(color='#0000ff', size=8)
+            ))
+            
+            fig_trp.update_layout(
+                title=dict(
+                    text="<b>Bluetooth BDR - Active TRP Trend (LTE Band/Chan)</b>", 
+                    font=dict(size=22, color="#000000"),
+                    x=0.5,
+                    xanchor='center'
+                ),
+                xaxis_title="<b>Band / Channel</b>",
+                yaxis_title="<b>TRP (dBm)</b>",
+                xaxis_title_font=dict(size=16, color="#000000"),
+                yaxis_title_font=dict(size=16, color="#000000"),
+                showlegend=True,
+                legend=dict(font=dict(size=14, color="#000000")),
+                hovermode="x unified",
+                plot_bgcolor="#e9f1ff",
+                paper_bgcolor="#e9f1ff",
+                margin=dict(l=20, r=20, t=60, b=20)
+            )
+            
+            fig_trp.update_xaxes(
+                tickfont=dict(size=14, color="#000000"), 
+                tickprefix="<b>", ticksuffix="</b>",
+                showline=True, linewidth=2, linecolor='black', mirror=True,
+                showgrid=True, gridcolor='#999999'
+            )
+            fig_trp.update_yaxes(
+                tickfont=dict(size=14, color="#000000"), 
+                tickprefix="<b>", ticksuffix="</b>",
+                showline=True, linewidth=2, linecolor='black', mirror=True,
+                showgrid=True, gridcolor='#999999'
+            )
+
+            st.plotly_chart(fig_trp, use_container_width=True)
+            
+            # --- Second Graph: TIS Trend ---
+            fig_tis = go.Figure()
+            
+            fig_tis.add_trace(go.Scatter(
+                x=df['Band Chan'], 
+                y=df['TIS (dBm)'],
+                mode='lines+markers',
+                name=f'<b>TIS (dBm) - {test_date}</b>',
+                text=df['Frequency (Mhz)'],
+                hovertemplate="<b>%{x}</b><br>Freq: %{text} MHz<br>TIS: %{y:.2f} dBm<extra></extra>",
+                line=dict(color='#ff0000'), # Red for TIS to distinguish from TRP
+                marker=dict(color='#ff0000', size=8)
+            ))
+            
+            fig_tis.update_layout(
+                title=dict(
+                    text="<b>Bluetooth BDR - Active TIS Trend (LTE Band/Chan)</b>", 
+                    font=dict(size=22, color="#000000"),
+                    x=0.5,
+                    xanchor='center'
+                ),
+                xaxis_title="<b>Band / Channel</b>",
+                yaxis_title="<b>TIS (dBm)</b>",
+                xaxis_title_font=dict(size=16, color="#000000"),
+                yaxis_title_font=dict(size=16, color="#000000"),
+                showlegend=True,
+                legend=dict(font=dict(size=14, color="#000000")),
+                hovermode="x unified",
+                plot_bgcolor="#e9f1ff",
+                paper_bgcolor="#e9f1ff",
+                margin=dict(l=20, r=20, t=60, b=20)
+            )
+            
+            fig_tis.update_xaxes(
+                tickfont=dict(size=14, color="#000000"), 
+                tickprefix="<b>", ticksuffix="</b>",
+                showline=True, linewidth=2, linecolor='black', mirror=True,
+                showgrid=True, gridcolor='#999999'
+            )
+            fig_tis.update_yaxes(
+                tickfont=dict(size=14, color="#000000"), 
+                tickprefix="<b>", ticksuffix="</b>",
+                showline=True, linewidth=2, linecolor='black', mirror=True,
+                showgrid=True, gridcolor='#999999'
+            )
+
+            st.plotly_chart(fig_tis, use_container_width=True)
+            
+        else:
+            st.warning("No valid measurement data could be found in the file.")
+    else:
+        st.error("Error reading Bluetooth BDR file structure. Please ensure it matches the required List format.")
 
 elif active_dataset_choice == "Phantom Wrist Dielectric Tracking":
     # --- Logic for the Phantom Wrist Dielectric Data ---
