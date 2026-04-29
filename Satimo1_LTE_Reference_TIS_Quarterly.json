@@ -1,0 +1,175 @@
+{
+  "Inseego MiFi Reference Device: IMEI: 7427 - LTE Low Frequencies": {
+    "Reference": "LTE Low Frequencies",
+    "Date": "3/3/26",
+    "Data": [
+      {
+        "Band Chan": "B71 Low",
+        "Frequency (Mhz)": "622",
+        "TIS (dBm)": "-96.35"
+      },
+      {
+        "Band Chan": "B71 Mid",
+        "Frequency (Mhz)": "634.5",
+        "TIS (dBm)": "-97.27"
+      },
+      {
+        "Band Chan": "B71 High",
+        "Frequency (Mhz)": "647",
+        "TIS (dBm)": "-97.29"
+      },
+      {
+        "Band Chan": "B12 Mid",
+        "Frequency (Mhz)": "737.5",
+        "TIS (dBm)": "-100.14"
+      },
+      {
+        "Band Chan": "B13 Mid",
+        "Frequency (Mhz)": "751",
+        "TIS (dBm)": "-96.84"
+      },
+      {
+        "Band Chan": "B28 Low",
+        "Frequency (Mhz)": "763",
+        "TIS (dBm)": "-96.97"
+      },
+      {
+        "Band Chan": "B28 Mid",
+        "Frequency (Mhz)": "780.5",
+        "TIS (dBm)": "-97.70"
+      },
+      {
+        "Band Chan": "B20 Low",
+        "Frequency (Mhz)": "796",
+        "TIS (dBm)": "-98.16"
+      },
+      {
+        "Band Chan": "B28 High",
+        "Frequency (Mhz)": "798",
+        "TIS (dBm)": "-96.94"
+      },
+      {
+        "Band Chan": "B20 Mid",
+        "Frequency (Mhz)": "806",
+        "TIS (dBm)": "-98.95"
+      },
+      {
+        "Band Chan": "B20 High",
+        "Frequency (Mhz)": "816",
+        "TIS (dBm)": "-98.65"
+      },
+      {
+        "Band Chan": "B26 Low",
+        "Frequency (Mhz)": "861.5",
+        "TIS (dBm)": "-100.60"
+      },
+      {
+        "Band Chan": "B26 Mid",
+        "Frequency (Mhz)": "876.5",
+        "TIS (dBm)": "-101.09"
+      },
+      {
+        "Band Chan": "B26 High",
+        "Frequency (Mhz)": "891.5",
+        "TIS (dBm)": "-101.46"
+      },
+      {
+        "Band Chan": "B8 Low",
+        "Frequency (Mhz)": "930",
+        "TIS (dBm)": "-98.52"
+      },
+      {
+        "Band Chan": "B8 Mid",
+        "Frequency (Mhz)": "942.5",
+        "TIS (dBm)": "-98.70"
+      },
+      {
+        "Band Chan": "B8 High",
+        "Frequency (Mhz)": "955",
+        "TIS (dBm)": "-98.32"
+      },
+      {
+        "Band Chan": "B8 Low",
+        "Frequency (Mhz)": "930",
+        "TIS (dBm)": "-98.52"
+      },
+      {
+        "Band Chan": "B8 Mid",
+        "Frequency (Mhz)": "942.5",
+        "TIS (dBm)": "-98.70"
+      }
+    ]
+  },
+  "Inseego MiFi Reference Device: IMEI: 7427 - LTE Mid Frequencies": {
+    "Reference": "LTE Mid Frequencies",
+    "Date": "3/3/26",
+    "Data": [
+      {
+        "Band Chan": "B3 Low",
+        "Frequency (Mhz)": "1810",
+        "TIS (dBm)": "-100.17"
+      },
+      {
+        "Band Chan": "B3 Mid",
+        "Frequency (Mhz)": "1842.5",
+        "TIS (dBm)": "-100.09"
+      },
+      {
+        "Band Chan": "B3 High",
+        "Frequency (Mhz)": "1875",
+        "TIS (dBm)": "-99.69"
+      },
+      {
+        "Band Chan": "B25 Low",
+        "Frequency (Mhz)": "1932.5",
+        "TIS (dBm)": "-101.25"
+      },
+      {
+        "Band Chan": "B25 Mid",
+        "Frequency (Mhz)": "1962.5",
+        "TIS (dBm)": "-102.34"
+      },
+      {
+        "Band Chan": "B25 High",
+        "Frequency (Mhz)": "1992.5",
+        "TIS (dBm)": "-102.51"
+      },
+      {
+        "Band Chan": "B66 Low",
+        "Frequency (Mhz)": "2115",
+        "TIS (dBm)": "-100.38"
+      },
+      {
+        "Band Chan": "B66 Mid",
+        "Frequency (Mhz)": "2145",
+        "TIS (dBm)": "-100.25"
+      },
+      {
+        "Band Chan": "B66 High",
+        "Frequency (Mhz)": "2175",
+        "TIS (dBm)": "-100.36"
+      }
+    ]
+  },
+  "Inseego MiFi Reference Device: IMEI: 7427 - LTE High Frequencies": {
+    "Reference": "LTE High Frequencies",
+    "Date": "3/3/26",
+    "Data": [
+      {
+        "Band Chan": "B7 Low",
+        "Frequency (Mhz)": "2630",
+        "TIS (dBm)": "-98.09"
+      },
+      {
+        "Band Chan": "B7 Mid",
+        "Frequency (Mhz)": "2655",
+        "TIS (dBm)": "-97.96"
+      },
+      {
+        "Band Chan": "B7 High",
+        "Frequency (Mhz)": "2680",
+        "TIS (dBm)": "-97.54"
+      }
+    ]
+  }
+}
