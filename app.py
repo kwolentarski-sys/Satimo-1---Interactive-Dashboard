@@ -198,7 +198,7 @@ if active_dataset_choice == "Phantom Wrist Dielectric Tracking":
             df_freespace['2-1659 TRP'] = pd.to_numeric(df_freespace['2-1659 TRP'].replace("FreeSpace", float("NaN")), errors='coerce')
 
         st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - Phantom Wrist Dielectric Tracking ({chamber_choice})</h3>", unsafe_allow_html=True)
-        st.markdown(f"<div style='font-size: 20px; padding-bottom: 5px;'><b>Device:</b> {device_name}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div style='font-size: 20px; padding-bottom: 5px;'><b>{device_name}</b></div>", unsafe_allow_html=True)
         st.markdown(f"<div style='font-size: 16px; padding-bottom: 10px;'><b>Reference:</b> {ref_info} | <b>Test Date:</b> {test_date}</div>", unsafe_allow_html=True)
 
         # --- First Graph: Phantom Dielectric Tracking (Frequency) ---
@@ -255,30 +255,30 @@ if active_dataset_choice == "Phantom Wrist Dielectric Tracking":
 
         st.plotly_chart(fig1, use_container_width=True)
         
-        # --- Second Graph: Free Space TRP (Frequency) ---
+        # --- Second Graph: Free Space TRP (LTE Band/Chan) ---
         fig2 = go.Figure()
         
         if not df_freespace.empty and '2-1659 TRP' in df_freespace.columns:
             if df_freespace['2-1659 TRP'].notna().any():
                 fig2.add_trace(go.Scatter(
-                    x=df_freespace['Frequency (MHz)'], 
+                    x=df_freespace['Band Chan'], 
                     y=df_freespace['2-1659 TRP'],
                     mode='lines+markers',
                     name='<b>Free Space TRP</b>',
-                    text=df_freespace['Band Chan'],
-                    hovertemplate="<b>%{text}</b><br>Freq: %{x} MHz<br>TRP: %{y:.2f} dBm<extra></extra>",
+                    text=df_freespace['Frequency (MHz)'],
+                    hovertemplate="<b>%{x}</b><br>Freq: %{text} MHz<br>TRP: %{y:.2f} dBm<extra></extra>",
                     line=dict(color='#0000ff'),
                     marker=dict(color='#0000ff', size=8)
                 ))
             
         fig2.update_layout(
             title=dict(
-                text="<b>Free Space TRP (Frequency)</b>", 
+                text="<b>Free Space TRP (LTE Band/Chan)</b>", 
                 font=dict(size=22, color="#000000"),
                 x=0.5,
                 xanchor='center'
             ),
-            xaxis_title="<b>Frequency (MHz)</b>",
+            xaxis_title="<b>LTE Band / Channel</b>",
             yaxis_title="<b>Total Radiated Power (dBm)</b>",
             xaxis_title_font=dict(size=16, color="#000000"),
             yaxis_title_font=dict(size=16, color="#000000"),
