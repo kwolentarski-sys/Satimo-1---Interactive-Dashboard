@@ -250,8 +250,8 @@ if active_dataset_choice in ["GPS L1 CW", "GPS L5 CW"]:
                     fig_table = go.Figure(data=[go.Table(
                         header=dict(
                             values=header_values,
-                            fill_color='#0000ff',
-                            font=dict(color='white', size=14),
+                            fill_color='#d9d9d9',
+                            font=dict(color='#000000', size=14),
                             align='center',
                             height=40
                         ),
