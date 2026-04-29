@@ -468,7 +468,7 @@ elif active_dataset_choice == "LTE TRP":
             df['TRP (dBm)'] = df['TRP (dBm)'].astype(float)
             
             # Dashboard Headers
-            st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - LTE TRP Validation Measurements</h3>", unsafe_allow_html=True)
+            st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - Active Validation Measurements - LTE TRP</h3>", unsafe_allow_html=True)
             st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> {device_name} | <b>Test Date:</b> {test_date}</div>", unsafe_allow_html=True)
             
             fig = go.Figure()
@@ -535,7 +535,7 @@ elif active_dataset_choice == "LTE TRP":
             device_name = selected_data.get('Device', 'Unknown Device')
             
             # Dashboard Headers
-            st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - LTE TRP Validation Measurements</h3>", unsafe_allow_html=True)
+            st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - Active Validation Measurements - LTE TRP</h3>", unsafe_allow_html=True)
             st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> {device_name} | <b>Test Date:</b> {test_date}</div>", unsafe_allow_html=True)
             
             fig = go.Figure()
