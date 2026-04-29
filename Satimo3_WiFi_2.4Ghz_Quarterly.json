@@ -1,0 +1,26 @@
+[
+  {
+    "Device": "Reference: Samsung Galaxy S5 (SM-G900P): IMEI: 9867",
+    "Date": "3/17/26",
+    "Measurements": [
+      {
+        "Band Chan": "LOW    ch:1",
+        "Frequency (Mhz)": "2412",
+        "TRP (dBm)": "12.81",
+        "TIS (dBm)": "-82.91"
+      },
+      {
+        "Band Chan": "MID      ch:6",
+        "Frequency (Mhz)": "2437",
+        "TRP (dBm)": "14.09",
+        "TIS (dBm)": "-87.78"
+      },
+      {
+        "Band Chan": "HIGH   ch:11",
+        "Frequency (Mhz)": "2462",
+        "TRP (dBm)": "12.96",
+        "TIS (dBm)": "-85.86"
+      }
+    ]
+  }
+]
