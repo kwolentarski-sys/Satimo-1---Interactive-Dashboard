@@ -29,17 +29,27 @@ ANTENNA_RANGES = {
     # Dipoles
     "Dipole SD450": "400 - 500 MHz",
     "Dipole SD665": "625 - 700 MHz",
-    "Dipole SD740": "690 - 790 MHz",
+    "Dipole SD740": "690 - 800 MHz",
+    "Dipole SD836": "810 - 855 MHz",
     "Dipole SD850": "800 - 950 MHz",
+    "Dipole SD880": "860 - 920 MHz",
     "Dipole SD900": "850 - 950 MHz",
+    "Dipole SD945": "925 - 980 MHz",
+    "Dipole SD1230": "1165 - 1295 MHz",
     "Dipole SD1500": "1400 - 1600 MHz",
-    "Dipole SD1800": "1700 - 1900 MHz",
+    "Dipole SD1575": "1500 - 1630 MHz",
+    "Dipole SD1730": "1640 - 1705 MHz",
+    "Dipole SD1800": "1700 - 1915 MHz",
     "Dipole SD1900": "1800 - 2000 MHz",
     "Dipole SD2000": "1900 - 2100 MHz",
-    "Dipole SD2450": "2300 - 2600 MHz",
-    "Dipole SD2600": "2500 - 2800 MHz",
+    "Dipole SD2140": "2005 - 2330 MHz",
+    "Dipole SD2450": "2300 - 2650 MHz",
+    "Dipole SD2600": "2500 - 2950 MHz",
     "Dipole SD3500": "3400 - 3600 MHz",
+    "Dipole SD5150": "4900 - 5400 MHz",
     "Dipole SD5500": "5000 - 6000 MHz",
+    "Dipole SD5650": "5405 - 5900 MHz",
+    "Dipole WD6000": "6000 - 8000 MHz",
     
     # Horns
     "Horn SH400": "400 - 6000 MHz",
@@ -123,7 +133,7 @@ if not target_file:
 try:
     raw_data = load_data(target_file)
 except FileNotFoundError:
-    if chamber_choice != "Satimo 2" and target_file != 'Chambers_Wideband_Dipole_Comparison.json':
+    if chamber_choice != "Satimo 2" and target_file != 'Chambers_Wideband_Dipole_Comparison.json' and target_file != 'Satimo1_Dipoles_Yearly.json':
         st.info(f"🏗️ **{chamber_choice} is under construction.**\n\nWhen ready, simply upload **`{target_file}`** to GitHub and this dashboard will populate automatically.")
     else:
         st.error(f"Please ensure the file '{target_file}' is saved in the same directory as this script.")
