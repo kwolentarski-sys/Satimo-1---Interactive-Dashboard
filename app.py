@@ -133,7 +133,7 @@ if not target_file:
 try:
     raw_data = load_data(target_file)
 except FileNotFoundError:
-    if chamber_choice != "Satimo 2" and target_file != 'Chambers_Wideband_Dipole_Comparison.json' and target_file != 'Satimo1_Dipoles_Yearly.json':
+    if chamber_choice != "Satimo 2" and target_file != 'Chambers_Wideband_Dipole_Comparison.json' and target_file != 'Satimo1_Dipoles_Yearly.json' and target_file != 'Satimo1_LTE_Reference_TRP_Quarterly.json':
         st.info(f"🏗️ **{chamber_choice} is under construction.**\n\nWhen ready, simply upload **`{target_file}`** to GitHub and this dashboard will populate automatically.")
     else:
         st.error(f"Please ensure the file '{target_file}' is saved in the same directory as this script.")
@@ -237,8 +237,24 @@ if active_dataset_choice == "Pixel Phone S4 with Dipoles":
 elif active_dataset_choice == "LTE TRP":
     # --- Logic for the Active LTE TRP Data ---
     
+    # Normalize data structure to handle both List (Satimo 2) and Dict (Satimo 1) formats
+    normalized_data = []
+    if isinstance(raw_data, dict):
+        for key, val in raw_data.items():
+            if isinstance(val, dict) and "Data" in val:
+                freq_range = val.get("Reference", "Unknown Range")
+                device_name = key.split(" - ")[0] if " - " in key else "Unknown Device"
+                normalized_data.append({
+                    "Frequency_Range": freq_range,
+                    "Device": device_name,
+                    "Date": val.get("Date", "N/A"),
+                    "Measurements": val.get("Data", [])
+                })
+    elif isinstance(raw_data, list):
+        normalized_data = raw_data
+    
     # Extract the available frequency ranges from the JSON
-    freq_ranges = [d.get("Frequency_Range", "Unknown") for d in raw_data if isinstance(d, dict)]
+    freq_ranges = [d.get("Frequency_Range", "Unknown") for d in normalized_data if isinstance(d, dict)]
     if not freq_ranges:
         st.error(f"⚠️ Invalid data structure for LTE TRP in {chamber_choice}.")
         st.stop()
@@ -256,7 +272,7 @@ elif active_dataset_choice == "LTE TRP":
         device_name = 'Unknown Device'
         
         # Aggregate all measurements across all frequency ranges
-        for item in raw_data:
+        for item in normalized_data:
             if isinstance(item, dict):
                 test_date = item.get('Date', test_date)
                 device_name = item.get('Device', device_name)
@@ -324,7 +340,7 @@ elif active_dataset_choice == "LTE TRP":
             
     else:
         # --- Standard Logic: Frequency vs TRP ---
-        selected_data = next((item for item in raw_data if item.get("Frequency_Range") == selected_range), None)
+        selected_data = next((item for item in normalized_data if item.get("Frequency_Range") == selected_range), None)
         
         if selected_data and "Measurements" in selected_data:
             df = pd.DataFrame(selected_data["Measurements"])
@@ -393,8 +409,24 @@ elif active_dataset_choice == "LTE TRP":
 elif active_dataset_choice == "LTE TIS":
     # --- Logic for the Active LTE TIS Data ---
     
+    # Normalize data structure to handle both List (Satimo 2) and Dict (Satimo 1) formats
+    normalized_data = []
+    if isinstance(raw_data, dict):
+        for key, val in raw_data.items():
+            if isinstance(val, dict) and "Data" in val:
+                freq_range = val.get("Reference", "Unknown Range")
+                device_name = key.split(" - ")[0] if " - " in key else "Unknown Device"
+                normalized_data.append({
+                    "Frequency_Range": freq_range,
+                    "Device": device_name,
+                    "Date": val.get("Date", "N/A"),
+                    "Measurements": val.get("Data", [])
+                })
+    elif isinstance(raw_data, list):
+        normalized_data = raw_data
+        
     # Fallback to assign Frequency_Range labels if they are missing in the JSON file
-    for i, item in enumerate(raw_data):
+    for i, item in enumerate(normalized_data):
         if isinstance(item, dict) and "Frequency_Range" not in item:
             if i == 0:
                 item["Frequency_Range"] = "LTE Low Frequencies"
@@ -406,7 +438,7 @@ elif active_dataset_choice == "LTE TIS":
                 item["Frequency_Range"] = f"Range {i+1}"
     
     # Extract the frequency ranges
-    freq_ranges = [d.get("Frequency_Range") for d in raw_data if isinstance(d, dict)]
+    freq_ranges = [d.get("Frequency_Range") for d in normalized_data if isinstance(d, dict)]
     if not freq_ranges:
         st.error(f"⚠️ Invalid data structure for LTE TIS in {chamber_choice}.")
         st.stop()
@@ -424,7 +456,7 @@ elif active_dataset_choice == "LTE TIS":
         device_name = 'Unknown Device'
         
         # Aggregate all measurements across all frequency ranges
-        for item in raw_data:
+        for item in normalized_data:
             if isinstance(item, dict):
                 test_date = item.get('Date', test_date)
                 device_name = item.get('Device', device_name)
@@ -492,7 +524,7 @@ elif active_dataset_choice == "LTE TIS":
             
     else:
         # --- Standard Logic: Frequency vs TIS ---
-        selected_data = next((item for item in raw_data if item.get("Frequency_Range") == selected_range), None)
+        selected_data = next((item for item in normalized_data if item.get("Frequency_Range") == selected_range), None)
         
         if selected_data and "Measurements" in selected_data:
             df = pd.DataFrame(selected_data["Measurements"])
