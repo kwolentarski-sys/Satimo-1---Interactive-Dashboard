@@ -95,7 +95,7 @@ dataset_choice = ph_passive_type.selectbox(
 # 2. Active Dataset Selection Toggle 
 active_dataset_choice = ph_active_type.selectbox(
     "**Select Active Validation Type:**",
-    ("None", "LTE TRP", "LTE TIS", "Pixel Phone S4 with Dipoles")
+    ("None", "LTE TRP", "LTE TIS", "Pixel Phone S4 with Dipoles", "Phantom Wrist Dielectric Tracking")
 )
 
 # Map Chamber selection to file prefix
@@ -114,7 +114,12 @@ if active_dataset_choice == "LTE TRP":
 elif active_dataset_choice == "LTE TIS":
     target_file = f'{prefix}LTE_Reference_TIS_Quarterly.json'
 elif active_dataset_choice == "Pixel Phone S4 with Dipoles":
-    target_file = f'{prefix}Pixel_Phone_S4_Dipoles_Quarterly.json'
+    if chamber_choice == "Satimo 1":
+        target_file = 'Satimo1_Pixel_S4_Dipoles_Quarterly.json'
+    else:
+        target_file = f'{prefix}Pixel_Phone_S4_Dipoles_Quarterly.json'
+elif active_dataset_choice == "Phantom Wrist Dielectric Tracking":
+    target_file = f'{prefix}Phantom_Wrist_Dielectric_Quarterly.json'
 elif dataset_choice == "Yearly Dipoles":
     target_file = f'{prefix}Dipoles_Yearly.json'
 elif dataset_choice == "Quarterly Dipoles":
@@ -129,11 +134,20 @@ if not target_file:
     st.info("👈 Please select an Active or Passive Validation Type from the sidebar to view data.")
     st.stop()
 
+# Known files list for "under construction" fallback logic
+known_files = [
+    'Chambers_Wideband_Dipole_Comparison.json', 
+    'Satimo1_Dipoles_Yearly.json', 
+    'Satimo1_LTE_Reference_TRP_Quarterly.json', 
+    'Satimo1_Pixel_S4_Dipoles_Quarterly.json',
+    'Satimo1_Phantom_Wrist_Dielectric_Quarterly.json'
+]
+
 # Load the selected dataset with friendly fallback for missing files
 try:
     raw_data = load_data(target_file)
 except FileNotFoundError:
-    if chamber_choice != "Satimo 2" and target_file != 'Chambers_Wideband_Dipole_Comparison.json':
+    if chamber_choice != "Satimo 2" and target_file not in known_files:
         st.info(f"🏗️ **{chamber_choice} is under construction.**\n\nWhen ready, simply upload **`{target_file}`** to GitHub and this dashboard will populate automatically.")
     else:
         st.error(f"Please ensure the file '{target_file}' is saved in the same directory as this script.")
@@ -145,7 +159,176 @@ except json.JSONDecodeError:
 
 # --- ROUTING LOGIC BASED ON DATASET TYPE ---
 
-if active_dataset_choice == "Pixel Phone S4 with Dipoles":
+if active_dataset_choice == "Phantom Wrist Dielectric Tracking":
+    # --- Logic for the Phantom Wrist Dielectric Data ---
+    
+    device_name = list(raw_data.keys())[0] if isinstance(raw_data, dict) else "Unknown Device"
+    
+    if isinstance(raw_data, dict):
+        ref_info = raw_data[device_name].get("Reference", "N/A")
+        test_date = raw_data[device_name].get("Date", "N/A")
+        measurements = raw_data[device_name].get("Data", [])
+    else:
+        ref_info = "N/A"
+        test_date = "N/A"
+        measurements = raw_data
+        
+    if measurements:
+        df = pd.DataFrame(measurements)
+        
+        # Convert frequencies to numeric, coercing text rows (like "TRP Freqs Ascending") to NaN
+        df['Frequency (MHz)'] = pd.to_numeric(df['Frequency (MHz)'], errors='coerce')
+        
+        # The file separates standard Phantom data from FreeSpace data.
+        # We can isolate them based on the presence of the Old TRP column.
+        df_phantom = df[df['Old 2-1010 TRP'].notna() & (df['Old 2-1010 TRP'] != "")].copy()
+        df_freespace = df[df['Old 2-1010 TRP'].isna() | (df['Old 2-1010 TRP'] == "")].copy()
+        
+        # Drop rows where frequency is missing (cleaning up formatting gaps)
+        df_phantom = df_phantom.dropna(subset=['Frequency (MHz)'])
+        df_freespace = df_freespace.dropna(subset=['Frequency (MHz)'])
+        
+        # Convert all relevant TRP columns to numeric
+        trp_cols = ['2-1659 TRP', '2-1660 TRP', '2-1621 TRP', 'Old 2-1010 TRP']
+        for col in trp_cols:
+            if col in df_phantom.columns:
+                df_phantom[col] = pd.to_numeric(df_phantom[col], errors='coerce')
+                
+        if '2-1659 TRP' in df_freespace.columns:
+            df_freespace['2-1659 TRP'] = pd.to_numeric(df_freespace['2-1659 TRP'], errors='coerce')
+
+        st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - Phantom Wrist Dielectric Tracking ({chamber_choice})</h3>", unsafe_allow_html=True)
+        st.markdown(f"<div style='font-size: 20px; padding-bottom: 5px;'><b>Device:</b> {device_name}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div style='font-size: 16px; padding-bottom: 10px;'><b>Reference:</b> {ref_info} | <b>Test Date:</b> {test_date}</div>", unsafe_allow_html=True)
+
+        # --- First Graph: Frequency vs TRP ---
+        fig1 = go.Figure()
+        colors = ['#0000ff', '#00aa00', '#ff0000', '#ff8800'] # Blue, Green, Red, Orange
+        
+        for i, col in enumerate(trp_cols):
+            if col in df_phantom.columns and df_phantom[col].notna().any():
+                fig1.add_trace(go.Scatter(
+                    x=df_phantom['Frequency (MHz)'], 
+                    y=df_phantom[col],
+                    mode='lines+markers',
+                    name=f'<b>{col}</b>',
+                    text=df_phantom['Band Chan'],
+                    hovertemplate="<b>%{text}</b><br>Freq: %{x} MHz<br>TRP: %{y:.2f} dBm<extra></extra>",
+                    line=dict(color=colors[i % len(colors)]),
+                    marker=dict(size=8)
+                ))
+                
+        # Overlay the FreeSpace reference line if it exists
+        if not df_freespace.empty and '2-1659 TRP' in df_freespace.columns and df_freespace['2-1659 TRP'].notna().any():
+            fig1.add_trace(go.Scatter(
+                x=df_freespace['Frequency (MHz)'], 
+                y=df_freespace['2-1659 TRP'],
+                mode='lines+markers',
+                name='<b>FreeSpace TRP</b>',
+                text=df_freespace['Band Chan'],
+                hovertemplate="<b>%{text}</b><br>Freq: %{x} MHz<br>TRP: %{y:.2f} dBm<extra></extra>",
+                line=dict(dash='dash', color='#888888'),
+                marker=dict(size=8)
+            ))
+            
+        fig1.update_layout(
+            title=dict(
+                text="<b>Phantom Dielectric Tracking (Frequency)</b>", 
+                font=dict(size=22, color="#000000"),
+                x=0.5,
+                xanchor='center'
+            ),
+            xaxis_title="<b>Frequency (MHz)</b>",
+            yaxis_title="<b>Total Radiated Power (dBm)</b>",
+            xaxis_title_font=dict(size=16, color="#000000"),
+            yaxis_title_font=dict(size=16, color="#000000"),
+            legend=dict(font=dict(size=14, color="#000000")),
+            hovermode="x unified",
+            plot_bgcolor="#e9f1ff",
+            paper_bgcolor="#e9f1ff",
+            margin=dict(l=20, r=20, t=60, b=20)
+        )
+        
+        fig1.update_xaxes(
+            tickfont=dict(size=14, color="#000000"), 
+            tickprefix="<b>", ticksuffix="</b>",
+            showline=True, linewidth=2, linecolor='black', mirror=True,
+            showgrid=True, gridcolor='#999999'
+        )
+        fig1.update_yaxes(
+            tickfont=dict(size=14, color="#000000"), 
+            tickprefix="<b>", ticksuffix="</b>",
+            showline=True, linewidth=2, linecolor='black', mirror=True,
+            showgrid=True, gridcolor='#999999'
+        )
+
+        st.plotly_chart(fig1, use_container_width=True)
+        
+        # --- Second Graph: Band/Chan vs TRP ---
+        fig2 = go.Figure()
+        
+        for i, col in enumerate(trp_cols):
+            if col in df_phantom.columns and df_phantom[col].notna().any():
+                fig2.add_trace(go.Scatter(
+                    x=df_phantom['Band Chan'], 
+                    y=df_phantom[col],
+                    mode='lines+markers',
+                    name=f'<b>{col}</b>',
+                    text=df_phantom['Frequency (MHz)'],
+                    hovertemplate="<b>%{x}</b><br>Freq: %{text} MHz<br>TRP: %{y:.2f} dBm<extra></extra>",
+                    line=dict(color=colors[i % len(colors)]),
+                    marker=dict(size=8)
+                ))
+                
+        if not df_freespace.empty and '2-1659 TRP' in df_freespace.columns and df_freespace['2-1659 TRP'].notna().any():
+            fig2.add_trace(go.Scatter(
+                x=df_freespace['Band Chan'], 
+                y=df_freespace['2-1659 TRP'],
+                mode='lines+markers',
+                name='<b>FreeSpace TRP</b>',
+                text=df_freespace['Frequency (MHz)'],
+                hovertemplate="<b>%{x}</b><br>Freq: %{text} MHz<br>TRP: %{y:.2f} dBm<extra></extra>",
+                line=dict(dash='dash', color='#888888'),
+                marker=dict(size=8)
+            ))
+            
+        fig2.update_layout(
+            title=dict(
+                text="<b>Phantom Dielectric Tracking (LTE Band/Chan)</b>", 
+                font=dict(size=22, color="#000000"),
+                x=0.5,
+                xanchor='center'
+            ),
+            xaxis_title="<b>LTE Band / Channel</b>",
+            yaxis_title="<b>Total Radiated Power (dBm)</b>",
+            xaxis_title_font=dict(size=16, color="#000000"),
+            yaxis_title_font=dict(size=16, color="#000000"),
+            legend=dict(font=dict(size=14, color="#000000")),
+            hovermode="x unified",
+            plot_bgcolor="#e9f1ff",
+            paper_bgcolor="#e9f1ff",
+            margin=dict(l=20, r=20, t=60, b=20)
+        )
+        
+        fig2.update_xaxes(
+            tickfont=dict(size=14, color="#000000"), 
+            tickprefix="<b>", ticksuffix="</b>",
+            showline=True, linewidth=2, linecolor='black', mirror=True,
+            showgrid=True, gridcolor='#999999'
+        )
+        fig2.update_yaxes(
+            tickfont=dict(size=14, color="#000000"), 
+            tickprefix="<b>", ticksuffix="</b>",
+            showline=True, linewidth=2, linecolor='black', mirror=True,
+            showgrid=True, gridcolor='#999999'
+        )
+
+        st.plotly_chart(fig2, use_container_width=True)
+        
+    else:
+        st.warning(f"No valid measurement data could be parsed for Phantom Wrist Tracking in {chamber_choice}.")
+
+elif active_dataset_choice == "Pixel Phone S4 with Dipoles":
     # --- Logic for the Pixel Phone S4 Data ---
     
     # Normalize data structure to handle both List (Satimo 2) and Dict (Satimo 1) formats
