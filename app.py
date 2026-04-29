@@ -102,10 +102,6 @@ dataset_choice = ph_passive_type.selectbox(
 if chamber_choice == "Satimo 3":
     active_validation_options = (
         "None", 
-        "LTE TRP", 
-        "LTE TIS", 
-        "Pixel Phone S4 with Dipoles", 
-        "Phantom Wrist Dielectric Tracking",
         "Bluetooth BDR", 
         "Bluetooth EDR2", 
         "WiFi 2.4GHz", 
