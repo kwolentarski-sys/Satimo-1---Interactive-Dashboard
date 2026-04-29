@@ -101,7 +101,7 @@ dataset_choice = ph_passive_type.selectbox(
 # 2. Active Dataset Selection Toggle 
 active_dataset_choice = ph_active_type.selectbox(
     "**Select Active Validation Type:**",
-    ("None", "LTE TRP", "LTE TIS", "Pixel Phone S4 with Dipoles", "Phantom Wrist Dielectric Tracking")
+    ("None", "LTE TRP", "LTE TIS", "Pixel Phone S4 with Dipoles", "Phantom Wrist Dielectric Tracking", "Bluetooth BDR")
 )
 
 # Map Chamber selection to file prefix
@@ -126,6 +126,8 @@ elif active_dataset_choice == "Pixel Phone S4 with Dipoles":
         target_file = f'{prefix}Pixel_Phone_S4_Dipoles_Quarterly.json'
 elif active_dataset_choice == "Phantom Wrist Dielectric Tracking":
     target_file = f'{prefix}Phantom_Wrist_Dielectric_Quarterly.json'
+elif active_dataset_choice == "Bluetooth BDR":
+    target_file = f'{prefix}Bluetooth_BDR_Quarterly.json'
 elif dataset_choice == "Yearly Dipoles":
     target_file = f'{prefix}Dipoles_Yearly.json'
 elif dataset_choice == "Quarterly Dipoles":
@@ -147,7 +149,8 @@ known_files = [
     'Satimo1_LTE_Reference_TRP_Quarterly.json', 
     'Satimo1_LTE_Reference_TIS_Quarterly.json',
     'Satimo1_Pixel_Phone_S4_Dipoles_Quarterly.json',
-    'Satimo1_Phantom_Wrist_Dielectric_Quarterly.json'
+    'Satimo1_Phantom_Wrist_Dielectric_Quarterly.json',
+    'Satimo3_Bluetooth_BDR_Quarterly.json'
 ]
 
 # Load the selected dataset with friendly fallback for missing files
@@ -166,7 +169,10 @@ except json.JSONDecodeError:
 
 # --- ROUTING LOGIC BASED ON DATASET TYPE ---
 
-if active_dataset_choice == "Phantom Wrist Dielectric Tracking":
+if active_dataset_choice == "Bluetooth BDR":
+    st.info("📡 **Bluetooth BDR data structure detected.** Please provide the JSON structure for this data so the custom graphs can be generated!")
+
+elif active_dataset_choice == "Phantom Wrist Dielectric Tracking":
     # --- Logic for the Phantom Wrist Dielectric Data ---
     
     device_name = list(raw_data.keys())[0] if isinstance(raw_data, dict) else "Unknown Device"
@@ -478,7 +484,7 @@ elif active_dataset_choice == "LTE TRP":
                 x=df['Band Chan'], 
                 y=df['TRP (dBm)'],
                 mode='lines+markers',
-                name=f'<b>{test_date}</b>',
+                name=f'<b>TRP (dBm) - {test_date}</b>',
                 text=df['Frequency (Mhz)'],
                 hovertemplate="<b>%{x}</b><br>Freq: %{text} MHz<br>TRP: %{y:.2f} dBm<extra></extra>",
                 line=dict(color='#0000ff'),
@@ -546,7 +552,7 @@ elif active_dataset_choice == "LTE TRP":
                 x=df['Frequency (Mhz)'], 
                 y=df['TRP (dBm)'],
                 mode='lines+markers',
-                name=f'<b>{test_date}</b>',
+                name=f'<b>TRP (dBm) - {test_date}</b>',
                 text=df['Band Chan'],
                 hovertemplate="<b>%{text}</b><br>Freq: %{x} MHz<br>TRP: %{y:.2f} dBm<extra></extra>",
                 line=dict(color='#0000ff'),
@@ -664,7 +670,7 @@ elif active_dataset_choice == "LTE TIS":
                 x=df['Band Chan'], 
                 y=df['TIS (dBm)'],
                 mode='lines+markers',
-                name=f'<b>{test_date}</b>',
+                name=f'<b>TIS (dBm) - {test_date}</b>',
                 text=df['Frequency (Mhz)'],
                 hovertemplate="<b>%{x}</b><br>Freq: %{text} MHz<br>TIS: %{y:.2f} dBm<extra></extra>",
                 line=dict(color='#0000ff'),
@@ -732,7 +738,7 @@ elif active_dataset_choice == "LTE TIS":
                 x=df['Frequency (Mhz)'], 
                 y=df['TIS (dBm)'],
                 mode='lines+markers',
-                name=f'<b>{test_date}</b>',
+                name=f'<b>TIS (dBm) - {test_date}</b>',
                 text=df['Band Chan'],
                 hovertemplate="<b>%{text}</b><br>Freq: %{x} MHz<br>TIS: %{y:.2f} dBm<extra></extra>",
                 line=dict(color='#0000ff'),
