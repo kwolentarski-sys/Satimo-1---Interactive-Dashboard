@@ -98,10 +98,34 @@ dataset_choice = ph_passive_type.selectbox(
     ("None", "Yearly Dipoles", "Quarterly Dipoles", "Monthly Horns", "Wideband Dipole Chamber Comparison")
 )
 
+# Set dynamic options for Active Validation based on the selected Chamber
+if chamber_choice == "Satimo 1":
+    active_validation_options = (
+        "None", 
+        "LTE TRP", 
+        "LTE TIS", 
+        "Pixel Phone S4 with Dipoles", 
+        "Phantom Wrist Dielectric Tracking"
+    )
+else:
+    active_validation_options = (
+        "None", 
+        "LTE TRP", 
+        "LTE TIS", 
+        "Pixel Phone S4 with Dipoles", 
+        "Phantom Wrist Dielectric Tracking", 
+        "Bluetooth BDR", 
+        "Bluetooth EDR2", 
+        "WiFi 2.4GHz", 
+        "WiFi 5 GHz", 
+        "GPS L1 CW", 
+        "GPS L5 CW"
+    )
+
 # 2. Active Dataset Selection Toggle 
 active_dataset_choice = ph_active_type.selectbox(
     "**Select Active Validation Type:**",
-    ("None", "LTE TRP", "LTE TIS", "Pixel Phone S4 with Dipoles", "Phantom Wrist Dielectric Tracking", "Bluetooth BDR", "Bluetooth EDR2", "WiFi 2.4GHz", "WiFi 5 GHz", "GPS L1 CW", "GPS L5 CW")
+    active_validation_options
 )
 
 # Map Chamber selection to file prefix
