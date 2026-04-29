@@ -145,6 +145,7 @@ known_files = [
     'Chambers_Wideband_Dipole_Comparison.json', 
     'Satimo1_Dipoles_Yearly.json', 
     'Satimo1_LTE_Reference_TRP_Quarterly.json', 
+    'Satimo1_LTE_Reference_TIS_Quarterly.json',
     'Satimo1_Pixel_Phone_S4_Dipoles_Quarterly.json',
     'Satimo1_Phantom_Wrist_Dielectric_Quarterly.json'
 ]
@@ -469,7 +470,7 @@ elif active_dataset_choice == "LTE TRP":
             
             # Dashboard Headers
             st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - Active Validation Measurements - LTE TRP</h3>", unsafe_allow_html=True)
-            st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> {device_name} | <b>Test Date:</b> {test_date}</div>", unsafe_allow_html=True)
+            st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> {device_name}</div>", unsafe_allow_html=True)
             
             fig = go.Figure()
             
@@ -477,7 +478,7 @@ elif active_dataset_choice == "LTE TRP":
                 x=df['Band Chan'], 
                 y=df['TRP (dBm)'],
                 mode='lines+markers',
-                name=f'<b>TRP (dBm) {test_date}</b>',
+                name=f'<b>TRP (dBm) - {test_date}</b>',
                 text=df['Frequency (Mhz)'],
                 hovertemplate="<b>%{x}</b><br>Freq: %{text} MHz<br>TRP: %{y:.2f} dBm<extra></extra>",
                 line=dict(color='#0000ff'),
@@ -536,7 +537,7 @@ elif active_dataset_choice == "LTE TRP":
             
             # Dashboard Headers
             st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - Active Validation Measurements - LTE TRP</h3>", unsafe_allow_html=True)
-            st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> {device_name} | <b>Test Date:</b> {test_date}</div>", unsafe_allow_html=True)
+            st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> {device_name}</div>", unsafe_allow_html=True)
             
             fig = go.Figure()
             
@@ -544,7 +545,7 @@ elif active_dataset_choice == "LTE TRP":
                 x=df['Frequency (Mhz)'], 
                 y=df['TRP (dBm)'],
                 mode='lines+markers',
-                name=f'<b>TRP (dBm) {test_date}</b>',
+                name=f'<b>TRP (dBm) - {test_date}</b>',
                 text=df['Band Chan'],
                 hovertemplate="<b>%{text}</b><br>Freq: %{x} MHz<br>TRP: %{y:.2f} dBm<extra></extra>",
                 line=dict(color='#0000ff'),
@@ -653,7 +654,7 @@ elif active_dataset_choice == "LTE TIS":
             
             # Dashboard Headers
             st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - Active Validation Measurements - LTE TIS</h3>", unsafe_allow_html=True)
-            st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> {device_name} | <b>Test Date:</b> {test_date}</div>", unsafe_allow_html=True)
+            st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> {device_name}</div>", unsafe_allow_html=True)
             
             fig = go.Figure()
             
@@ -661,7 +662,7 @@ elif active_dataset_choice == "LTE TIS":
                 x=df['Band Chan'], 
                 y=df['TIS (dBm)'],
                 mode='lines+markers',
-                name=f'<b>TIS (dBm) {test_date}</b>',
+                name=f'<b>TIS (dBm) - {test_date}</b>',
                 text=df['Frequency (Mhz)'],
                 hovertemplate="<b>%{x}</b><br>Freq: %{text} MHz<br>TIS: %{y:.2f} dBm<extra></extra>",
                 line=dict(color='#0000ff'),
@@ -720,7 +721,7 @@ elif active_dataset_choice == "LTE TIS":
             
             # Dashboard Headers
             st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - Active Validation Measurements - LTE TIS</h3>", unsafe_allow_html=True)
-            st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> {device_name} | <b>Test Date:</b> {test_date}</div>", unsafe_allow_html=True)
+            st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> {device_name}</div>", unsafe_allow_html=True)
             
             fig = go.Figure()
             
@@ -728,7 +729,7 @@ elif active_dataset_choice == "LTE TIS":
                 x=df['Frequency (Mhz)'], 
                 y=df['TIS (dBm)'],
                 mode='lines+markers',
-                name=f'<b>TIS (dBm) {test_date}</b>',
+                name=f'<b>TIS (dBm) - {test_date}</b>',
                 text=df['Band Chan'],
                 hovertemplate="<b>%{text}</b><br>Freq: %{x} MHz<br>TIS: %{y:.2f} dBm<extra></extra>",
                 line=dict(color='#0000ff'),
