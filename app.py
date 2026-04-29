@@ -101,7 +101,7 @@ dataset_choice = ph_passive_type.selectbox(
 # 2. Active Dataset Selection Toggle 
 active_dataset_choice = ph_active_type.selectbox(
     "**Select Active Validation Type:**",
-    ("None", "LTE TRP", "LTE TIS", "Pixel Phone S4 with Dipoles", "Phantom Wrist Dielectric Tracking", "Bluetooth BDR", "Bluetooth EDR2", "WiFi 2.4GHz")
+    ("None", "LTE TRP", "LTE TIS", "Pixel Phone S4 with Dipoles", "Phantom Wrist Dielectric Tracking", "Bluetooth BDR", "Bluetooth EDR2", "WiFi 2.4GHz", "WiFi 5 GHz")
 )
 
 # Map Chamber selection to file prefix
@@ -132,6 +132,8 @@ elif active_dataset_choice == "Bluetooth EDR2":
     target_file = f'{prefix}Bluetooth_EDR2_Quarterly.json'
 elif active_dataset_choice == "WiFi 2.4GHz":
     target_file = f'{prefix}WiFi_2.4GHz_Quarterly.json'
+elif active_dataset_choice == "WiFi 5 GHz":
+    target_file = f'{prefix}WiFi_5GHz_Quarterly.json'
 elif dataset_choice == "Yearly Dipoles":
     target_file = f'{prefix}Dipoles_Yearly.json'
 elif dataset_choice == "Quarterly Dipoles":
@@ -156,7 +158,8 @@ known_files = [
     'Satimo1_Phantom_Wrist_Dielectric_Quarterly.json',
     'Satimo3_Bluetooth_BDR_Quarterly.json',
     'Satimo3_Bluetooth_EDR2_Quarterly.json',
-    'Satimo3_WiFi_2.4GHz_Quarterly.json'
+    'Satimo3_WiFi_2.4GHz_Quarterly.json',
+    'Satimo3_WiFi_5GHz_Quarterly.json'
 ]
 
 # Load the selected dataset with friendly fallback for missing files
@@ -175,7 +178,7 @@ except json.JSONDecodeError:
 
 # --- ROUTING LOGIC BASED ON DATASET TYPE ---
 
-if active_dataset_choice in ["Bluetooth BDR", "Bluetooth EDR2", "WiFi 2.4GHz"]:
+if active_dataset_choice in ["Bluetooth BDR", "Bluetooth EDR2", "WiFi 2.4GHz", "WiFi 5 GHz"]:
     # --- Logic for the Bluetooth/WiFi Data ---
     
     if isinstance(raw_data, list) and len(raw_data) > 0:
