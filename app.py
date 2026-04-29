@@ -652,7 +652,7 @@ elif active_dataset_choice == "LTE TIS":
             df['TIS (dBm)'] = df['TIS (dBm)'].astype(float)
             
             # Dashboard Headers
-            st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - LTE TIS Validation Measurements</h3>", unsafe_allow_html=True)
+            st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - Active Validation Measurements - LTE TIS</h3>", unsafe_allow_html=True)
             st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> {device_name} | <b>Test Date:</b> {test_date}</div>", unsafe_allow_html=True)
             
             fig = go.Figure()
@@ -719,7 +719,7 @@ elif active_dataset_choice == "LTE TIS":
             device_name = selected_data.get('Device', 'Unknown Device')
             
             # Dashboard Headers
-            st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - LTE TIS Validation Measurements</h3>", unsafe_allow_html=True)
+            st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - Active Validation Measurements - LTE TIS</h3>", unsafe_allow_html=True)
             st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> {device_name} | <b>Test Date:</b> {test_date}</div>", unsafe_allow_html=True)
             
             fig = go.Figure()
