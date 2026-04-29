@@ -133,7 +133,7 @@ if not target_file:
 try:
     raw_data = load_data(target_file)
 except FileNotFoundError:
-    if chamber_choice != "Satimo 2" and target_file != 'Chambers_Wideband_Dipole_Comparison.json' and target_file != 'Satimo1_Dipoles_Yearly.json' and target_file != 'Satimo1_LTE_Reference_TRP_Quarterly.json':
+    if chamber_choice != "Satimo 2" and target_file != 'Chambers_Wideband_Dipole_Comparison.json':
         st.info(f"🏗️ **{chamber_choice} is under construction.**\n\nWhen ready, simply upload **`{target_file}`** to GitHub and this dashboard will populate automatically.")
     else:
         st.error(f"Please ensure the file '{target_file}' is saved in the same directory as this script.")
@@ -148,9 +148,24 @@ except json.JSONDecodeError:
 if active_dataset_choice == "Pixel Phone S4 with Dipoles":
     # --- Logic for the Pixel Phone S4 Data ---
     
-    if isinstance(raw_data, list) and len(raw_data) > 0:
-        df = pd.DataFrame(raw_data)
+    # Normalize data structure to handle both List (Satimo 2) and Dict (Satimo 1) formats
+    normalized_data = []
+    if isinstance(raw_data, dict):
+        for key, val in raw_data.items():
+            if isinstance(val, dict) and "Data" in val:
+                normalized_data.extend(val["Data"])
+    elif isinstance(raw_data, list):
+        normalized_data = raw_data
         
+    if len(normalized_data) > 0:
+        df = pd.DataFrame(normalized_data)
+        
+        # Normalize column names if they are abbreviated in the JSON
+        if "Calculated TRP (dBm)" in df.columns:
+            df.rename(columns={"Calculated TRP (dBm)": "Calculated Total Radiated Power (dBm)"}, inplace=True)
+        if "Measured TRP (dBm)" in df.columns:
+            df.rename(columns={"Measured TRP (dBm)": "Measured Total Radiated Power (dBm)"}, inplace=True)
+            
         # Ensure correct numerical types for plotting
         df['Frequency (MHz)'] = df['Frequency (MHz)'].astype(float)
         df['Calculated Total Radiated Power (dBm)'] = df['Calculated Total Radiated Power (dBm)'].astype(float)
