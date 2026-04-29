@@ -80,20 +80,15 @@ chamber_choice = ph_chamber.selectbox(
     index=1 # Defaults to Satimo 2
 )
 
-# Add the main title and Google logo to the top of the page
+# Add the main title, Google logo, and dynamic subtitle tightly packed together
 st.markdown(
-    """
-    <div style='display: flex; justify-content: space-between; align-items: center; padding-bottom: 5px;'>
-        <h1 style='font-size: 32px; margin: 0;'>San Diego Antenna Chambers</h1>
+    f"""
+    <div style='display: flex; justify-content: space-between; align-items: center; padding-bottom: 0px;'>
+        <h1 style='font-size: 32px; margin: 0; padding: 0;'>San Diego Antenna Chambers</h1>
         <img src='https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg' style='height: 35px;' alt='Google'>
     </div>
+    <h2 style='font-size: 26px; color: #000000; margin-top: 0px; padding-top: 0px; margin-bottom: 20px;'>{chamber_choice} - Interactive Dashboard</h2>
     """, 
-    unsafe_allow_html=True
-)
-
-# Add the dynamic subtitle
-st.markdown(
-    f"<h2 style='font-size: 22px; color: #555; margin-top: 0px; margin-bottom: 20px;'>{chamber_choice} - Interactive Dashboard</h2>", 
     unsafe_allow_html=True
 )
 
