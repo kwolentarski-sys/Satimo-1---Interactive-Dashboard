@@ -804,7 +804,7 @@ elif dataset_choice == "Wideband Dipole Chamber Comparison":
                     
     # Display the Overshoot Subtitle with conditional color formatting
     if max_overshoot_val > 0:
-        overshoot_html = f"<b>Maximum Overshoot Above 0 dB:</b> <span style='color: #da0303;'>{max_overshoot_val:.2f} dB at {max_overshoot_freq:g} MHz ({max_overshoot_chamber})</span>"
+        overshoot_html = f"<b>Maximum Overshoot Above 0 dB:</b> <span style='color: #da0303;'>{max_overshoot_val:.2f} dB at {max_overshoot_freq:g} MHz</span>"
     else:
         overshoot_html = "<b>Maximum Overshoot Above 0 dB:</b> <span style='color: #04c136; font-weight: bold;'>None</span>"
         
