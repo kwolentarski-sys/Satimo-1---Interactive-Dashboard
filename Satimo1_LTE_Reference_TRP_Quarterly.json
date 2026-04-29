@@ -1,0 +1,165 @@
+{
+  "Inseego MiFi Reference Device: IMEI: 7427 - LTE Low Frequencies": {
+    "Reference": "LTE Low Frequencies",
+    "Date": "3/11/26",
+    "Data": [
+      {
+        "Band Chan": "B71 Low",
+        "Frequency (Mhz)": "664.58",
+        "TRP (dBm)": "19.72"
+      },
+      {
+        "Band Chan": "B71 Mid",
+        "Frequency (Mhz)": "680.5",
+        "TRP (dBm)": "19.71"
+      },
+      {
+        "Band Chan": "B71 High",
+        "Frequency (Mhz)": "696.42",
+        "TRP (dBm)": "18.47"
+      },
+      {
+        "Band Chan": "B28 Low",
+        "Frequency (Mhz)": "704.58",
+        "TRP (dBm)": "19.18"
+      },
+      {
+        "Band Chan": "B12 Mid",
+        "Frequency (Mhz)": "707.41",
+        "TRP (dBm)": "19.04"
+      },
+      {
+        "Band Chan": "B28 Mid",
+        "Frequency (Mhz)": "725.5",
+        "TRP (dBm)": "18.52"
+      },
+      {
+        "Band Chan": "B28 High",
+        "Frequency (Mhz)": "746.42",
+        "TRP (dBm)": "16.53"
+      },
+      {
+        "Band Chan": "B13 Mid",
+        "Frequency (Mhz)": "782",
+        "TRP (dBm)": "19.28"
+      },
+      {
+        "Band Chan": "B26 Low",
+        "Frequency (Mhz)": "814.97",
+        "TRP (dBm)": "19.03"
+      },
+      {
+        "Band Chan": "B26 Mid",
+        "Frequency (Mhz)": "831.41",
+        "TRP (dBm)": "20.41"
+      },
+      {
+        "Band Chan": "B20 Low",
+        "Frequency (Mhz)": "833.58",
+        "TRP (dBm)": "18.80"
+      },
+      {
+        "Band Chan": "B20 Mid",
+        "Frequency (Mhz)": "847",
+        "TRP (dBm)": "20.19"
+      },
+      {
+        "Band Chan": "B26 High",
+        "Frequency (Mhz)": "848.03",
+        "TRP (dBm)": "20.65"
+      },
+      {
+        "Band Chan": "B20 High",
+        "Frequency (Mhz)": "860.42",
+        "TRP (dBm)": "20.48"
+      },
+      {
+        "Band Chan": "B8 Low",
+        "Frequency (Mhz)": "881.58",
+        "TRP (dBm)": "20.82"
+      },
+      {
+        "Band Chan": "B8 Mid",
+        "Frequency (Mhz)": "897.5",
+        "TRP (dBm)": "20.91"
+      },
+      {
+        "Band Chan": "B8 High",
+        "Frequency (Mhz)": "913.42",
+        "TRP (dBm)": "20.27"
+      }
+    ]
+  },
+  "Inseego MiFi Reference Device: IMEI: 7427 - LTE Mid Frequencies": {
+    "Reference": "LTE Mid Frequencies",
+    "Date": "3/11/26",
+    "Data": [
+      {
+        "Band Chan": "B66 Low",
+        "Frequency (Mhz)": "1711.58",
+        "TRP (dBm)": "20.94"
+      },
+      {
+        "Band Chan": "B66 Mid",
+        "Frequency (Mhz)": "1745",
+        "TRP (dBm)": "21.17"
+      },
+      {
+        "Band Chan": "B66 High",
+        "Frequency (Mhz)": "1778.42",
+        "TRP (dBm)": "20.55"
+      },
+      {
+        "Band Chan": "B25 Low",
+        "Frequency (Mhz)": "1850.97",
+        "TRP (dBm)": "20.59"
+      },
+      {
+        "Band Chan": "B25 Mid",
+        "Frequency (Mhz)": "1882.41",
+        "TRP (dBm)": "20.49"
+      },
+      {
+        "Band Chan": "B25 High",
+        "Frequency (Mhz)": "1914.03",
+        "TRP (dBm)": "19.03"
+      },
+      {
+        "Band Chan": "B1 Low",
+        "Frequency (Mhz)": "1921.58",
+        "TRP (dBm)": "19.64"
+      },
+      {
+        "Band Chan": "B1 Mid",
+        "Frequency (Mhz)": "1950",
+        "TRP (dBm)": "18.76"
+      },
+      {
+        "Band Chan": "B1 High",
+        "Frequency (Mhz)": "1978.42",
+        "TRP (dBm)": "18.54"
+      }
+    ]
+  },
+  "Inseego MiFi Reference Device: IMEI: 7427 - LTE High Frequencies": {
+    "Reference": "LTE High Frequencies",
+    "Date": "3/11/26",
+    "Data": [
+      {
+        "Band Chan": "B7 Low",
+        "Frequency (Mhz)": "2502.62",
+        "TRP (dBm)": "17.69"
+      },
+      {
+        "Band Chan": "B7 Mid",
+        "Frequency (Mhz)": "2535",
+        "TRP (dBm)": "18.46"
+      },
+      {
+        "Band Chan": "B7 High",
+        "Frequency (Mhz)": "2567.38",
+        "TRP (dBm)": "18.10"
+      }
+    ]
+  }
+}
