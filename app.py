@@ -101,7 +101,7 @@ dataset_choice = ph_passive_type.selectbox(
 # 2. Active Dataset Selection Toggle 
 active_dataset_choice = ph_active_type.selectbox(
     "**Select Active Validation Type:**",
-    ("None", "LTE TRP", "LTE TIS", "Pixel Phone S4 with Dipoles", "Phantom Wrist Dielectric Tracking", "Bluetooth BDR")
+    ("None", "LTE TRP", "LTE TIS", "Pixel Phone S4 with Dipoles", "Phantom Wrist Dielectric Tracking", "Bluetooth BDR", "Bluetooth EDR2")
 )
 
 # Map Chamber selection to file prefix
@@ -128,6 +128,8 @@ elif active_dataset_choice == "Phantom Wrist Dielectric Tracking":
     target_file = f'{prefix}Phantom_Wrist_Dielectric_Quarterly.json'
 elif active_dataset_choice == "Bluetooth BDR":
     target_file = f'{prefix}Bluetooth_BDR_Quarterly.json'
+elif active_dataset_choice == "Bluetooth EDR2":
+    target_file = f'{prefix}Bluetooth_EDR2_Quarterly.json'
 elif dataset_choice == "Yearly Dipoles":
     target_file = f'{prefix}Dipoles_Yearly.json'
 elif dataset_choice == "Quarterly Dipoles":
@@ -150,7 +152,8 @@ known_files = [
     'Satimo1_LTE_Reference_TIS_Quarterly.json',
     'Satimo1_Pixel_Phone_S4_Dipoles_Quarterly.json',
     'Satimo1_Phantom_Wrist_Dielectric_Quarterly.json',
-    'Satimo3_Bluetooth_BDR_Quarterly.json'
+    'Satimo3_Bluetooth_BDR_Quarterly.json',
+    'Satimo3_Bluetooth_EDR2_Quarterly.json'
 ]
 
 # Load the selected dataset with friendly fallback for missing files
@@ -169,8 +172,8 @@ except json.JSONDecodeError:
 
 # --- ROUTING LOGIC BASED ON DATASET TYPE ---
 
-if active_dataset_choice == "Bluetooth BDR":
-    # --- Logic for the Bluetooth BDR Data ---
+if active_dataset_choice in ["Bluetooth BDR", "Bluetooth EDR2"]:
+    # --- Logic for the Bluetooth Data ---
     
     if isinstance(raw_data, list) and len(raw_data) > 0:
         device_data = raw_data[0]
@@ -187,7 +190,7 @@ if active_dataset_choice == "Bluetooth BDR":
             df['TIS (dBm)'] = pd.to_numeric(df['TIS (dBm)'], errors='coerce')
             
             # Dashboard Headers
-            st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - Active Validation Measurements - Bluetooth BDR</h3>", unsafe_allow_html=True)
+            st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - Active Validation Measurements - {active_dataset_choice}</h3>", unsafe_allow_html=True)
             st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> {device_name.replace('Reference: ', '')}</div>", unsafe_allow_html=True)
             
             # --- First Graph: TRP Trend ---
@@ -206,7 +209,7 @@ if active_dataset_choice == "Bluetooth BDR":
             
             fig_trp.update_layout(
                 title=dict(
-                    text="<b>Bluetooth BDR - Active TRP Trend (LTE Band/Chan)</b>", 
+                    text=f"<b>{active_dataset_choice} - Active TRP Trend (LTE Band/Chan)</b>", 
                     font=dict(size=22, color="#000000"),
                     x=0.5,
                     xanchor='center'
@@ -254,7 +257,7 @@ if active_dataset_choice == "Bluetooth BDR":
             
             fig_tis.update_layout(
                 title=dict(
-                    text="<b>Bluetooth BDR - Active TIS Trend (LTE Band/Chan)</b>", 
+                    text=f"<b>{active_dataset_choice} - Active TIS Trend (LTE Band/Chan)</b>", 
                     font=dict(size=22, color="#000000"),
                     x=0.5,
                     xanchor='center'
@@ -289,7 +292,7 @@ if active_dataset_choice == "Bluetooth BDR":
         else:
             st.warning("No valid measurement data could be found in the file.")
     else:
-        st.error("Error reading Bluetooth BDR file structure. Please ensure it matches the required List format.")
+        st.error(f"Error reading {active_dataset_choice} file structure. Please ensure it matches the required List format.")
 
 elif active_dataset_choice == "Phantom Wrist Dielectric Tracking":
     # --- Logic for the Phantom Wrist Dielectric Data ---
