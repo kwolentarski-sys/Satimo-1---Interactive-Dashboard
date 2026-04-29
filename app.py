@@ -181,8 +181,86 @@ except json.JSONDecodeError:
 
 # --- ROUTING LOGIC BASED ON DATASET TYPE ---
 
-if active_dataset_choice in ["Bluetooth BDR", "Bluetooth EDR2", "WiFi 2.4GHz", "WiFi 5 GHz", "GPS L1 CW"]:
-    # --- Logic for the Bluetooth/WiFi/GPS Data ---
+if active_dataset_choice == "GPS L1 CW":
+    # --- Logic for GPS L1 CW Radiation Pattern Data ---
+    
+    if isinstance(raw_data, dict):
+        device_name = raw_data.get("Device", "Unknown Device")
+        test_date = raw_data.get("Date", "N/A")
+        
+        # Dashboard Headers
+        st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - Active Validation Measurements - {active_dataset_choice}</h3>", unsafe_allow_html=True)
+        st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> {device_name} | <b>Date:</b> {test_date}</div>", unsafe_allow_html=True)
+        
+        polarizations = raw_data.get("Polarizations", [])
+        
+        if polarizations:
+            for pol in polarizations:
+                pol_label = pol.get("Label", pol.get("Type", "Polarization"))
+                pol_data = pol.get("Data", [])
+                
+                rows = []
+                for item in pol_data:
+                    elevation = item.get("Elevation", "")
+                    values = item.get("Values", {})
+                    # Add elevation to the row dict
+                    row_data = {"Elevation": elevation}
+                    row_data.update(values)
+                    rows.append(row_data)
+                
+                if rows:
+                    df_pol = pd.DataFrame(rows)
+                    
+                    # Sort the azimuth columns numerically
+                    cols = df_pol.columns.tolist()
+                    cols.remove("Elevation")
+                    try:
+                        sorted_cols = sorted(cols, key=lambda x: float(x))
+                    except ValueError:
+                        sorted_cols = cols
+                    
+                    # Build header values and cell values for the Plotly Table
+                    header_values = ["<b>Elevation (°)</b>"] + [f"<b>{c}°</b>" for c in sorted_cols]
+                    cell_values = [df_pol["Elevation"]] + [df_pol[col] for col in sorted_cols]
+                    
+                    # Create the stylish Plotly Table
+                    fig_table = go.Figure(data=[go.Table(
+                        header=dict(
+                            values=header_values,
+                            fill_color='#0000ff',
+                            font=dict(color='white', size=14),
+                            align='center',
+                            height=40
+                        ),
+                        cells=dict(
+                            values=cell_values,
+                            fill_color='#e9f1ff',
+                            font=dict(color='black', size=14),
+                            align='center',
+                            height=35
+                        )
+                    )])
+                    
+                    fig_table.update_layout(
+                        title=dict(
+                            text=f"<b>{pol_label} - Radiation Pattern</b>", 
+                            font=dict(size=20, color="#000000"),
+                            x=0.5,
+                            xanchor='center'
+                        ),
+                        margin=dict(l=20, r=20, t=50, b=20)
+                    )
+                    
+                    st.plotly_chart(fig_table, use_container_width=True)
+                else:
+                    st.warning(f"No valid data found for {pol_label}.")
+        else:
+            st.warning("No polarization data found in the file.")
+    else:
+        st.error(f"Error reading {active_dataset_choice} file structure. Please ensure it is a JSON Dictionary.")
+
+elif active_dataset_choice in ["Bluetooth BDR", "Bluetooth EDR2", "WiFi 2.4GHz", "WiFi 5 GHz"]:
+    # --- Logic for the Bluetooth/WiFi Data ---
     
     if isinstance(raw_data, list) and len(raw_data) > 0:
         device_data = raw_data[0]
@@ -193,115 +271,110 @@ if active_dataset_choice in ["Bluetooth BDR", "Bluetooth EDR2", "WiFi 2.4GHz", "
         if measurements:
             df = pd.DataFrame(measurements)
             
-            # Clean and format the data conditionally based on what's in the JSON
-            if 'Frequency (Mhz)' in df.columns:
-                df['Frequency (Mhz)'] = pd.to_numeric(df['Frequency (Mhz)'], errors='coerce')
-            if 'TRP (dBm)' in df.columns:
-                df['TRP (dBm)'] = pd.to_numeric(df['TRP (dBm)'], errors='coerce')
-            if 'TIS (dBm)' in df.columns:
-                df['TIS (dBm)'] = pd.to_numeric(df['TIS (dBm)'], errors='coerce')
+            # Clean and format the data
+            df['Frequency (Mhz)'] = pd.to_numeric(df['Frequency (Mhz)'], errors='coerce')
+            df['TRP (dBm)'] = pd.to_numeric(df['TRP (dBm)'], errors='coerce')
+            df['TIS (dBm)'] = pd.to_numeric(df['TIS (dBm)'], errors='coerce')
             
             # Dashboard Headers
             st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - Active Validation Measurements - {active_dataset_choice}</h3>", unsafe_allow_html=True)
             st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> {device_name.replace('Reference: ', '')}</div>", unsafe_allow_html=True)
             
-            # --- First Graph: TRP Trend (Only render if TRP data exists) ---
-            if 'TRP (dBm)' in df.columns:
-                fig_trp = go.Figure()
-                
-                fig_trp.add_trace(go.Scatter(
-                    x=df['Band Chan'], 
-                    y=df['TRP (dBm)'],
-                    mode='lines+markers',
-                    name=f'<b>TRP (dBm) - {test_date}</b>',
-                    text=df.get('Frequency (Mhz)', df['Band Chan']),
-                    hovertemplate="<b>%{x}</b><br>Freq: %{text} MHz<br>TRP: %{y:.2f} dBm<extra></extra>",
-                    line=dict(color='#0000ff'),
-                    marker=dict(color='#0000ff', size=8)
-                ))
-                
-                fig_trp.update_layout(
-                    title=dict(
-                        text=f"<b>{active_dataset_choice} - Active TRP Trend (Band/Chan)</b>", 
-                        font=dict(size=22, color="#000000"),
-                        x=0.5,
-                        xanchor='center'
-                    ),
-                    xaxis_title="<b>Band / Channel</b>",
-                    yaxis_title="<b>TRP (dBm)</b>",
-                    xaxis_title_font=dict(size=16, color="#000000"),
-                    yaxis_title_font=dict(size=16, color="#000000"),
-                    showlegend=True,
-                    legend=dict(font=dict(size=14, color="#000000")),
-                    hovermode="x unified",
-                    plot_bgcolor="#e9f1ff",
-                    paper_bgcolor="#e9f1ff",
-                    margin=dict(l=20, r=20, t=60, b=20)
-                )
-                
-                fig_trp.update_xaxes(
-                    tickfont=dict(size=14, color="#000000"), 
-                    tickprefix="<b>", ticksuffix="</b>",
-                    showline=True, linewidth=2, linecolor='black', mirror=True,
-                    showgrid=True, gridcolor='#999999'
-                )
-                fig_trp.update_yaxes(
-                    tickfont=dict(size=14, color="#000000"), 
-                    tickprefix="<b>", ticksuffix="</b>",
-                    showline=True, linewidth=2, linecolor='black', mirror=True,
-                    showgrid=True, gridcolor='#999999'
-                )
-
-                st.plotly_chart(fig_trp, use_container_width=True)
+            # --- First Graph: TRP Trend ---
+            fig_trp = go.Figure()
             
-            # --- Second Graph: TIS Trend (Only render if TIS data exists) ---
-            if 'TIS (dBm)' in df.columns:
-                fig_tis = go.Figure()
-                
-                fig_tis.add_trace(go.Scatter(
-                    x=df['Band Chan'], 
-                    y=df['TIS (dBm)'],
-                    mode='lines+markers',
-                    name=f'<b>TIS (dBm) - {test_date}</b>',
-                    text=df.get('Frequency (Mhz)', df['Band Chan']),
-                    hovertemplate="<b>%{x}</b><br>Freq: %{text} MHz<br>TIS: %{y:.2f} dBm<extra></extra>",
-                    line=dict(color='#ff0000'), # Red for TIS to distinguish from TRP
-                    marker=dict(color='#ff0000', size=8)
-                ))
-                
-                fig_tis.update_layout(
-                    title=dict(
-                        text=f"<b>{active_dataset_choice} - Active TIS Trend (Band/Chan)</b>", 
-                        font=dict(size=22, color="#000000"),
-                        x=0.5,
-                        xanchor='center'
-                    ),
-                    xaxis_title="<b>Band / Channel</b>",
-                    yaxis_title="<b>TIS (dBm)</b>",
-                    xaxis_title_font=dict(size=16, color="#000000"),
-                    yaxis_title_font=dict(size=16, color="#000000"),
-                    showlegend=True,
-                    legend=dict(font=dict(size=14, color="#000000")),
-                    hovermode="x unified",
-                    plot_bgcolor="#e9f1ff",
-                    paper_bgcolor="#e9f1ff",
-                    margin=dict(l=20, r=20, t=60, b=20)
-                )
-                
-                fig_tis.update_xaxes(
-                    tickfont=dict(size=14, color="#000000"), 
-                    tickprefix="<b>", ticksuffix="</b>",
-                    showline=True, linewidth=2, linecolor='black', mirror=True,
-                    showgrid=True, gridcolor='#999999'
-                )
-                fig_tis.update_yaxes(
-                    tickfont=dict(size=14, color="#000000"), 
-                    tickprefix="<b>", ticksuffix="</b>",
-                    showline=True, linewidth=2, linecolor='black', mirror=True,
-                    showgrid=True, gridcolor='#999999'
-                )
+            fig_trp.add_trace(go.Scatter(
+                x=df['Band Chan'], 
+                y=df['TRP (dBm)'],
+                mode='lines+markers',
+                name=f'<b>TRP (dBm) - {test_date}</b>',
+                text=df['Frequency (Mhz)'],
+                hovertemplate="<b>%{x}</b><br>Freq: %{text} MHz<br>TRP: %{y:.2f} dBm<extra></extra>",
+                line=dict(color='#0000ff'),
+                marker=dict(color='#0000ff', size=8)
+            ))
+            
+            fig_trp.update_layout(
+                title=dict(
+                    text=f"<b>{active_dataset_choice} - Active TRP Trend (Band/Chan)</b>", 
+                    font=dict(size=22, color="#000000"),
+                    x=0.5,
+                    xanchor='center'
+                ),
+                xaxis_title="<b>Band / Channel</b>",
+                yaxis_title="<b>TRP (dBm)</b>",
+                xaxis_title_font=dict(size=16, color="#000000"),
+                yaxis_title_font=dict(size=16, color="#000000"),
+                showlegend=True,
+                legend=dict(font=dict(size=14, color="#000000")),
+                hovermode="x unified",
+                plot_bgcolor="#e9f1ff",
+                paper_bgcolor="#e9f1ff",
+                margin=dict(l=20, r=20, t=60, b=20)
+            )
+            
+            fig_trp.update_xaxes(
+                tickfont=dict(size=14, color="#000000"), 
+                tickprefix="<b>", ticksuffix="</b>",
+                showline=True, linewidth=2, linecolor='black', mirror=True,
+                showgrid=True, gridcolor='#999999'
+            )
+            fig_trp.update_yaxes(
+                tickfont=dict(size=14, color="#000000"), 
+                tickprefix="<b>", ticksuffix="</b>",
+                showline=True, linewidth=2, linecolor='black', mirror=True,
+                showgrid=True, gridcolor='#999999'
+            )
 
-                st.plotly_chart(fig_tis, use_container_width=True)
+            st.plotly_chart(fig_trp, use_container_width=True)
+            
+            # --- Second Graph: TIS Trend ---
+            fig_tis = go.Figure()
+            
+            fig_tis.add_trace(go.Scatter(
+                x=df['Band Chan'], 
+                y=df['TIS (dBm)'],
+                mode='lines+markers',
+                name=f'<b>TIS (dBm) - {test_date}</b>',
+                text=df['Frequency (Mhz)'],
+                hovertemplate="<b>%{x}</b><br>Freq: %{text} MHz<br>TIS: %{y:.2f} dBm<extra></extra>",
+                line=dict(color='#ff0000'), # Red for TIS to distinguish from TRP
+                marker=dict(color='#ff0000', size=8)
+            ))
+            
+            fig_tis.update_layout(
+                title=dict(
+                    text=f"<b>{active_dataset_choice} - Active TIS Trend (Band/Chan)</b>", 
+                    font=dict(size=22, color="#000000"),
+                    x=0.5,
+                    xanchor='center'
+                ),
+                xaxis_title="<b>Band / Channel</b>",
+                yaxis_title="<b>TIS (dBm)</b>",
+                xaxis_title_font=dict(size=16, color="#000000"),
+                yaxis_title_font=dict(size=16, color="#000000"),
+                showlegend=True,
+                legend=dict(font=dict(size=14, color="#000000")),
+                hovermode="x unified",
+                plot_bgcolor="#e9f1ff",
+                paper_bgcolor="#e9f1ff",
+                margin=dict(l=20, r=20, t=60, b=20)
+            )
+            
+            fig_tis.update_xaxes(
+                tickfont=dict(size=14, color="#000000"), 
+                tickprefix="<b>", ticksuffix="</b>",
+                showline=True, linewidth=2, linecolor='black', mirror=True,
+                showgrid=True, gridcolor='#999999'
+            )
+            fig_tis.update_yaxes(
+                tickfont=dict(size=14, color="#000000"), 
+                tickprefix="<b>", ticksuffix="</b>",
+                showline=True, linewidth=2, linecolor='black', mirror=True,
+                showgrid=True, gridcolor='#999999'
+            )
+
+            st.plotly_chart(fig_tis, use_container_width=True)
             
         else:
             st.warning("No valid measurement data could be found in the file.")
