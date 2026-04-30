@@ -592,7 +592,7 @@ elif active_dataset_choice == "Pixel Phone S4 with Dipoles":
         max_delta_freq = df.loc[max_delta_idx, 'Frequency (MHz)']
         max_delta_band = df.loc[max_delta_idx, 'LTE Band']
         
-        delta_html = f"<b>Maximum Delta (Calc vs Meas):</b> {max_delta_val:.2f} dB at {max_delta_freq:g} MHz ({max_delta_band})"
+        delta_html = f"<b>Maximum Delta (Calc vs Meas):</b> <span style='color: #da0303;'>{max_delta_val:.2f} dB at {max_delta_freq:g} MHz ({max_delta_band})</span>"
         st.markdown(f"<div style='font-size: 18px; line-height: 1.4; margin-bottom: 10px;'>{delta_html}</div>", unsafe_allow_html=True)
         
         # --- Graph: Band/Chan vs TRP ---
