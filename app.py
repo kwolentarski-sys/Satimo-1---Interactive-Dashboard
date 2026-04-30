@@ -584,8 +584,7 @@ elif active_dataset_choice == "Pixel Phone S4 with Dipoles":
         df['Measured Total Radiated Power (dBm)'] = df['Measured Total Radiated Power (dBm)'].astype(float)
         df['Delta (Calc vs Meas) (dB)'] = df['Delta (Calc vs Meas) (dB)'].astype(float)
         
-        st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - Pixel Phone S4 Validation Measurements</h3>", unsafe_allow_html=True)
-        st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> Pixel Phone S4 with Dipoles</div>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - Active Validation Measurements - Pixel Phone S4 with Dipoles</h3>", unsafe_allow_html=True)
         
         # Calculate Maximum Delta
         max_delta_idx = df['Delta (Calc vs Meas) (dB)'].abs().idxmax()
