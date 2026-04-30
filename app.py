@@ -205,80 +205,56 @@ except json.JSONDecodeError:
 # --- ROUTING LOGIC BASED ON DATASET TYPE ---
 
 if active_dataset_choice == "GPS CW L1 L5":
-    # --- Logic for GPS CW Radiation Pattern Data ---
+    # --- Logic for GPS CW L1 L5 Table Data ---
     
     if isinstance(raw_data, dict):
         device_name = raw_data.get("Device", "Unknown Device")
         test_date = raw_data.get("Date", "N/A")
+        test_type = raw_data.get("Test_Type", "QMSL CW (-90 dBm)")
+        measurements = raw_data.get("Measurements", [])
         
         # Dashboard Headers
         st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - Active Validation Measurements - {active_dataset_choice}</h3>", unsafe_allow_html=True)
-        st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> {device_name} | <b>Date:</b> {test_date}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> {device_name} | <b>Date:</b> {test_date} | <b>Test:</b> {test_type}</div>", unsafe_allow_html=True)
         
-        polarizations = raw_data.get("Polarizations", [])
-        
-        if polarizations:
-            for pol in polarizations:
-                pol_label = pol.get("Label", pol.get("Type", "Polarization"))
-                pol_data = pol.get("Data", [])
-                
-                rows = []
-                for item in pol_data:
-                    elevation = item.get("Elevation", "")
-                    values = item.get("Values", {})
-                    # Add elevation to the row dict
-                    row_data = {"Elevation": elevation}
-                    row_data.update(values)
-                    rows.append(row_data)
-                
-                if rows:
-                    df_pol = pd.DataFrame(rows)
-                    
-                    # Sort the azimuth columns numerically
-                    cols = df_pol.columns.tolist()
-                    cols.remove("Elevation")
-                    try:
-                        sorted_cols = sorted(cols, key=lambda x: float(x))
-                    except ValueError:
-                        sorted_cols = cols
-                    
-                    # Build header values and cell values for the Plotly Table
-                    header_values = ["<b>Elevation (°)</b>"] + [f"<b>{c}°</b>" for c in sorted_cols]
-                    cell_values = [df_pol["Elevation"]] + [df_pol[col] for col in sorted_cols]
-                    
-                    # Create the stylish Plotly Table
-                    fig_table = go.Figure(data=[go.Table(
-                        header=dict(
-                            values=header_values,
-                            fill_color='#d9d9d9',
-                            font=dict(color='#000000', size=14),
-                            align='center',
-                            height=40
-                        ),
-                        cells=dict(
-                            values=cell_values,
-                            fill_color='#e9f1ff',
-                            font=dict(color='black', size=14),
-                            align='center',
-                            height=35
-                        )
-                    )])
-                    
-                    fig_table.update_layout(
-                        title=dict(
-                            text=f"<b>{pol_label} - Radiation Pattern</b>", 
-                            font=dict(size=20, color="#000000"),
-                            x=0.5,
-                            xanchor='center'
-                        ),
-                        margin=dict(l=20, r=20, t=50, b=20)
-                    )
-                    
-                    st.plotly_chart(fig_table, use_container_width=True)
-                else:
-                    st.warning(f"No valid data found for {pol_label}.")
+        if measurements:
+            df_gps = pd.DataFrame(measurements)
+            
+            # Build header values and cell values directly from the DataFrame
+            header_values = [f"<b>{col}</b>" for col in df_gps.columns]
+            cell_values = [df_gps[col] for col in df_gps.columns]
+            
+            # Create the stylish Plotly Table
+            fig_table = go.Figure(data=[go.Table(
+                header=dict(
+                    values=header_values,
+                    fill_color='#d9d9d9',
+                    font=dict(color='#000000', size=16),
+                    align='center',
+                    height=40
+                ),
+                cells=dict(
+                    values=cell_values,
+                    fill_color='#e9f1ff',
+                    font=dict(color='black', size=15),
+                    align='center',
+                    height=35
+                )
+            )])
+            
+            fig_table.update_layout(
+                title=dict(
+                    text=f"<b>GPS CW L1 & L5 Measurements</b>", 
+                    font=dict(size=20, color="#000000"),
+                    x=0.5,
+                    xanchor='center'
+                ),
+                margin=dict(l=20, r=20, t=50, b=20)
+            )
+            
+            st.plotly_chart(fig_table, use_container_width=True)
         else:
-            st.warning("No polarization data found in the file.")
+            st.warning("No measurements found in the file.")
     else:
         st.error(f"Error reading {active_dataset_choice} file structure. Please ensure it is a JSON Dictionary.")
 
