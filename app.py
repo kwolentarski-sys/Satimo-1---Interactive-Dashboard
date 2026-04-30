@@ -104,7 +104,7 @@ if chamber_choice == "Satimo 3":
         "None", 
         "Bluetooth BDR", 
         "Bluetooth EDR2", 
-        "WiFi 2.4GHz", 
+        "WiFi 2.4 GHz", 
         "WiFi 5 GHz", 
         "GPS L1 CW", 
         "GPS L5 CW"
@@ -150,7 +150,7 @@ elif active_dataset_choice == "Bluetooth BDR":
     target_file = f'{prefix}Bluetooth_BDR_Quarterly.json'
 elif active_dataset_choice == "Bluetooth EDR2":
     target_file = f'{prefix}Bluetooth_EDR2_Quarterly.json'
-elif active_dataset_choice == "WiFi 2.4GHz":
+elif active_dataset_choice == "WiFi 2.4 GHz":
     target_file = f'{prefix}WiFi_2.4GHz_Quarterly.json'
 elif active_dataset_choice == "WiFi 5 GHz":
     target_file = f'{prefix}WiFi_5GHz_Quarterly.json'
@@ -282,7 +282,7 @@ if active_dataset_choice in ["GPS L1 CW", "GPS L5 CW"]:
     else:
         st.error(f"Error reading {active_dataset_choice} file structure. Please ensure it is a JSON Dictionary.")
 
-elif active_dataset_choice in ["Bluetooth BDR", "Bluetooth EDR2", "WiFi 2.4GHz", "WiFi 5 GHz"]:
+elif active_dataset_choice in ["Bluetooth BDR", "Bluetooth EDR2", "WiFi 2.4 GHz", "WiFi 5 GHz"]:
     # --- Logic for the Bluetooth/WiFi Data ---
     
     if isinstance(raw_data, list) and len(raw_data) > 0:
