@@ -1,0 +1,17 @@
+{
+  "Device": "Luna L00CW",
+  "Date": "06/11/24",
+  "Test_Type": "QMSL CW (-90 dBm)",
+  "Measurements": [
+    {
+      "GPS Frequency": "L1",
+      "Peak": 72.6,
+      "Average": 69.65
+    },
+    {
+      "GPS Frequency": "L5",
+      "Peak": 70.4,
+      "Average": 67.47
+    }
+  ]
+}
