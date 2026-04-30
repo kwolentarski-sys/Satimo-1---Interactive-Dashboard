@@ -106,8 +106,7 @@ if chamber_choice == "Satimo 3":
         "Bluetooth EDR2", 
         "WiFi 2.4 GHz", 
         "WiFi 5 GHz", 
-        "GPS L1 CW", 
-        "GPS L5 CW"
+        "GPS CW L1 L5"
     )
 else:
     active_validation_options = (
@@ -154,10 +153,8 @@ elif active_dataset_choice == "WiFi 2.4 GHz":
     target_file = f'{prefix}WiFi_2.4GHz_Quarterly.json'
 elif active_dataset_choice == "WiFi 5 GHz":
     target_file = f'{prefix}WiFi_5GHz_Quarterly.json'
-elif active_dataset_choice == "GPS L1 CW":
-    target_file = f'{prefix}GPS_L1_CW_Quarterly.json'
-elif active_dataset_choice == "GPS L5 CW":
-    target_file = f'{prefix}GPS_L5_CW_Quarterly.json'
+elif active_dataset_choice == "GPS CW L1 L5":
+    target_file = f'{prefix}GPS_CW_L1_L5_Quarterly.json'
 elif dataset_choice == "Yearly Dipoles":
     target_file = f'{prefix}Dipoles_Yearly.json'
 elif dataset_choice == "Quarterly Dipoles":
@@ -184,8 +181,7 @@ known_files = [
     'Satimo3_Bluetooth_EDR2_Quarterly.json',
     'Satimo3_WiFi_2.4GHz_Quarterly.json',
     'Satimo3_WiFi_5GHz_Quarterly.json',
-    'Satimo3_GPS_L1_CW_Quarterly.json',
-    'Satimo3_GPS_L5_CW_Quarterly.json'
+    'Satimo3_GPS_CW_L1_L5_Quarterly.json'
 ]
 
 # Load the selected dataset with friendly fallback for missing files
@@ -208,7 +204,7 @@ except json.JSONDecodeError:
 
 # --- ROUTING LOGIC BASED ON DATASET TYPE ---
 
-if active_dataset_choice in ["GPS L1 CW", "GPS L5 CW"]:
+if active_dataset_choice == "GPS CW L1 L5":
     # --- Logic for GPS CW Radiation Pattern Data ---
     
     if isinstance(raw_data, dict):
