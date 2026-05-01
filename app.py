@@ -236,6 +236,7 @@ if active_dataset_choice == "GPS CW L1 L5":
                 header=dict(
                     values=header_values,
                     fill_color='#d9d9d9',
+                    line=dict(color='black', width=1),
                     font=dict(color='#000000', size=16),
                     align='center',
                     height=40
@@ -243,6 +244,7 @@ if active_dataset_choice == "GPS CW L1 L5":
                 cells=dict(
                     values=cell_values,
                     fill_color='#e9f1ff',
+                    line=dict(color='black', width=1),
                     font=dict(color='black', size=15),
                     align='center',
                     height=35
