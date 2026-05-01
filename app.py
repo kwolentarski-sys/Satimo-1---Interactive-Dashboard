@@ -134,7 +134,7 @@ active_dataset_choice = ph_active_type.selectbox(
 st.sidebar.markdown("---") # Visual divider
 test_desc_choice = st.sidebar.selectbox(
     "**Test Descriptions:**",
-    ("🔵 None", "Pixel Phone S4 with Dipoles", "Yearly Dipoles", "Horns Monthly", "Phantom Wrist Dielectric Tracking")
+    ("🔵 None", "Pixel Phone S4 with Dipoles", "Yearly Dipoles", "Horns Monthly", "Phantom Wrist Dielectric Tracking", "LTE TRP")
 )
 
 # Render the specific description based on user selection by reading the Markdown file
@@ -166,7 +166,13 @@ elif test_desc_choice == "Phantom Wrist Dielectric Tracking":
             st.sidebar.info(md_file.read())
     except FileNotFoundError:
         st.sidebar.warning("Upload **`Phantom_Wrist_Dielectric_Tracking.md`** to view this description.")
-
+elif test_desc_choice == "LTE TRP":
+    try:
+        # Load the custom markdown file uploaded to GitHub
+        with open("LTE_TRP.md", "r", encoding="utf-8") as md_file:
+            st.sidebar.info(md_file.read())
+    except FileNotFoundError:
+        st.sidebar.warning("Upload **`LTE_TRP.md`** to view this description.")
 
 # Map Chamber selection to file prefix
 prefix_map = {
