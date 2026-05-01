@@ -213,9 +213,9 @@ if active_dataset_choice == "GPS CW L1 L5":
         test_type = raw_data.get("Test_Type", "QMSL CW (-90 dBm)")
         measurements = raw_data.get("Measurements", [])
         
-        # Dashboard Headers
+        # Dashboard Headers (Date removed from header and labels stacked)
         st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - Active Validation Measurements - {active_dataset_choice.replace('🔵 ', '')}</h3>", unsafe_allow_html=True)
-        st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> {device_name} | <b>Date:</b> {test_date} | <b>Test:</b> {test_type}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div style='font-size: 20px; line-height: 1.4; padding-bottom: 10px;'><b>Device:</b> {device_name}<br><b>Test:</b> {test_type}</div>", unsafe_allow_html=True)
         
         if measurements:
             df_gps = pd.DataFrame(measurements)
