@@ -108,6 +108,13 @@ if chamber_choice == "Satimo 3":
         "WiFi 5 GHz", 
         "GPS CW L1 L5"
     )
+elif chamber_choice == "Satimo 2":
+    active_validation_options = (
+        "🔵 None", 
+        "LTE TRP", 
+        "LTE TIS", 
+        "Pixel Phone S4 with Dipoles"
+    )
 else:
     active_validation_options = (
         "🔵 None", 
@@ -127,7 +134,7 @@ active_dataset_choice = ph_active_type.selectbox(
 st.sidebar.markdown("---") # Visual divider
 test_desc_choice = st.sidebar.selectbox(
     "**Test Descriptions:**",
-    ("🔵 None", "Pixel Phone S4 with Dipoles", "Yearly Dipoles")
+    ("🔵 None", "Pixel Phone S4 with Dipoles", "Yearly Dipoles", "Horns Monthly")
 )
 
 # Render the specific description based on user selection by reading the Markdown file
@@ -145,6 +152,13 @@ elif test_desc_choice == "Yearly Dipoles":
             st.sidebar.info(md_file.read())
     except FileNotFoundError:
         st.sidebar.warning("Upload **`Yearly_Dipoles.md`** to view this description.")
+elif test_desc_choice == "Horns Monthly":
+    try:
+        # Load the custom markdown file uploaded to GitHub
+        with open("Horns_Monthly.md", "r", encoding="utf-8") as md_file:
+            st.sidebar.info(md_file.read())
+    except FileNotFoundError:
+        st.sidebar.warning("Upload **`Horns_Monthly.md`** to view this description.")
 
 
 # Map Chamber selection to file prefix
