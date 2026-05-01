@@ -108,6 +108,13 @@ if chamber_choice == "Satimo 3":
         "WiFi 5 GHz", 
         "GPS CW L1 L5"
     )
+elif chamber_choice == "Satimo 2":
+    active_validation_options = (
+        "🔵 None", 
+        "LTE TRP", 
+        "LTE TIS", 
+        "Pixel Phone S4 with Dipoles"
+    )
 else:
     active_validation_options = (
         "🔵 None", 
