@@ -123,6 +123,20 @@ active_dataset_choice = ph_active_type.selectbox(
     active_validation_options
 )
 
+# --- NEW: Test Descriptions Menu ---
+st.sidebar.markdown("---") # Visual divider
+test_desc_choice = st.sidebar.selectbox(
+    "**Test Descriptions:**",
+    ("None", "Passive Validation", "Active Validation")
+)
+
+# Render the specific description based on user selection
+if test_desc_choice == "Passive Validation":
+    st.sidebar.info("**Passive Validation:**\n\nThis testing verifies the baseline accuracy of the chamber using reference antennas (like Dipoles and Horns). We measure the passive efficiency (dB) of these antennas across various frequencies and compare the results to expected reference data (such as NIST calibration standards) to ensure the chamber environment is stable and properly calibrated.")
+elif test_desc_choice == "Active Validation":
+    st.sidebar.info("**Active Validation:**\n\nThis testing involves measuring live, transmitting devices to verify the chamber's ability to accurately capture Total Radiated Power (TRP) and Total Isotropic Sensitivity (TIS). We use reference devices across multiple protocols (LTE, WiFi, Bluetooth, GPS) to ensure real-world active measurements remain consistent over time.")
+
+
 # Map Chamber selection to file prefix
 prefix_map = {
     "Satimo 1": "Satimo1_",
