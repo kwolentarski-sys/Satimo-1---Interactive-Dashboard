@@ -95,13 +95,13 @@ st.markdown(
 # 1. Passive Dataset Selection Toggle 
 dataset_choice = ph_passive_type.selectbox(
     "**Select Passive Validation Type:**",
-    ("None", "Yearly Dipoles", "Quarterly Dipoles", "Monthly Horns", "Wideband Dipole Chamber Comparison")
+    ("🔵 None", "Yearly Dipoles", "Quarterly Dipoles", "Monthly Horns", "Wideband Dipole Chamber Comparison")
 )
 
 # Set dynamic options for Active Validation based on the selected Chamber
 if chamber_choice == "Satimo 3":
     active_validation_options = (
-        "None", 
+        "🔵 None", 
         "Bluetooth BDR", 
         "Bluetooth EDR2", 
         "WiFi 2.4 GHz", 
@@ -110,7 +110,7 @@ if chamber_choice == "Satimo 3":
     )
 else:
     active_validation_options = (
-        "None", 
+        "🔵 None", 
         "LTE TRP", 
         "LTE TIS", 
         "Pixel Phone S4 with Dipoles", 
@@ -189,7 +189,7 @@ try:
     raw_data = load_data(target_file)
 except FileNotFoundError:
     # Display a disabled "Select Antenna" menu while waiting for passive data to load
-    if dataset_choice in ["Yearly Dipoles", "Quarterly Dipoles", "Monthly Horns", "Wideband Dipole Chamber Comparison"] and active_dataset_choice == "None":
+    if dataset_choice in ["Yearly Dipoles", "Quarterly Dipoles", "Monthly Horns", "Wideband Dipole Chamber Comparison"] and active_dataset_choice == "🔵 None":
         ph_antenna.selectbox("**Select Antenna:**", ["Awaiting Data..."], disabled=True)
 
     if chamber_choice != "Satimo 2" and target_file not in known_files:
@@ -214,7 +214,7 @@ if active_dataset_choice == "GPS CW L1 L5":
         measurements = raw_data.get("Measurements", [])
         
         # Dashboard Headers
-        st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - Active Validation Measurements - {active_dataset_choice}</h3>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - Active Validation Measurements - {active_dataset_choice.replace('🔵 ', '')}</h3>", unsafe_allow_html=True)
         st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> {device_name} | <b>Date:</b> {test_date} | <b>Test:</b> {test_type}</div>", unsafe_allow_html=True)
         
         if measurements:
