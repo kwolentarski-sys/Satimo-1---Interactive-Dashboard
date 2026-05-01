@@ -484,7 +484,8 @@ elif active_dataset_choice == "Phantom Wrist Dielectric Tracking":
 
         st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - Phantom Wrist Dielectric Tracking</h3>", unsafe_allow_html=True)
         st.markdown(f"<div style='font-size: 20px; padding-bottom: 5px;'><b>{device_name}</b></div>", unsafe_allow_html=True)
-        st.markdown(f"<div style='font-size: 16px; padding-bottom: 10px;'><b>Reference:</b> {ref_info} | <b>Test Date:</b> {test_date}</div>", unsafe_allow_html=True)
+        # Removed the test date from the subtitle here
+        st.markdown(f"<div style='font-size: 16px; padding-bottom: 10px;'><b>Reference:</b> {ref_info}</div>", unsafe_allow_html=True)
 
         # --- First Graph: Phantom Dielectric Tracking (Frequency) ---
         fig1 = go.Figure()
@@ -493,7 +494,8 @@ elif active_dataset_choice == "Phantom Wrist Dielectric Tracking":
         for i, col in enumerate(trp_cols):
             if col in df_phantom.columns:
                 has_data = df_phantom[col].notna().any()
-                trace_name = f'<b>{col}</b>' if has_data else f'<b>{col} (NA)</b>'
+                # Inject test_date directly into the trace name
+                trace_name = f'<b>{col} - {test_date}</b>' if has_data else f'<b>{col} - {test_date} (NA)</b>'
                 
                 # We still add the trace even if empty so it appears in the legend as NA
                 fig1.add_trace(go.Scatter(
