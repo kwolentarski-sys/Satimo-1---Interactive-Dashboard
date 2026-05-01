@@ -1,0 +1,2714 @@
+{
+  "Horn SH400": {
+    "Reference": "Reference Data - NIST",
+    "Date": "3/16/26",
+    "Data": [
+      {
+        "Frequency (MHz)": "600",
+        "Efficiency (dB)": "-0.09",
+        "Efficiency (dB)_3": "0.06"
+      },
+      {
+        "Frequency (MHz)": "610",
+        "Efficiency (dB)": "-0.09",
+        "Efficiency (dB)_3": "0.03"
+      },
+      {
+        "Frequency (MHz)": "620",
+        "Efficiency (dB)": "-0.11",
+        "Efficiency (dB)_3": "0.11"
+      },
+      {
+        "Frequency (MHz)": "630",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "0.06"
+      },
+      {
+        "Frequency (MHz)": "640",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "0.05"
+      },
+      {
+        "Frequency (MHz)": "650",
+        "Efficiency (dB)": "-0.2",
+        "Efficiency (dB)_3": "-0.01"
+      },
+      {
+        "Frequency (MHz)": "660",
+        "Efficiency (dB)": "-0.24",
+        "Efficiency (dB)_3": "-0.03"
+      },
+      {
+        "Frequency (MHz)": "670",
+        "Efficiency (dB)": "-0.29",
+        "Efficiency (dB)_3": "-0.07"
+      },
+      {
+        "Frequency (MHz)": "680",
+        "Efficiency (dB)": "-0.34",
+        "Efficiency (dB)_3": "-0.08"
+      },
+      {
+        "Frequency (MHz)": "690",
+        "Efficiency (dB)": "-0.39",
+        "Efficiency (dB)_3": "-0.15"
+      },
+      {
+        "Frequency (MHz)": "700",
+        "Efficiency (dB)": "-0.43",
+        "Efficiency (dB)_3": "-0.12"
+      },
+      {
+        "Frequency (MHz)": "710",
+        "Efficiency (dB)": "-0.47",
+        "Efficiency (dB)_3": "-0.19"
+      },
+      {
+        "Frequency (MHz)": "720",
+        "Efficiency (dB)": "-0.5",
+        "Efficiency (dB)_3": "-0.2"
+      },
+      {
+        "Frequency (MHz)": "730",
+        "Efficiency (dB)": "-0.52",
+        "Efficiency (dB)_3": "-0.33"
+      },
+      {
+        "Frequency (MHz)": "740",
+        "Efficiency (dB)": "-0.53",
+        "Efficiency (dB)_3": "-0.32"
+      },
+      {
+        "Frequency (MHz)": "750",
+        "Efficiency (dB)": "-0.54",
+        "Efficiency (dB)_3": "-0.41"
+      },
+      {
+        "Frequency (MHz)": "760",
+        "Efficiency (dB)": "-0.54",
+        "Efficiency (dB)_3": "-0.36"
+      },
+      {
+        "Frequency (MHz)": "770",
+        "Efficiency (dB)": "-0.54",
+        "Efficiency (dB)_3": "-0.38"
+      },
+      {
+        "Frequency (MHz)": "780",
+        "Efficiency (dB)": "-0.53",
+        "Efficiency (dB)_3": "-0.31"
+      },
+      {
+        "Frequency (MHz)": "790",
+        "Efficiency (dB)": "-0.51",
+        "Efficiency (dB)_3": "-0.37"
+      },
+      {
+        "Frequency (MHz)": "800",
+        "Efficiency (dB)": "-0.49",
+        "Efficiency (dB)_3": "-0.26"
+      },
+      {
+        "Frequency (MHz)": "810",
+        "Efficiency (dB)": "-0.45",
+        "Efficiency (dB)_3": "-0.22"
+      },
+      {
+        "Frequency (MHz)": "820",
+        "Efficiency (dB)": "-0.41",
+        "Efficiency (dB)_3": "-0.18"
+      },
+      {
+        "Frequency (MHz)": "830",
+        "Efficiency (dB)": "-0.37",
+        "Efficiency (dB)_3": "-0.21"
+      },
+      {
+        "Frequency (MHz)": "840",
+        "Efficiency (dB)": "-0.33",
+        "Efficiency (dB)_3": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "850",
+        "Efficiency (dB)": "-0.28",
+        "Efficiency (dB)_3": "-0.15"
+      },
+      {
+        "Frequency (MHz)": "860",
+        "Efficiency (dB)": "-0.24",
+        "Efficiency (dB)_3": "-0.09"
+      },
+      {
+        "Frequency (MHz)": "870",
+        "Efficiency (dB)": "-0.19",
+        "Efficiency (dB)_3": "-0.04"
+      },
+      {
+        "Frequency (MHz)": "880",
+        "Efficiency (dB)": "-0.14",
+        "Efficiency (dB)_3": "0.03"
+      },
+      {
+        "Frequency (MHz)": "890",
+        "Efficiency (dB)": "-0.11",
+        "Efficiency (dB)_3": "0.07"
+      },
+      {
+        "Frequency (MHz)": "900",
+        "Efficiency (dB)": "-0.09",
+        "Efficiency (dB)_3": "0.1"
+      },
+      {
+        "Frequency (MHz)": "910",
+        "Efficiency (dB)": "-0.09",
+        "Efficiency (dB)_3": "0.06"
+      },
+      {
+        "Frequency (MHz)": "920",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.01"
+      },
+      {
+        "Frequency (MHz)": "930",
+        "Efficiency (dB)": "-0.19",
+        "Efficiency (dB)_3": "-0.15"
+      },
+      {
+        "Frequency (MHz)": "940",
+        "Efficiency (dB)": "-0.26",
+        "Efficiency (dB)_3": "-0.22"
+      },
+      {
+        "Frequency (MHz)": "950",
+        "Efficiency (dB)": "-0.34",
+        "Efficiency (dB)_3": "-0.34"
+      },
+      {
+        "Frequency (MHz)": "960",
+        "Efficiency (dB)": "-0.4",
+        "Efficiency (dB)_3": "-0.4"
+      },
+      {
+        "Frequency (MHz)": "970",
+        "Efficiency (dB)": "-0.44",
+        "Efficiency (dB)_3": "-0.48"
+      },
+      {
+        "Frequency (MHz)": "980",
+        "Efficiency (dB)": "-0.46",
+        "Efficiency (dB)_3": "-0.4"
+      },
+      {
+        "Frequency (MHz)": "990",
+        "Efficiency (dB)": "-0.46",
+        "Efficiency (dB)_3": "-0.36"
+      },
+      {
+        "Frequency (MHz)": "1000",
+        "Efficiency (dB)": "-0.47",
+        "Efficiency (dB)_3": "-0.36"
+      },
+      {
+        "Frequency (MHz)": "1010",
+        "Efficiency (dB)": "-0.47",
+        "Efficiency (dB)_3": "-0.35"
+      },
+      {
+        "Frequency (MHz)": "1020",
+        "Efficiency (dB)": "-0.47",
+        "Efficiency (dB)_3": "-0.27"
+      },
+      {
+        "Frequency (MHz)": "1030",
+        "Efficiency (dB)": "-0.48",
+        "Efficiency (dB)_3": "-0.19"
+      },
+      {
+        "Frequency (MHz)": "1040",
+        "Efficiency (dB)": "-0.48",
+        "Efficiency (dB)_3": "-0.23"
+      },
+      {
+        "Frequency (MHz)": "1050",
+        "Efficiency (dB)": "-0.48",
+        "Efficiency (dB)_3": "-0.25"
+      },
+      {
+        "Frequency (MHz)": "1060",
+        "Efficiency (dB)": "-0.48",
+        "Efficiency (dB)_3": "-0.31"
+      },
+      {
+        "Frequency (MHz)": "1070",
+        "Efficiency (dB)": "-0.48",
+        "Efficiency (dB)_3": "-0.28"
+      },
+      {
+        "Frequency (MHz)": "1080",
+        "Efficiency (dB)": "-0.47",
+        "Efficiency (dB)_3": "-0.27"
+      },
+      {
+        "Frequency (MHz)": "1090",
+        "Efficiency (dB)": "-0.45",
+        "Efficiency (dB)_3": "-0.19"
+      },
+      {
+        "Frequency (MHz)": "1100",
+        "Efficiency (dB)": "-0.43",
+        "Efficiency (dB)_3": "-0.16"
+      },
+      {
+        "Frequency (MHz)": "1110",
+        "Efficiency (dB)": "-0.4",
+        "Efficiency (dB)_3": "-0.2"
+      },
+      {
+        "Frequency (MHz)": "1120",
+        "Efficiency (dB)": "-0.37",
+        "Efficiency (dB)_3": "-0.19"
+      },
+      {
+        "Frequency (MHz)": "1130",
+        "Efficiency (dB)": "-0.34",
+        "Efficiency (dB)_3": "-0.23"
+      },
+      {
+        "Frequency (MHz)": "1140",
+        "Efficiency (dB)": "-0.3",
+        "Efficiency (dB)_3": "-0.2"
+      },
+      {
+        "Frequency (MHz)": "1150",
+        "Efficiency (dB)": "-0.26",
+        "Efficiency (dB)_3": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "1160",
+        "Efficiency (dB)": "-0.22",
+        "Efficiency (dB)_3": "-0.12"
+      },
+      {
+        "Frequency (MHz)": "1170",
+        "Efficiency (dB)": "-0.19",
+        "Efficiency (dB)_3": "-0.14"
+      },
+      {
+        "Frequency (MHz)": "1180",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.11"
+      },
+      {
+        "Frequency (MHz)": "1190",
+        "Efficiency (dB)": "-0.14",
+        "Efficiency (dB)_3": "-0.06"
+      },
+      {
+        "Frequency (MHz)": "1200",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.02"
+      },
+      {
+        "Frequency (MHz)": "1210",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.02"
+      },
+      {
+        "Frequency (MHz)": "1220",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "0"
+      },
+      {
+        "Frequency (MHz)": "1230",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "0.01"
+      },
+      {
+        "Frequency (MHz)": "1240",
+        "Efficiency (dB)": "-0.14",
+        "Efficiency (dB)_3": "-0.03"
+      },
+      {
+        "Frequency (MHz)": "1250",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.07"
+      },
+      {
+        "Frequency (MHz)": "1260",
+        "Efficiency (dB)": "-0.19",
+        "Efficiency (dB)_3": "-0.1"
+      },
+      {
+        "Frequency (MHz)": "1270",
+        "Efficiency (dB)": "-0.23",
+        "Efficiency (dB)_3": "-0.11"
+      },
+      {
+        "Frequency (MHz)": "1280",
+        "Efficiency (dB)": "-0.27",
+        "Efficiency (dB)_3": "-0.15"
+      },
+      {
+        "Frequency (MHz)": "1290",
+        "Efficiency (dB)": "-0.32",
+        "Efficiency (dB)_3": "-0.21"
+      },
+      {
+        "Frequency (MHz)": "1300",
+        "Efficiency (dB)": "-0.36",
+        "Efficiency (dB)_3": "-0.21"
+      },
+      {
+        "Frequency (MHz)": "1310",
+        "Efficiency (dB)": "-0.39",
+        "Efficiency (dB)_3": "-0.23"
+      },
+      {
+        "Frequency (MHz)": "1320",
+        "Efficiency (dB)": "-0.42",
+        "Efficiency (dB)_3": "-0.22"
+      },
+      {
+        "Frequency (MHz)": "1330",
+        "Efficiency (dB)": "-0.44",
+        "Efficiency (dB)_3": "-0.21"
+      },
+      {
+        "Frequency (MHz)": "1340",
+        "Efficiency (dB)": "-0.45",
+        "Efficiency (dB)_3": "-0.18"
+      },
+      {
+        "Frequency (MHz)": "1350",
+        "Efficiency (dB)": "-0.46",
+        "Efficiency (dB)_3": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "1360",
+        "Efficiency (dB)": "-0.44",
+        "Efficiency (dB)_3": "-0.19"
+      },
+      {
+        "Frequency (MHz)": "1370",
+        "Efficiency (dB)": "-0.43",
+        "Efficiency (dB)_3": "-0.19"
+      },
+      {
+        "Frequency (MHz)": "1380",
+        "Efficiency (dB)": "-0.4",
+        "Efficiency (dB)_3": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "1390",
+        "Efficiency (dB)": "-0.37",
+        "Efficiency (dB)_3": "-0.12"
+      },
+      {
+        "Frequency (MHz)": "1400",
+        "Efficiency (dB)": "-0.34",
+        "Efficiency (dB)_3": "-0.14"
+      },
+      {
+        "Frequency (MHz)": "1410",
+        "Efficiency (dB)": "-0.3",
+        "Efficiency (dB)_3": "-0.12"
+      },
+      {
+        "Frequency (MHz)": "1420",
+        "Efficiency (dB)": "-0.27",
+        "Efficiency (dB)_3": "-0.13"
+      },
+      {
+        "Frequency (MHz)": "1430",
+        "Efficiency (dB)": "-0.24",
+        "Efficiency (dB)_3": "-0.07"
+      },
+      {
+        "Frequency (MHz)": "1440",
+        "Efficiency (dB)": "-0.22",
+        "Efficiency (dB)_3": "-0.1"
+      },
+      {
+        "Frequency (MHz)": "1450",
+        "Efficiency (dB)": "-0.2",
+        "Efficiency (dB)_3": "-0.13"
+      },
+      {
+        "Frequency (MHz)": "1460",
+        "Efficiency (dB)": "-0.18",
+        "Efficiency (dB)_3": "-0.13"
+      },
+      {
+        "Frequency (MHz)": "1470",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.13"
+      },
+      {
+        "Frequency (MHz)": "1480",
+        "Efficiency (dB)": "-0.15",
+        "Efficiency (dB)_3": "-0.08"
+      },
+      {
+        "Frequency (MHz)": "1490",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.08"
+      },
+      {
+        "Frequency (MHz)": "1500",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.08"
+      },
+      {
+        "Frequency (MHz)": "1510",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.08"
+      },
+      {
+        "Frequency (MHz)": "1520",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.15"
+      },
+      {
+        "Frequency (MHz)": "1530",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.1"
+      },
+      {
+        "Frequency (MHz)": "1540",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.09"
+      },
+      {
+        "Frequency (MHz)": "1550",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.04"
+      },
+      {
+        "Frequency (MHz)": "1560",
+        "Efficiency (dB)": "-0.14",
+        "Efficiency (dB)_3": "-0.09"
+      },
+      {
+        "Frequency (MHz)": "1570",
+        "Efficiency (dB)": "-0.15",
+        "Efficiency (dB)_3": "-0.03"
+      },
+      {
+        "Frequency (MHz)": "1580",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.09"
+      },
+      {
+        "Frequency (MHz)": "1590",
+        "Efficiency (dB)": "-0.18",
+        "Efficiency (dB)_3": "-0.01"
+      },
+      {
+        "Frequency (MHz)": "1600",
+        "Efficiency (dB)": "-0.19",
+        "Efficiency (dB)_3": "-0.04"
+      },
+      {
+        "Frequency (MHz)": "1610",
+        "Efficiency (dB)": "-0.2",
+        "Efficiency (dB)_3": "0.02"
+      },
+      {
+        "Frequency (MHz)": "1620",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "-0.05"
+      },
+      {
+        "Frequency (MHz)": "1630",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "0.02"
+      },
+      {
+        "Frequency (MHz)": "1640",
+        "Efficiency (dB)": "-0.22",
+        "Efficiency (dB)_3": "0.02"
+      },
+      {
+        "Frequency (MHz)": "1650",
+        "Efficiency (dB)": "-0.22",
+        "Efficiency (dB)_3": "0.01"
+      },
+      {
+        "Frequency (MHz)": "1660",
+        "Efficiency (dB)": "-0.22",
+        "Efficiency (dB)_3": "-0.01"
+      },
+      {
+        "Frequency (MHz)": "1670",
+        "Efficiency (dB)": "-0.22",
+        "Efficiency (dB)_3": "-0.03"
+      },
+      {
+        "Frequency (MHz)": "1680",
+        "Efficiency (dB)": "-0.22",
+        "Efficiency (dB)_3": "-0.09"
+      },
+      {
+        "Frequency (MHz)": "1690",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "-0.11"
+      },
+      {
+        "Frequency (MHz)": "1700",
+        "Efficiency (dB)": "-0.2",
+        "Efficiency (dB)_3": "-0.1"
+      },
+      {
+        "Frequency (MHz)": "1710",
+        "Efficiency (dB)": "-0.19",
+        "Efficiency (dB)_3": "-0.06"
+      },
+      {
+        "Frequency (MHz)": "1720",
+        "Efficiency (dB)": "-0.18",
+        "Efficiency (dB)_3": "-0.08"
+      },
+      {
+        "Frequency (MHz)": "1730",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.11"
+      },
+      {
+        "Frequency (MHz)": "1740",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.16"
+      },
+      {
+        "Frequency (MHz)": "1750",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.13"
+      },
+      {
+        "Frequency (MHz)": "1760",
+        "Efficiency (dB)": "-0.15",
+        "Efficiency (dB)_3": "-0.14"
+      },
+      {
+        "Frequency (MHz)": "1770",
+        "Efficiency (dB)": "-0.14",
+        "Efficiency (dB)_3": "-0.12"
+      },
+      {
+        "Frequency (MHz)": "1780",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.14"
+      },
+      {
+        "Frequency (MHz)": "1790",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.13"
+      },
+      {
+        "Frequency (MHz)": "1800",
+        "Efficiency (dB)": "-0.11",
+        "Efficiency (dB)_3": "-0.13"
+      },
+      {
+        "Frequency (MHz)": "1810",
+        "Efficiency (dB)": "-0.11",
+        "Efficiency (dB)_3": "-0.11"
+      },
+      {
+        "Frequency (MHz)": "1820",
+        "Efficiency (dB)": "-0.1",
+        "Efficiency (dB)_3": "-0.08"
+      },
+      {
+        "Frequency (MHz)": "1830",
+        "Efficiency (dB)": "-0.1",
+        "Efficiency (dB)_3": "-0.08"
+      },
+      {
+        "Frequency (MHz)": "1840",
+        "Efficiency (dB)": "-0.1",
+        "Efficiency (dB)_3": "-0.06"
+      },
+      {
+        "Frequency (MHz)": "1850",
+        "Efficiency (dB)": "-0.1",
+        "Efficiency (dB)_3": "-0.09"
+      },
+      {
+        "Frequency (MHz)": "1860",
+        "Efficiency (dB)": "-0.1",
+        "Efficiency (dB)_3": "-0.11"
+      },
+      {
+        "Frequency (MHz)": "1870",
+        "Efficiency (dB)": "-0.1",
+        "Efficiency (dB)_3": "-0.15"
+      },
+      {
+        "Frequency (MHz)": "1880",
+        "Efficiency (dB)": "-0.1",
+        "Efficiency (dB)_3": "-0.12"
+      },
+      {
+        "Frequency (MHz)": "1890",
+        "Efficiency (dB)": "-0.1",
+        "Efficiency (dB)_3": "-0.13"
+      },
+      {
+        "Frequency (MHz)": "1900",
+        "Efficiency (dB)": "-0.1",
+        "Efficiency (dB)_3": "-0.08"
+      },
+      {
+        "Frequency (MHz)": "1910",
+        "Efficiency (dB)": "-0.1",
+        "Efficiency (dB)_3": "-0.08"
+      },
+      {
+        "Frequency (MHz)": "1920",
+        "Efficiency (dB)": "-0.11",
+        "Efficiency (dB)_3": "-0.02"
+      },
+      {
+        "Frequency (MHz)": "1930",
+        "Efficiency (dB)": "-0.11",
+        "Efficiency (dB)_3": "-0.03"
+      },
+      {
+        "Frequency (MHz)": "1940",
+        "Efficiency (dB)": "-0.11",
+        "Efficiency (dB)_3": "0.01"
+      },
+      {
+        "Frequency (MHz)": "1950",
+        "Efficiency (dB)": "-0.11",
+        "Efficiency (dB)_3": "-0.06"
+      },
+      {
+        "Frequency (MHz)": "1960",
+        "Efficiency (dB)": "-0.11",
+        "Efficiency (dB)_3": "-0.03"
+      },
+      {
+        "Frequency (MHz)": "1970",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.12"
+      },
+      {
+        "Frequency (MHz)": "1980",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.11"
+      },
+      {
+        "Frequency (MHz)": "1990",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.19"
+      },
+      {
+        "Frequency (MHz)": "2000",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.19"
+      },
+      {
+        "Frequency (MHz)": "2010",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.28"
+      },
+      {
+        "Frequency (MHz)": "2020",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.19"
+      },
+      {
+        "Frequency (MHz)": "2030",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.26"
+      },
+      {
+        "Frequency (MHz)": "2040",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "2050",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.28"
+      },
+      {
+        "Frequency (MHz)": "2060",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.27"
+      },
+      {
+        "Frequency (MHz)": "2070",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.31"
+      },
+      {
+        "Frequency (MHz)": "2080",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.3"
+      },
+      {
+        "Frequency (MHz)": "2090",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.28"
+      },
+      {
+        "Frequency (MHz)": "2100",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.25"
+      },
+      {
+        "Frequency (MHz)": "2110",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.25"
+      },
+      {
+        "Frequency (MHz)": "2120",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.2"
+      },
+      {
+        "Frequency (MHz)": "2130",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.16"
+      },
+      {
+        "Frequency (MHz)": "2140",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.15"
+      },
+      {
+        "Frequency (MHz)": "2150",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.14"
+      },
+      {
+        "Frequency (MHz)": "2160",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.14"
+      },
+      {
+        "Frequency (MHz)": "2170",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.14"
+      },
+      {
+        "Frequency (MHz)": "2180",
+        "Efficiency (dB)": "-0.11",
+        "Efficiency (dB)_3": "-0.16"
+      },
+      {
+        "Frequency (MHz)": "2190",
+        "Efficiency (dB)": "-0.11",
+        "Efficiency (dB)_3": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "2200",
+        "Efficiency (dB)": "-0.11",
+        "Efficiency (dB)_3": "-0.15"
+      },
+      {
+        "Frequency (MHz)": "2210",
+        "Efficiency (dB)": "-0.1",
+        "Efficiency (dB)_3": "-0.12"
+      },
+      {
+        "Frequency (MHz)": "2220",
+        "Efficiency (dB)": "-0.1",
+        "Efficiency (dB)_3": "-0.11"
+      },
+      {
+        "Frequency (MHz)": "2230",
+        "Efficiency (dB)": "-0.09",
+        "Efficiency (dB)_3": "-0.1"
+      },
+      {
+        "Frequency (MHz)": "2240",
+        "Efficiency (dB)": "-0.09",
+        "Efficiency (dB)_3": "-0.08"
+      },
+      {
+        "Frequency (MHz)": "2250",
+        "Efficiency (dB)": "-0.09",
+        "Efficiency (dB)_3": "-0.07"
+      },
+      {
+        "Frequency (MHz)": "2260",
+        "Efficiency (dB)": "-0.09",
+        "Efficiency (dB)_3": "-0.11"
+      },
+      {
+        "Frequency (MHz)": "2270",
+        "Efficiency (dB)": "-0.09",
+        "Efficiency (dB)_3": "-0.12"
+      },
+      {
+        "Frequency (MHz)": "2280",
+        "Efficiency (dB)": "-0.09",
+        "Efficiency (dB)_3": "-0.14"
+      },
+      {
+        "Frequency (MHz)": "2290",
+        "Efficiency (dB)": "-0.09",
+        "Efficiency (dB)_3": "-0.13"
+      },
+      {
+        "Frequency (MHz)": "2300",
+        "Efficiency (dB)": "-0.09",
+        "Efficiency (dB)_3": "-0.15"
+      },
+      {
+        "Frequency (MHz)": "2310",
+        "Efficiency (dB)": "-0.09",
+        "Efficiency (dB)_3": "-0.16"
+      },
+      {
+        "Frequency (MHz)": "2320",
+        "Efficiency (dB)": "-0.1",
+        "Efficiency (dB)_3": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "2330",
+        "Efficiency (dB)": "-0.1",
+        "Efficiency (dB)_3": "-0.16"
+      },
+      {
+        "Frequency (MHz)": "2340",
+        "Efficiency (dB)": "-0.11",
+        "Efficiency (dB)_3": "-0.18"
+      },
+      {
+        "Frequency (MHz)": "2350",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.23"
+      },
+      {
+        "Frequency (MHz)": "2360",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.24"
+      },
+      {
+        "Frequency (MHz)": "2370",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.24"
+      },
+      {
+        "Frequency (MHz)": "2380",
+        "Efficiency (dB)": "-0.14",
+        "Efficiency (dB)_3": "-0.25"
+      },
+      {
+        "Frequency (MHz)": "2390",
+        "Efficiency (dB)": "-0.15",
+        "Efficiency (dB)_3": "-0.25"
+      },
+      {
+        "Frequency (MHz)": "2400",
+        "Efficiency (dB)": "-0.15",
+        "Efficiency (dB)_3": "-0.25"
+      },
+      {
+        "Frequency (MHz)": "2410",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.24"
+      },
+      {
+        "Frequency (MHz)": "2420",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.26"
+      },
+      {
+        "Frequency (MHz)": "2430",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.28"
+      },
+      {
+        "Frequency (MHz)": "2440",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.31"
+      },
+      {
+        "Frequency (MHz)": "2450",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.28"
+      },
+      {
+        "Frequency (MHz)": "2460",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.27"
+      },
+      {
+        "Frequency (MHz)": "2470",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.27"
+      },
+      {
+        "Frequency (MHz)": "2480",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.28"
+      },
+      {
+        "Frequency (MHz)": "2490",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.24"
+      },
+      {
+        "Frequency (MHz)": "2500",
+        "Efficiency (dB)": "-0.15",
+        "Efficiency (dB)_3": "-0.19"
+      },
+      {
+        "Frequency (MHz)": "2510",
+        "Efficiency (dB)": "-0.15",
+        "Efficiency (dB)_3": "-0.16"
+      },
+      {
+        "Frequency (MHz)": "2520",
+        "Efficiency (dB)": "-0.15",
+        "Efficiency (dB)_3": "-0.16"
+      },
+      {
+        "Frequency (MHz)": "2530",
+        "Efficiency (dB)": "-0.14",
+        "Efficiency (dB)_3": "-0.15"
+      },
+      {
+        "Frequency (MHz)": "2540",
+        "Efficiency (dB)": "-0.14",
+        "Efficiency (dB)_3": "-0.11"
+      },
+      {
+        "Frequency (MHz)": "2550",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.13"
+      },
+      {
+        "Frequency (MHz)": "2560",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.12"
+      },
+      {
+        "Frequency (MHz)": "2570",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.11"
+      },
+      {
+        "Frequency (MHz)": "2580",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.1"
+      },
+      {
+        "Frequency (MHz)": "2590",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.11"
+      },
+      {
+        "Frequency (MHz)": "2600",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.12"
+      },
+      {
+        "Frequency (MHz)": "2610",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.09"
+      },
+      {
+        "Frequency (MHz)": "2620",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.09"
+      },
+      {
+        "Frequency (MHz)": "2630",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.11"
+      },
+      {
+        "Frequency (MHz)": "2640",
+        "Efficiency (dB)": "-0.14",
+        "Efficiency (dB)_3": "-0.15"
+      },
+      {
+        "Frequency (MHz)": "2650",
+        "Efficiency (dB)": "-0.14",
+        "Efficiency (dB)_3": "-0.14"
+      },
+      {
+        "Frequency (MHz)": "2660",
+        "Efficiency (dB)": "-0.15",
+        "Efficiency (dB)_3": "-0.15"
+      },
+      {
+        "Frequency (MHz)": "2670",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.15"
+      },
+      {
+        "Frequency (MHz)": "2680",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "2690",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.15"
+      },
+      {
+        "Frequency (MHz)": "2700",
+        "Efficiency (dB)": "-0.18",
+        "Efficiency (dB)_3": "-0.14"
+      },
+      {
+        "Frequency (MHz)": "2710",
+        "Efficiency (dB)": "-0.19",
+        "Efficiency (dB)_3": "-0.18"
+      },
+      {
+        "Frequency (MHz)": "2720",
+        "Efficiency (dB)": "-0.2",
+        "Efficiency (dB)_3": "-0.21"
+      },
+      {
+        "Frequency (MHz)": "2730",
+        "Efficiency (dB)": "-0.2",
+        "Efficiency (dB)_3": "-0.22"
+      },
+      {
+        "Frequency (MHz)": "2740",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "-0.21"
+      },
+      {
+        "Frequency (MHz)": "2750",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "-0.24"
+      },
+      {
+        "Frequency (MHz)": "2760",
+        "Efficiency (dB)": "-0.22",
+        "Efficiency (dB)_3": "-0.24"
+      },
+      {
+        "Frequency (MHz)": "2770",
+        "Efficiency (dB)": "-0.22",
+        "Efficiency (dB)_3": "-0.26"
+      },
+      {
+        "Frequency (MHz)": "2780",
+        "Efficiency (dB)": "-0.22",
+        "Efficiency (dB)_3": "-0.24"
+      },
+      {
+        "Frequency (MHz)": "2790",
+        "Efficiency (dB)": "-0.22",
+        "Efficiency (dB)_3": "-0.26"
+      },
+      {
+        "Frequency (MHz)": "2800",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "-0.28"
+      },
+      {
+        "Frequency (MHz)": "2810",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "-0.3"
+      },
+      {
+        "Frequency (MHz)": "2820",
+        "Efficiency (dB)": "-0.2",
+        "Efficiency (dB)_3": "-0.23"
+      },
+      {
+        "Frequency (MHz)": "2830",
+        "Efficiency (dB)": "-0.2",
+        "Efficiency (dB)_3": "-0.21"
+      },
+      {
+        "Frequency (MHz)": "2840",
+        "Efficiency (dB)": "-0.19",
+        "Efficiency (dB)_3": "-0.16"
+      },
+      {
+        "Frequency (MHz)": "2850",
+        "Efficiency (dB)": "-0.19",
+        "Efficiency (dB)_3": "-0.16"
+      },
+      {
+        "Frequency (MHz)": "2860",
+        "Efficiency (dB)": "-0.19",
+        "Efficiency (dB)_3": "-0.12"
+      },
+      {
+        "Frequency (MHz)": "2870",
+        "Efficiency (dB)": "-0.18",
+        "Efficiency (dB)_3": "-0.12"
+      },
+      {
+        "Frequency (MHz)": "2880",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.12"
+      },
+      {
+        "Frequency (MHz)": "2890",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.09"
+      },
+      {
+        "Frequency (MHz)": "2900",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.09"
+      },
+      {
+        "Frequency (MHz)": "2910",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.07"
+      },
+      {
+        "Frequency (MHz)": "2920",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.13"
+      },
+      {
+        "Frequency (MHz)": "2930",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.1"
+      },
+      {
+        "Frequency (MHz)": "2940",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.11"
+      },
+      {
+        "Frequency (MHz)": "2950",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.11"
+      },
+      {
+        "Frequency (MHz)": "2960",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.13"
+      },
+      {
+        "Frequency (MHz)": "2970",
+        "Efficiency (dB)": "-0.18",
+        "Efficiency (dB)_3": "-0.11"
+      },
+      {
+        "Frequency (MHz)": "2980",
+        "Efficiency (dB)": "-0.18",
+        "Efficiency (dB)_3": "-0.14"
+      },
+      {
+        "Frequency (MHz)": "2990",
+        "Efficiency (dB)": "-0.19",
+        "Efficiency (dB)_3": "-0.14"
+      },
+      {
+        "Frequency (MHz)": "3000",
+        "Efficiency (dB)": "-0.2",
+        "Efficiency (dB)_3": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "3010",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "-0.2"
+      },
+      {
+        "Frequency (MHz)": "3020",
+        "Efficiency (dB)": "-0.22",
+        "Efficiency (dB)_3": "-0.23"
+      },
+      {
+        "Frequency (MHz)": "3030",
+        "Efficiency (dB)": "-0.22",
+        "Efficiency (dB)_3": "-0.22"
+      },
+      {
+        "Frequency (MHz)": "3040",
+        "Efficiency (dB)": "-0.23",
+        "Efficiency (dB)_3": "-0.25"
+      },
+      {
+        "Frequency (MHz)": "3050",
+        "Efficiency (dB)": "-0.23",
+        "Efficiency (dB)_3": "-0.22"
+      },
+      {
+        "Frequency (MHz)": "3060",
+        "Efficiency (dB)": "-0.24",
+        "Efficiency (dB)_3": "-0.22"
+      },
+      {
+        "Frequency (MHz)": "3070",
+        "Efficiency (dB)": "-0.24",
+        "Efficiency (dB)_3": "-0.22"
+      },
+      {
+        "Frequency (MHz)": "3080",
+        "Efficiency (dB)": "-0.24",
+        "Efficiency (dB)_3": "-0.29"
+      },
+      {
+        "Frequency (MHz)": "3090",
+        "Efficiency (dB)": "-0.24",
+        "Efficiency (dB)_3": "-0.27"
+      },
+      {
+        "Frequency (MHz)": "3100",
+        "Efficiency (dB)": "-0.25",
+        "Efficiency (dB)_3": "-0.28"
+      },
+      {
+        "Frequency (MHz)": "3110",
+        "Efficiency (dB)": "-0.24",
+        "Efficiency (dB)_3": "-0.18"
+      },
+      {
+        "Frequency (MHz)": "3120",
+        "Efficiency (dB)": "-0.24",
+        "Efficiency (dB)_3": "-0.22"
+      },
+      {
+        "Frequency (MHz)": "3130",
+        "Efficiency (dB)": "-0.24",
+        "Efficiency (dB)_3": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "3140",
+        "Efficiency (dB)": "-0.23",
+        "Efficiency (dB)_3": "-0.16"
+      },
+      {
+        "Frequency (MHz)": "3150",
+        "Efficiency (dB)": "-0.22",
+        "Efficiency (dB)_3": "-0.08"
+      },
+      {
+        "Frequency (MHz)": "3160",
+        "Efficiency (dB)": "-0.22",
+        "Efficiency (dB)_3": "-0.11"
+      },
+      {
+        "Frequency (MHz)": "3170",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "-0.14"
+      },
+      {
+        "Frequency (MHz)": "3180",
+        "Efficiency (dB)": "-0.2",
+        "Efficiency (dB)_3": "-0.14"
+      },
+      {
+        "Frequency (MHz)": "3190",
+        "Efficiency (dB)": "-0.2",
+        "Efficiency (dB)_3": "-0.15"
+      },
+      {
+        "Frequency (MHz)": "3200",
+        "Efficiency (dB)": "-0.19",
+        "Efficiency (dB)_3": "-0.15"
+      },
+      {
+        "Frequency (MHz)": "3210",
+        "Efficiency (dB)": "-0.18",
+        "Efficiency (dB)_3": "-0.16"
+      },
+      {
+        "Frequency (MHz)": "3220",
+        "Efficiency (dB)": "-0.18",
+        "Efficiency (dB)_3": "-0.13"
+      },
+      {
+        "Frequency (MHz)": "3230",
+        "Efficiency (dB)": "-0.18",
+        "Efficiency (dB)_3": "-0.11"
+      },
+      {
+        "Frequency (MHz)": "3240",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.11"
+      },
+      {
+        "Frequency (MHz)": "3250",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.14"
+      },
+      {
+        "Frequency (MHz)": "3260",
+        "Efficiency (dB)": "-0.18",
+        "Efficiency (dB)_3": "-0.13"
+      },
+      {
+        "Frequency (MHz)": "3270",
+        "Efficiency (dB)": "-0.18",
+        "Efficiency (dB)_3": "-0.14"
+      },
+      {
+        "Frequency (MHz)": "3280",
+        "Efficiency (dB)": "-0.18",
+        "Efficiency (dB)_3": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "3290",
+        "Efficiency (dB)": "-0.19",
+        "Efficiency (dB)_3": "-0.24"
+      },
+      {
+        "Frequency (MHz)": "3300",
+        "Efficiency (dB)": "-0.19",
+        "Efficiency (dB)_3": "-0.3"
+      },
+      {
+        "Frequency (MHz)": "3310",
+        "Efficiency (dB)": "-0.2",
+        "Efficiency (dB)_3": "-0.32"
+      },
+      {
+        "Frequency (MHz)": "3320",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "-0.31"
+      },
+      {
+        "Frequency (MHz)": "3330",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "-0.28"
+      },
+      {
+        "Frequency (MHz)": "3340",
+        "Efficiency (dB)": "-0.22",
+        "Efficiency (dB)_3": "-0.27"
+      },
+      {
+        "Frequency (MHz)": "3350",
+        "Efficiency (dB)": "-0.22",
+        "Efficiency (dB)_3": "-0.3"
+      },
+      {
+        "Frequency (MHz)": "3360",
+        "Efficiency (dB)": "-0.23",
+        "Efficiency (dB)_3": "-0.35"
+      },
+      {
+        "Frequency (MHz)": "3370",
+        "Efficiency (dB)": "-0.23",
+        "Efficiency (dB)_3": "-0.37"
+      },
+      {
+        "Frequency (MHz)": "3380",
+        "Efficiency (dB)": "-0.24",
+        "Efficiency (dB)_3": "-0.3"
+      },
+      {
+        "Frequency (MHz)": "3390",
+        "Efficiency (dB)": "-0.24",
+        "Efficiency (dB)_3": "-0.31"
+      },
+      {
+        "Frequency (MHz)": "3400",
+        "Efficiency (dB)": "-0.24",
+        "Efficiency (dB)_3": "-0.3"
+      },
+      {
+        "Frequency (MHz)": "3410",
+        "Efficiency (dB)": "-0.23",
+        "Efficiency (dB)_3": "-0.35"
+      },
+      {
+        "Frequency (MHz)": "3420",
+        "Efficiency (dB)": "-0.23",
+        "Efficiency (dB)_3": "-0.28"
+      },
+      {
+        "Frequency (MHz)": "3430",
+        "Efficiency (dB)": "-0.23",
+        "Efficiency (dB)_3": "-0.24"
+      },
+      {
+        "Frequency (MHz)": "3440",
+        "Efficiency (dB)": "-0.22",
+        "Efficiency (dB)_3": "-0.18"
+      },
+      {
+        "Frequency (MHz)": "3450",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "-0.22"
+      },
+      {
+        "Frequency (MHz)": "3460",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "-0.19"
+      },
+      {
+        "Frequency (MHz)": "3470",
+        "Efficiency (dB)": "-0.2",
+        "Efficiency (dB)_3": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "3480",
+        "Efficiency (dB)": "-0.2",
+        "Efficiency (dB)_3": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "3490",
+        "Efficiency (dB)": "-0.19",
+        "Efficiency (dB)_3": "-0.21"
+      },
+      {
+        "Frequency (MHz)": "3500",
+        "Efficiency (dB)": "-0.18",
+        "Efficiency (dB)_3": "-0.19"
+      },
+      {
+        "Frequency (MHz)": "3510",
+        "Efficiency (dB)": "-0.18",
+        "Efficiency (dB)_3": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "3520",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.21"
+      },
+      {
+        "Frequency (MHz)": "3530",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.25"
+      },
+      {
+        "Frequency (MHz)": "3540",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.28"
+      },
+      {
+        "Frequency (MHz)": "3550",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.26"
+      },
+      {
+        "Frequency (MHz)": "3560",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.26"
+      },
+      {
+        "Frequency (MHz)": "3570",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.26"
+      },
+      {
+        "Frequency (MHz)": "3580",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.27"
+      },
+      {
+        "Frequency (MHz)": "3590",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.25"
+      },
+      {
+        "Frequency (MHz)": "3600",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.24"
+      },
+      {
+        "Frequency (MHz)": "3610",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.3"
+      },
+      {
+        "Frequency (MHz)": "3620",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.29"
+      },
+      {
+        "Frequency (MHz)": "3630",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.33"
+      },
+      {
+        "Frequency (MHz)": "3640",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.29"
+      },
+      {
+        "Frequency (MHz)": "3650",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.31"
+      },
+      {
+        "Frequency (MHz)": "3660",
+        "Efficiency (dB)": "-0.18",
+        "Efficiency (dB)_3": "-0.28"
+      },
+      {
+        "Frequency (MHz)": "3670",
+        "Efficiency (dB)": "-0.18",
+        "Efficiency (dB)_3": "-0.31"
+      },
+      {
+        "Frequency (MHz)": "3680",
+        "Efficiency (dB)": "-0.18",
+        "Efficiency (dB)_3": "-0.27"
+      },
+      {
+        "Frequency (MHz)": "3690",
+        "Efficiency (dB)": "-0.18",
+        "Efficiency (dB)_3": "-0.27"
+      },
+      {
+        "Frequency (MHz)": "3700",
+        "Efficiency (dB)": "-0.18",
+        "Efficiency (dB)_3": "-0.26"
+      },
+      {
+        "Frequency (MHz)": "3710",
+        "Efficiency (dB)": "-0.18",
+        "Efficiency (dB)_3": "-0.26"
+      },
+      {
+        "Frequency (MHz)": "3720",
+        "Efficiency (dB)": "-0.18",
+        "Efficiency (dB)_3": "-0.25"
+      },
+      {
+        "Frequency (MHz)": "3730",
+        "Efficiency (dB)": "-0.18",
+        "Efficiency (dB)_3": "-0.27"
+      },
+      {
+        "Frequency (MHz)": "3740",
+        "Efficiency (dB)": "-0.18",
+        "Efficiency (dB)_3": "-0.31"
+      },
+      {
+        "Frequency (MHz)": "3750",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.24"
+      },
+      {
+        "Frequency (MHz)": "3760",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.28"
+      },
+      {
+        "Frequency (MHz)": "3770",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.24"
+      },
+      {
+        "Frequency (MHz)": "3780",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.31"
+      },
+      {
+        "Frequency (MHz)": "3790",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.28"
+      },
+      {
+        "Frequency (MHz)": "3800",
+        "Efficiency (dB)": "-0.15",
+        "Efficiency (dB)_3": "-0.31"
+      },
+      {
+        "Frequency (MHz)": "3810",
+        "Efficiency (dB)": "-0.15",
+        "Efficiency (dB)_3": "-0.28"
+      },
+      {
+        "Frequency (MHz)": "3820",
+        "Efficiency (dB)": "-0.14",
+        "Efficiency (dB)_3": "-0.33"
+      },
+      {
+        "Frequency (MHz)": "3830",
+        "Efficiency (dB)": "-0.14",
+        "Efficiency (dB)_3": "-0.33"
+      },
+      {
+        "Frequency (MHz)": "3840",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.34"
+      },
+      {
+        "Frequency (MHz)": "3850",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.36"
+      },
+      {
+        "Frequency (MHz)": "3860",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.35"
+      },
+      {
+        "Frequency (MHz)": "3870",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.35"
+      },
+      {
+        "Frequency (MHz)": "3880",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.33"
+      },
+      {
+        "Frequency (MHz)": "3890",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.35"
+      },
+      {
+        "Frequency (MHz)": "3900",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.34"
+      },
+      {
+        "Frequency (MHz)": "3910",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.34"
+      },
+      {
+        "Frequency (MHz)": "3920",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.34"
+      },
+      {
+        "Frequency (MHz)": "3930",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.32"
+      },
+      {
+        "Frequency (MHz)": "3940",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.34"
+      },
+      {
+        "Frequency (MHz)": "3950",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.33"
+      },
+      {
+        "Frequency (MHz)": "3960",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.35"
+      },
+      {
+        "Frequency (MHz)": "3970",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.29"
+      },
+      {
+        "Frequency (MHz)": "3980",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.31"
+      },
+      {
+        "Frequency (MHz)": "3990",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.27"
+      },
+      {
+        "Frequency (MHz)": "4000",
+        "Efficiency (dB)": "-0.14",
+        "Efficiency (dB)_3": "-0.3"
+      },
+      {
+        "Frequency (MHz)": "4010",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.25"
+      },
+      {
+        "Frequency (MHz)": "4020",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.25"
+      },
+      {
+        "Frequency (MHz)": "4030",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.25"
+      },
+      {
+        "Frequency (MHz)": "4040",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.25"
+      },
+      {
+        "Frequency (MHz)": "4050",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.29"
+      },
+      {
+        "Frequency (MHz)": "4060",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.29"
+      },
+      {
+        "Frequency (MHz)": "4070",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.34"
+      },
+      {
+        "Frequency (MHz)": "4080",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.31"
+      },
+      {
+        "Frequency (MHz)": "4090",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.33"
+      },
+      {
+        "Frequency (MHz)": "4100",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.33"
+      },
+      {
+        "Frequency (MHz)": "4110",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.38"
+      },
+      {
+        "Frequency (MHz)": "4120",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.38"
+      },
+      {
+        "Frequency (MHz)": "4130",
+        "Efficiency (dB)": "-0.11",
+        "Efficiency (dB)_3": "-0.39"
+      },
+      {
+        "Frequency (MHz)": "4140",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.39"
+      },
+      {
+        "Frequency (MHz)": "4150",
+        "Efficiency (dB)": "-0.11",
+        "Efficiency (dB)_3": "-0.41"
+      },
+      {
+        "Frequency (MHz)": "4160",
+        "Efficiency (dB)": "-0.1",
+        "Efficiency (dB)_3": "-0.39"
+      },
+      {
+        "Frequency (MHz)": "4170",
+        "Efficiency (dB)": "-0.1",
+        "Efficiency (dB)_3": "-0.36"
+      },
+      {
+        "Frequency (MHz)": "4180",
+        "Efficiency (dB)": "-0.11",
+        "Efficiency (dB)_3": "-0.33"
+      },
+      {
+        "Frequency (MHz)": "4190",
+        "Efficiency (dB)": "-0.11",
+        "Efficiency (dB)_3": "-0.32"
+      },
+      {
+        "Frequency (MHz)": "4200",
+        "Efficiency (dB)": "-0.11",
+        "Efficiency (dB)_3": "-0.29"
+      },
+      {
+        "Frequency (MHz)": "4210",
+        "Efficiency (dB)": "-0.11",
+        "Efficiency (dB)_3": "-0.26"
+      },
+      {
+        "Frequency (MHz)": "4220",
+        "Efficiency (dB)": "-0.11",
+        "Efficiency (dB)_3": "-0.23"
+      },
+      {
+        "Frequency (MHz)": "4230",
+        "Efficiency (dB)": "-0.11",
+        "Efficiency (dB)_3": "-0.19"
+      },
+      {
+        "Frequency (MHz)": "4240",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "4250",
+        "Efficiency (dB)": "-0.11",
+        "Efficiency (dB)_3": "-0.15"
+      },
+      {
+        "Frequency (MHz)": "4260",
+        "Efficiency (dB)": "-0.11",
+        "Efficiency (dB)_3": "-0.12"
+      },
+      {
+        "Frequency (MHz)": "4270",
+        "Efficiency (dB)": "-0.11",
+        "Efficiency (dB)_3": "-0.13"
+      },
+      {
+        "Frequency (MHz)": "4280",
+        "Efficiency (dB)": "-0.11",
+        "Efficiency (dB)_3": "-0.15"
+      },
+      {
+        "Frequency (MHz)": "4290",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "4300",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.16"
+      },
+      {
+        "Frequency (MHz)": "4310",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.16"
+      },
+      {
+        "Frequency (MHz)": "4320",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.15"
+      },
+      {
+        "Frequency (MHz)": "4330",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.18"
+      },
+      {
+        "Frequency (MHz)": "4340",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "4350",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.19"
+      },
+      {
+        "Frequency (MHz)": "4360",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.21"
+      },
+      {
+        "Frequency (MHz)": "4370",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.26"
+      },
+      {
+        "Frequency (MHz)": "4380",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.29"
+      },
+      {
+        "Frequency (MHz)": "4390",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.31"
+      },
+      {
+        "Frequency (MHz)": "4400",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.32"
+      },
+      {
+        "Frequency (MHz)": "4410",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.3"
+      },
+      {
+        "Frequency (MHz)": "4420",
+        "Efficiency (dB)": "-0.12",
+        "Efficiency (dB)_3": "-0.33"
+      },
+      {
+        "Frequency (MHz)": "4430",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.32"
+      },
+      {
+        "Frequency (MHz)": "4440",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.35"
+      },
+      {
+        "Frequency (MHz)": "4450",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.3"
+      },
+      {
+        "Frequency (MHz)": "4460",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.3"
+      },
+      {
+        "Frequency (MHz)": "4470",
+        "Efficiency (dB)": "-0.13",
+        "Efficiency (dB)_3": "-0.28"
+      },
+      {
+        "Frequency (MHz)": "4480",
+        "Efficiency (dB)": "-0.14",
+        "Efficiency (dB)_3": "-0.29"
+      },
+      {
+        "Frequency (MHz)": "4490",
+        "Efficiency (dB)": "-0.14",
+        "Efficiency (dB)_3": "-0.25"
+      },
+      {
+        "Frequency (MHz)": "4500",
+        "Efficiency (dB)": "-0.14",
+        "Efficiency (dB)_3": "-0.22"
+      },
+      {
+        "Frequency (MHz)": "4510",
+        "Efficiency (dB)": "-0.14",
+        "Efficiency (dB)_3": "-0.19"
+      },
+      {
+        "Frequency (MHz)": "4520",
+        "Efficiency (dB)": "-0.15",
+        "Efficiency (dB)_3": "-0.18"
+      },
+      {
+        "Frequency (MHz)": "4530",
+        "Efficiency (dB)": "-0.15",
+        "Efficiency (dB)_3": "-0.12"
+      },
+      {
+        "Frequency (MHz)": "4540",
+        "Efficiency (dB)": "-0.15",
+        "Efficiency (dB)_3": "-0.07"
+      },
+      {
+        "Frequency (MHz)": "4550",
+        "Efficiency (dB)": "-0.15",
+        "Efficiency (dB)_3": "-0.04"
+      },
+      {
+        "Frequency (MHz)": "4560",
+        "Efficiency (dB)": "-0.15",
+        "Efficiency (dB)_3": "-0.03"
+      },
+      {
+        "Frequency (MHz)": "4570",
+        "Efficiency (dB)": "-0.15",
+        "Efficiency (dB)_3": "-0.03"
+      },
+      {
+        "Frequency (MHz)": "4580",
+        "Efficiency (dB)": "-0.15",
+        "Efficiency (dB)_3": "-0.03"
+      },
+      {
+        "Frequency (MHz)": "4590",
+        "Efficiency (dB)": "-0.15",
+        "Efficiency (dB)_3": "-0.01"
+      },
+      {
+        "Frequency (MHz)": "4600",
+        "Efficiency (dB)": "-0.15",
+        "Efficiency (dB)_3": "-0.04"
+      },
+      {
+        "Frequency (MHz)": "4610",
+        "Efficiency (dB)": "-0.15",
+        "Efficiency (dB)_3": "-0.02"
+      },
+      {
+        "Frequency (MHz)": "4620",
+        "Efficiency (dB)": "-0.15",
+        "Efficiency (dB)_3": "-0.07"
+      },
+      {
+        "Frequency (MHz)": "4630",
+        "Efficiency (dB)": "-0.15",
+        "Efficiency (dB)_3": "-0.03"
+      },
+      {
+        "Frequency (MHz)": "4640",
+        "Efficiency (dB)": "-0.15",
+        "Efficiency (dB)_3": "-0.06"
+      },
+      {
+        "Frequency (MHz)": "4650",
+        "Efficiency (dB)": "-0.15",
+        "Efficiency (dB)_3": "-0.03"
+      },
+      {
+        "Frequency (MHz)": "4660",
+        "Efficiency (dB)": "-0.15",
+        "Efficiency (dB)_3": "-0.14"
+      },
+      {
+        "Frequency (MHz)": "4670",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.12"
+      },
+      {
+        "Frequency (MHz)": "4680",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "4690",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.21"
+      },
+      {
+        "Frequency (MHz)": "4700",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.27"
+      },
+      {
+        "Frequency (MHz)": "4710",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.28"
+      },
+      {
+        "Frequency (MHz)": "4720",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.23"
+      },
+      {
+        "Frequency (MHz)": "4730",
+        "Efficiency (dB)": "-0.18",
+        "Efficiency (dB)_3": "-0.23"
+      },
+      {
+        "Frequency (MHz)": "4740",
+        "Efficiency (dB)": "-0.18",
+        "Efficiency (dB)_3": "-0.18"
+      },
+      {
+        "Frequency (MHz)": "4750",
+        "Efficiency (dB)": "-0.19",
+        "Efficiency (dB)_3": "-0.22"
+      },
+      {
+        "Frequency (MHz)": "4760",
+        "Efficiency (dB)": "-0.19",
+        "Efficiency (dB)_3": "-0.21"
+      },
+      {
+        "Frequency (MHz)": "4770",
+        "Efficiency (dB)": "-0.19",
+        "Efficiency (dB)_3": "-0.23"
+      },
+      {
+        "Frequency (MHz)": "4780",
+        "Efficiency (dB)": "-0.2",
+        "Efficiency (dB)_3": "-0.18"
+      },
+      {
+        "Frequency (MHz)": "4790",
+        "Efficiency (dB)": "-0.2",
+        "Efficiency (dB)_3": "-0.19"
+      },
+      {
+        "Frequency (MHz)": "4800",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "-0.16"
+      },
+      {
+        "Frequency (MHz)": "4810",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "-0.14"
+      },
+      {
+        "Frequency (MHz)": "4820",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "-0.12"
+      },
+      {
+        "Frequency (MHz)": "4830",
+        "Efficiency (dB)": "-0.22",
+        "Efficiency (dB)_3": "-0.09"
+      },
+      {
+        "Frequency (MHz)": "4840",
+        "Efficiency (dB)": "-0.22",
+        "Efficiency (dB)_3": "-0.11"
+      },
+      {
+        "Frequency (MHz)": "4850",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "-0.11"
+      },
+      {
+        "Frequency (MHz)": "4860",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "-0.1"
+      },
+      {
+        "Frequency (MHz)": "4870",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "-0.1"
+      },
+      {
+        "Frequency (MHz)": "4880",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "-0.13"
+      },
+      {
+        "Frequency (MHz)": "4890",
+        "Efficiency (dB)": "-0.22",
+        "Efficiency (dB)_3": "-0.11"
+      },
+      {
+        "Frequency (MHz)": "4900",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "-0.05"
+      },
+      {
+        "Frequency (MHz)": "4910",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "-0.11"
+      },
+      {
+        "Frequency (MHz)": "4920",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "-0.1"
+      },
+      {
+        "Frequency (MHz)": "4930",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "4940",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "-0.14"
+      },
+      {
+        "Frequency (MHz)": "4950",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "4960",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "-0.13"
+      },
+      {
+        "Frequency (MHz)": "4970",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "-0.19"
+      },
+      {
+        "Frequency (MHz)": "4980",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "-0.19"
+      },
+      {
+        "Frequency (MHz)": "4990",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "-0.22"
+      },
+      {
+        "Frequency (MHz)": "5000",
+        "Efficiency (dB)": "-0.22",
+        "Efficiency (dB)_3": "-0.21"
+      },
+      {
+        "Frequency (MHz)": "5010",
+        "Efficiency (dB)": "-0.22",
+        "Efficiency (dB)_3": "-0.22"
+      },
+      {
+        "Frequency (MHz)": "5020",
+        "Efficiency (dB)": "-0.23",
+        "Efficiency (dB)_3": "-0.21"
+      },
+      {
+        "Frequency (MHz)": "5030",
+        "Efficiency (dB)": "-0.23",
+        "Efficiency (dB)_3": "-0.2"
+      },
+      {
+        "Frequency (MHz)": "5040",
+        "Efficiency (dB)": "-0.23",
+        "Efficiency (dB)_3": "-0.18"
+      },
+      {
+        "Frequency (MHz)": "5050",
+        "Efficiency (dB)": "-0.24",
+        "Efficiency (dB)_3": "-0.18"
+      },
+      {
+        "Frequency (MHz)": "5060",
+        "Efficiency (dB)": "-0.24",
+        "Efficiency (dB)_3": "-0.2"
+      },
+      {
+        "Frequency (MHz)": "5070",
+        "Efficiency (dB)": "-0.25",
+        "Efficiency (dB)_3": "-0.2"
+      },
+      {
+        "Frequency (MHz)": "5080",
+        "Efficiency (dB)": "-0.25",
+        "Efficiency (dB)_3": "-0.18"
+      },
+      {
+        "Frequency (MHz)": "5090",
+        "Efficiency (dB)": "-0.25",
+        "Efficiency (dB)_3": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "5100",
+        "Efficiency (dB)": "-0.25",
+        "Efficiency (dB)_3": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "5110",
+        "Efficiency (dB)": "-0.26",
+        "Efficiency (dB)_3": "-0.18"
+      },
+      {
+        "Frequency (MHz)": "5120",
+        "Efficiency (dB)": "-0.26",
+        "Efficiency (dB)_3": "-0.16"
+      },
+      {
+        "Frequency (MHz)": "5130",
+        "Efficiency (dB)": "-0.26",
+        "Efficiency (dB)_3": "-0.16"
+      },
+      {
+        "Frequency (MHz)": "5140",
+        "Efficiency (dB)": "-0.26",
+        "Efficiency (dB)_3": "-0.15"
+      },
+      {
+        "Frequency (MHz)": "5150",
+        "Efficiency (dB)": "-0.26",
+        "Efficiency (dB)_3": "-0.19"
+      },
+      {
+        "Frequency (MHz)": "5160",
+        "Efficiency (dB)": "-0.26",
+        "Efficiency (dB)_3": "-0.2"
+      },
+      {
+        "Frequency (MHz)": "5170",
+        "Efficiency (dB)": "-0.26",
+        "Efficiency (dB)_3": "-0.19"
+      },
+      {
+        "Frequency (MHz)": "5180",
+        "Efficiency (dB)": "-0.25",
+        "Efficiency (dB)_3": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "5190",
+        "Efficiency (dB)": "-0.25",
+        "Efficiency (dB)_3": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "5200",
+        "Efficiency (dB)": "-0.25",
+        "Efficiency (dB)_3": "-0.2"
+      },
+      {
+        "Frequency (MHz)": "5210",
+        "Efficiency (dB)": "-0.25",
+        "Efficiency (dB)_3": "-0.22"
+      },
+      {
+        "Frequency (MHz)": "5220",
+        "Efficiency (dB)": "-0.25",
+        "Efficiency (dB)_3": "-0.25"
+      },
+      {
+        "Frequency (MHz)": "5230",
+        "Efficiency (dB)": "-0.24",
+        "Efficiency (dB)_3": "-0.25"
+      },
+      {
+        "Frequency (MHz)": "5240",
+        "Efficiency (dB)": "-0.24",
+        "Efficiency (dB)_3": "-0.27"
+      },
+      {
+        "Frequency (MHz)": "5250",
+        "Efficiency (dB)": "-0.23",
+        "Efficiency (dB)_3": "-0.27"
+      },
+      {
+        "Frequency (MHz)": "5260",
+        "Efficiency (dB)": "-0.23",
+        "Efficiency (dB)_3": "-0.27"
+      },
+      {
+        "Frequency (MHz)": "5270",
+        "Efficiency (dB)": "-0.23",
+        "Efficiency (dB)_3": "-0.27"
+      },
+      {
+        "Frequency (MHz)": "5280",
+        "Efficiency (dB)": "-0.23",
+        "Efficiency (dB)_3": "-0.29"
+      },
+      {
+        "Frequency (MHz)": "5290",
+        "Efficiency (dB)": "-0.23",
+        "Efficiency (dB)_3": "-0.28"
+      },
+      {
+        "Frequency (MHz)": "5300",
+        "Efficiency (dB)": "-0.23",
+        "Efficiency (dB)_3": "-0.3"
+      },
+      {
+        "Frequency (MHz)": "5310",
+        "Efficiency (dB)": "-0.23",
+        "Efficiency (dB)_3": "-0.28"
+      },
+      {
+        "Frequency (MHz)": "5320",
+        "Efficiency (dB)": "-0.23",
+        "Efficiency (dB)_3": "-0.28"
+      },
+      {
+        "Frequency (MHz)": "5330",
+        "Efficiency (dB)": "-0.23",
+        "Efficiency (dB)_3": "-0.26"
+      },
+      {
+        "Frequency (MHz)": "5340",
+        "Efficiency (dB)": "-0.23",
+        "Efficiency (dB)_3": "-0.26"
+      },
+      {
+        "Frequency (MHz)": "5350",
+        "Efficiency (dB)": "-0.23",
+        "Efficiency (dB)_3": "-0.24"
+      },
+      {
+        "Frequency (MHz)": "5360",
+        "Efficiency (dB)": "-0.24",
+        "Efficiency (dB)_3": "-0.23"
+      },
+      {
+        "Frequency (MHz)": "5370",
+        "Efficiency (dB)": "-0.24",
+        "Efficiency (dB)_3": "-0.22"
+      },
+      {
+        "Frequency (MHz)": "5380",
+        "Efficiency (dB)": "-0.24",
+        "Efficiency (dB)_3": "-0.23"
+      },
+      {
+        "Frequency (MHz)": "5390",
+        "Efficiency (dB)": "-0.24",
+        "Efficiency (dB)_3": "-0.24"
+      },
+      {
+        "Frequency (MHz)": "5400",
+        "Efficiency (dB)": "-0.24",
+        "Efficiency (dB)_3": "-0.25"
+      },
+      {
+        "Frequency (MHz)": "5410",
+        "Efficiency (dB)": "-0.24",
+        "Efficiency (dB)_3": "-0.25"
+      },
+      {
+        "Frequency (MHz)": "5420",
+        "Efficiency (dB)": "-0.24",
+        "Efficiency (dB)_3": "-0.23"
+      },
+      {
+        "Frequency (MHz)": "5430",
+        "Efficiency (dB)": "-0.24",
+        "Efficiency (dB)_3": "-0.2"
+      },
+      {
+        "Frequency (MHz)": "5440",
+        "Efficiency (dB)": "-0.24",
+        "Efficiency (dB)_3": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "5450",
+        "Efficiency (dB)": "-0.23",
+        "Efficiency (dB)_3": "-0.15"
+      },
+      {
+        "Frequency (MHz)": "5460",
+        "Efficiency (dB)": "-0.23",
+        "Efficiency (dB)_3": "-0.16"
+      },
+      {
+        "Frequency (MHz)": "5470",
+        "Efficiency (dB)": "-0.23",
+        "Efficiency (dB)_3": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "5480",
+        "Efficiency (dB)": "-0.22",
+        "Efficiency (dB)_3": "-0.19"
+      },
+      {
+        "Frequency (MHz)": "5490",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "-0.18"
+      },
+      {
+        "Frequency (MHz)": "5500",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "-0.19"
+      },
+      {
+        "Frequency (MHz)": "5510",
+        "Efficiency (dB)": "-0.2",
+        "Efficiency (dB)_3": "-0.15"
+      },
+      {
+        "Frequency (MHz)": "5520",
+        "Efficiency (dB)": "-0.2",
+        "Efficiency (dB)_3": "-0.15"
+      },
+      {
+        "Frequency (MHz)": "5530",
+        "Efficiency (dB)": "-0.2",
+        "Efficiency (dB)_3": "-0.15"
+      },
+      {
+        "Frequency (MHz)": "5540",
+        "Efficiency (dB)": "-0.2",
+        "Efficiency (dB)_3": "-0.16"
+      },
+      {
+        "Frequency (MHz)": "5550",
+        "Efficiency (dB)": "-0.19",
+        "Efficiency (dB)_3": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "5560",
+        "Efficiency (dB)": "-0.19",
+        "Efficiency (dB)_3": "-0.18"
+      },
+      {
+        "Frequency (MHz)": "5570",
+        "Efficiency (dB)": "-0.18",
+        "Efficiency (dB)_3": "-0.23"
+      },
+      {
+        "Frequency (MHz)": "5580",
+        "Efficiency (dB)": "-0.18",
+        "Efficiency (dB)_3": "-0.22"
+      },
+      {
+        "Frequency (MHz)": "5590",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.26"
+      },
+      {
+        "Frequency (MHz)": "5600",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.25"
+      },
+      {
+        "Frequency (MHz)": "5610",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.27"
+      },
+      {
+        "Frequency (MHz)": "5620",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.27"
+      },
+      {
+        "Frequency (MHz)": "5630",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.32"
+      },
+      {
+        "Frequency (MHz)": "5640",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.29"
+      },
+      {
+        "Frequency (MHz)": "5650",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.29"
+      },
+      {
+        "Frequency (MHz)": "5660",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.28"
+      },
+      {
+        "Frequency (MHz)": "5670",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.29"
+      },
+      {
+        "Frequency (MHz)": "5680",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.27"
+      },
+      {
+        "Frequency (MHz)": "5690",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.28"
+      },
+      {
+        "Frequency (MHz)": "5700",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.26"
+      },
+      {
+        "Frequency (MHz)": "5710",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.29"
+      },
+      {
+        "Frequency (MHz)": "5720",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.29"
+      },
+      {
+        "Frequency (MHz)": "5730",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.29"
+      },
+      {
+        "Frequency (MHz)": "5740",
+        "Efficiency (dB)": "-0.16",
+        "Efficiency (dB)_3": "-0.26"
+      },
+      {
+        "Frequency (MHz)": "5750",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.27"
+      },
+      {
+        "Frequency (MHz)": "5760",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.22"
+      },
+      {
+        "Frequency (MHz)": "5770",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.19"
+      },
+      {
+        "Frequency (MHz)": "5780",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.14"
+      },
+      {
+        "Frequency (MHz)": "5790",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.14"
+      },
+      {
+        "Frequency (MHz)": "5800",
+        "Efficiency (dB)": "-0.17",
+        "Efficiency (dB)_3": "-0.12"
+      },
+      {
+        "Frequency (MHz)": "5810",
+        "Efficiency (dB)": "-0.18",
+        "Efficiency (dB)_3": "-0.15"
+      },
+      {
+        "Frequency (MHz)": "5820",
+        "Efficiency (dB)": "-0.18",
+        "Efficiency (dB)_3": "-0.17"
+      },
+      {
+        "Frequency (MHz)": "5830",
+        "Efficiency (dB)": "-0.19",
+        "Efficiency (dB)_3": "-0.2"
+      },
+      {
+        "Frequency (MHz)": "5840",
+        "Efficiency (dB)": "-0.19",
+        "Efficiency (dB)_3": "-0.22"
+      },
+      {
+        "Frequency (MHz)": "5850",
+        "Efficiency (dB)": "-0.2",
+        "Efficiency (dB)_3": "-0.24"
+      },
+      {
+        "Frequency (MHz)": "5860",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "-0.29"
+      },
+      {
+        "Frequency (MHz)": "5870",
+        "Efficiency (dB)": "-0.21",
+        "Efficiency (dB)_3": "-0.31"
+      },
+      {
+        "Frequency (MHz)": "5880",
+        "Efficiency (dB)": "-0.22",
+        "Efficiency (dB)_3": "-0.38"
+      },
+      {
+        "Frequency (MHz)": "5890",
+        "Efficiency (dB)": "-0.22",
+        "Efficiency (dB)_3": "-0.42"
+      },
+      {
+        "Frequency (MHz)": "5900",
+        "Efficiency (dB)": "-0.22",
+        "Efficiency (dB)_3": "-0.5"
+      },
+      {
+        "Frequency (MHz)": "5910",
+        "Efficiency (dB)": "-0.23",
+        "Efficiency (dB)_3": "-0.53"
+      },
+      {
+        "Frequency (MHz)": "5920",
+        "Efficiency (dB)": "-0.24",
+        "Efficiency (dB)_3": "-0.59"
+      },
+      {
+        "Frequency (MHz)": "5930",
+        "Efficiency (dB)": "-0.25",
+        "Efficiency (dB)_3": "-0.61"
+      },
+      {
+        "Frequency (MHz)": "5940",
+        "Efficiency (dB)": "-0.26",
+        "Efficiency (dB)_3": "-0.66"
+      },
+      {
+        "Frequency (MHz)": "5950",
+        "Efficiency (dB)": "-0.27",
+        "Efficiency (dB)_3": "-0.68"
+      },
+      {
+        "Frequency (MHz)": "5960",
+        "Efficiency (dB)": "-0.29",
+        "Efficiency (dB)_3": "-0.72"
+      },
+      {
+        "Frequency (MHz)": "5970",
+        "Efficiency (dB)": "-0.3",
+        "Efficiency (dB)_3": "-0.7"
+      },
+      {
+        "Frequency (MHz)": "5980",
+        "Efficiency (dB)": "-0.32",
+        "Efficiency (dB)_3": "-0.74"
+      },
+      {
+        "Frequency (MHz)": "5990",
+        "Efficiency (dB)": "-0.33",
+        "Efficiency (dB)_3": "-0.73"
+      },
+      {
+        "Frequency (MHz)": "6000",
+        "Efficiency (dB)": "-0.35",
+        "Efficiency (dB)_3": "-0.73"
+      }
+    ]
+  }
+}
+}Sorry, something went wrong. Please try your request again.
