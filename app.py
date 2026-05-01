@@ -224,6 +224,9 @@ if active_dataset_choice == "GPS CW L1 L5":
             if "Date" not in df_gps.columns:
                 df_gps.insert(1, "Date", test_date)
             
+            # Rename Peak and Average columns to include C/No
+            df_gps.rename(columns={"Peak": "Peak C/No", "Average": "Average C/No"}, inplace=True)
+            
             # Build header values and cell values directly from the DataFrame
             header_values = [f"<b>{col}</b>" for col in df_gps.columns]
             cell_values = [df_gps[col] for col in df_gps.columns]
@@ -248,7 +251,7 @@ if active_dataset_choice == "GPS CW L1 L5":
             
             fig_table.update_layout(
                 title=dict(
-                    text=f"<b>GPS CW L1 & L5 Measurements</b>", 
+                    text=f"<b>GPS CW L1, L5 - Active Carrier-over-Noise Trend</b>", 
                     font=dict(size=20, color="#000000"),
                     x=0.5,
                     xanchor='center'
