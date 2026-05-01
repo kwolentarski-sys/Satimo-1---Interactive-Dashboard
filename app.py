@@ -289,7 +289,12 @@ elif active_dataset_choice in ["Bluetooth BDR", "Bluetooth EDR2", "WiFi 2.4 GHz"
             
             # Dashboard Headers
             st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - Active Validation Measurements - {active_dataset_choice}</h3>", unsafe_allow_html=True)
-            st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> {device_name.replace('Reference: ', '')}</div>", unsafe_allow_html=True)
+            
+            # Add targeted subtitle specific to WiFi 2.4 GHz
+            if active_dataset_choice == "WiFi 2.4 GHz":
+                st.markdown(f"<div style='font-size: 20px; line-height: 1.4; padding-bottom: 10px;'><b>Device:</b> {device_name.replace('Reference: ', '')}<br>802.11n MCS 0 (Long GI), BW: 20 MHz</div>", unsafe_allow_html=True)
+            else:
+                st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> {device_name.replace('Reference: ', '')}</div>", unsafe_allow_html=True)
             
             # --- First Graph: TRP Trend (Only render if TRP data exists) ---
             if 'TRP (dBm)' in df.columns:
