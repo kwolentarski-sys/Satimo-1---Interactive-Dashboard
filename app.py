@@ -127,14 +127,12 @@ active_dataset_choice = ph_active_type.selectbox(
 st.sidebar.markdown("---") # Visual divider
 test_desc_choice = st.sidebar.selectbox(
     "**Test Descriptions:**",
-    ("None", "Passive Validation", "Active Validation")
+    ("🔵 None", "Pixel Phone S4 with Dipoles")
 )
 
 # Render the specific description based on user selection
-if test_desc_choice == "Passive Validation":
-    st.sidebar.info("**Passive Validation:**\n\nThis testing verifies the baseline accuracy of the chamber using reference antennas (like Dipoles and Horns). We measure the passive efficiency (dB) of these antennas across various frequencies and compare the results to expected reference data (such as NIST calibration standards) to ensure the chamber environment is stable and properly calibrated.")
-elif test_desc_choice == "Active Validation":
-    st.sidebar.info("**Active Validation:**\n\nThis testing involves measuring live, transmitting devices to verify the chamber's ability to accurately capture Total Radiated Power (TRP) and Total Isotropic Sensitivity (TIS). We use reference devices across multiple protocols (LTE, WiFi, Bluetooth, GPS) to ensure real-world active measurements remain consistent over time.")
+if test_desc_choice == "Pixel Phone S4 with Dipoles":
+    st.sidebar.info("**Pixel Phone S4 with Dipoles:**\n\nThis active validation test compares the Calculated Total Radiated Power (TRP) against the Measured TRP using a reference Pixel Phone S4 and dipole antennas. It helps identify discrepancies (Deltas) across different LTE bands to ensure the chamber's calibration and measurement accuracy remain strictly within acceptable tolerances.")
 
 
 # Map Chamber selection to file prefix
