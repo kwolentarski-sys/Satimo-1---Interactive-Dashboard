@@ -220,6 +220,10 @@ if active_dataset_choice == "GPS CW L1 L5":
         if measurements:
             df_gps = pd.DataFrame(measurements)
             
+            # Inject the date into the DataFrame so it displays inside the Plotly Table
+            if "Date" not in df_gps.columns:
+                df_gps.insert(1, "Date", test_date)
+            
             # Build header values and cell values directly from the DataFrame
             header_values = [f"<b>{col}</b>" for col in df_gps.columns]
             cell_values = [df_gps[col] for col in df_gps.columns]
