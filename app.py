@@ -295,9 +295,11 @@ elif active_dataset_choice in ["Bluetooth BDR", "Bluetooth EDR2", "WiFi 2.4 GHz"
             if active_dataset_choice == "WiFi 5 GHz" and display_device.lower() == "nan":
                 display_device = "Samsung Galaxy S5 (SM-G900P): IMEI: 9867"
             
-            # Add targeted subtitle specific to WiFi 2.4 GHz
+            # Add targeted subtitles specific to WiFi tests
             if active_dataset_choice == "WiFi 2.4 GHz":
                 st.markdown(f"<div style='font-size: 20px; line-height: 1.4; padding-bottom: 10px;'><b>Device:</b> {display_device}<br><b>802.11n MCS 0 (Long GI), BW: 20 MHz</b></div>", unsafe_allow_html=True)
+            elif active_dataset_choice == "WiFi 5 GHz":
+                st.markdown(f"<div style='font-size: 20px; line-height: 1.4; padding-bottom: 10px;'><b>Device:</b> {display_device}<br><b>802.11n MCS0 - 20 Mhz BW</b></div>", unsafe_allow_html=True)
             else:
                 st.markdown(f"<div style='font-size: 20px; padding-bottom: 10px;'><b>Device:</b> {display_device}</div>", unsafe_allow_html=True)
             
