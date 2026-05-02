@@ -76,8 +76,8 @@ ph_active_range = st.sidebar.empty()
 # 0. Chamber Selection Toggle
 chamber_choice = ph_chamber.selectbox(
     "**Select Chamber:**",
-    ("Satimo 1", "Satimo 2", "Satimo 3", "Rohde & Schwarz"),
-    index=1 # Defaults to Satimo 2
+    ("Satimo 1 (24 Probe)", "Satimo 2 (64 Probe)", "Satimo 3 (24 Probe)", "Rohde & Schwarz"),
+    index=1 # Defaults to Satimo 2 (64 Probe)
 )
 
 # Add the main title, Google logo, and dynamic subtitle tightly packed together
@@ -99,7 +99,7 @@ dataset_choice = ph_passive_type.selectbox(
 )
 
 # Set dynamic options for Active Validation based on the selected Chamber
-if chamber_choice == "Satimo 3":
+if chamber_choice == "Satimo 3 (24 Probe)":
     active_validation_options = (
         "🔵 None", 
         "Bluetooth BDR", 
@@ -108,7 +108,7 @@ if chamber_choice == "Satimo 3":
         "WiFi 5 GHz", 
         "GPS CW L1 L5"
     )
-elif chamber_choice == "Satimo 2":
+elif chamber_choice == "Satimo 2 (64 Probe)":
     active_validation_options = (
         "🔵 None", 
         "LTE TRP", 
@@ -198,9 +198,9 @@ elif test_desc_choice == "Bluetooth BDR":
 
 # Map Chamber selection to file prefix
 prefix_map = {
-    "Satimo 1": "Satimo1_",
-    "Satimo 2": "Satimo2_",
-    "Satimo 3": "Satimo3_",
+    "Satimo 1 (24 Probe)": "Satimo1_",
+    "Satimo 2 (64 Probe)": "Satimo2_",
+    "Satimo 3 (24 Probe)": "Satimo3_",
     "Rohde & Schwarz": "RS_"
 }
 prefix = prefix_map.get(chamber_choice, "Satimo2_")
@@ -212,7 +212,7 @@ if active_dataset_choice == "LTE TRP":
 elif active_dataset_choice == "LTE TIS":
     target_file = f'{prefix}LTE_Reference_TIS_Quarterly.json'
 elif active_dataset_choice == "Pixel Phone S4 with Dipoles":
-    if chamber_choice == "Satimo 1":
+    if chamber_choice == "Satimo 1 (24 Probe)":
         target_file = 'Satimo1_Pixel_Phone_S4_Dipoles_Quarterly.json'
     else:
         target_file = f'{prefix}Pixel_Phone_S4_Dipoles_Quarterly.json'
@@ -265,7 +265,7 @@ except FileNotFoundError:
     if dataset_choice in ["Yearly Dipoles", "Quarterly Dipoles", "Monthly Horns", "Wideband Dipole Chamber Comparison"] and active_dataset_choice == "🔵 None":
         ph_antenna.selectbox("**Select Antenna:**", ["Awaiting Data..."], disabled=True)
 
-    if chamber_choice != "Satimo 2" and target_file not in known_files:
+    if chamber_choice != "Satimo 2 (64 Probe)" and target_file not in known_files:
         st.info(f"🏗️ **{chamber_choice} is under construction.**\n\nWhen ready, simply upload **`{target_file}`** to GitHub and this dashboard will populate automatically.")
     else:
         st.error(f"Please ensure the file '{target_file}' is saved in the same directory as this script.")
@@ -1116,6 +1116,7 @@ elif dataset_choice == "Wideband Dipole Chamber Comparison":
                         e_val = float(row[e_key])
                         if e_val > 0 and e_val > max_overshoot_val:
                             max_overshoot_val = e_val
+                            max_overshoot_freq = f_val
                             max_overshoot_chamber = chamber_name
                 except (ValueError, TypeError):
                     continue
