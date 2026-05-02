@@ -134,7 +134,7 @@ active_dataset_choice = ph_active_type.selectbox(
 st.sidebar.markdown("---") # Visual divider
 test_desc_choice = st.sidebar.selectbox(
     "**Test Descriptions:**",
-    ("🔵 None", "Pixel Phone S4 with Dipoles", "Yearly Dipoles", "Horns Monthly", "Phantom Wrist Dielectric Tracking", "LTE TRP", "LTE TIS", "Wideband Dipole Chamber Comparison")
+    ("🔵 None", "Pixel Phone S4 with Dipoles", "Yearly Dipoles", "Horns Monthly", "Phantom Wrist Dielectric Tracking", "LTE TRP", "LTE TIS", "Wideband Dipole Chamber Comparison", "Bluetooth BDR")
 )
 
 # Render the specific description based on user selection by reading the Markdown file
@@ -187,6 +187,13 @@ elif test_desc_choice == "Wideband Dipole Chamber Comparison":
             st.sidebar.info(md_file.read())
     except FileNotFoundError:
         st.sidebar.warning("Upload **`Wideband_Dipole_Chamber_Comparison.md`** to view this description.")
+elif test_desc_choice == "Bluetooth BDR":
+    try:
+        # Load the custom markdown file uploaded to GitHub
+        with open("Bluetooth_BDR.md", "r", encoding="utf-8") as md_file:
+            st.sidebar.info(md_file.read())
+    except FileNotFoundError:
+        st.sidebar.warning("Upload **`Bluetooth_BDR.md`** to view this description.")
 
 
 # Map Chamber selection to file prefix
@@ -1109,7 +1116,6 @@ elif dataset_choice == "Wideband Dipole Chamber Comparison":
                         e_val = float(row[e_key])
                         if e_val > 0 and e_val > max_overshoot_val:
                             max_overshoot_val = e_val
-                            max_overshoot_freq = f_val
                             max_overshoot_chamber = chamber_name
                 except (ValueError, TypeError):
                     continue
