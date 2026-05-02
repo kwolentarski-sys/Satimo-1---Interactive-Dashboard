@@ -134,7 +134,7 @@ active_dataset_choice = ph_active_type.selectbox(
 st.sidebar.markdown("---") # Visual divider
 test_desc_choice = st.sidebar.selectbox(
     "**Test Descriptions:**",
-    ("🔵 None", "Pixel Phone S4 with Dipoles", "Yearly Dipoles", "Horns Monthly", "Phantom Wrist Dielectric Tracking", "LTE TRP", "LTE TIS", "Wideband Dipole Chamber Comparison", "Bluetooth BDR", "Bluetooth EDR2", "WiFi 2.4 GHz")
+    ("🔵 None", "Pixel Phone S4 with Dipoles", "Yearly Dipoles", "Horns Monthly", "Phantom Wrist Dielectric Tracking", "LTE TRP", "LTE TIS", "Wideband Dipole Chamber Comparison", "Bluetooth BDR", "Bluetooth EDR2", "WiFi 2.4 GHz", "WiFi 5 GHz", "GPS CW L1 L5")
 )
 
 # Render the specific description based on user selection by reading the Markdown file
@@ -208,6 +208,20 @@ elif test_desc_choice == "WiFi 2.4 GHz":
             st.sidebar.info(md_file.read())
     except FileNotFoundError:
         st.sidebar.warning("Upload **`WiFi_2.4GHz.md`** to view this description.")
+elif test_desc_choice == "WiFi 5 GHz":
+    try:
+        # Load the custom markdown file uploaded to GitHub
+        with open("WiFi_5GHz.md", "r", encoding="utf-8") as md_file:
+            st.sidebar.info(md_file.read())
+    except FileNotFoundError:
+        st.sidebar.warning("Upload **`WiFi_5GHz.md`** to view this description.")
+elif test_desc_choice == "GPS CW L1 L5":
+    try:
+        # Load the custom markdown file uploaded to GitHub
+        with open("GPS_CW_L1_L5.md", "r", encoding="utf-8") as md_file:
+            st.sidebar.info(md_file.read())
+    except FileNotFoundError:
+        st.sidebar.warning("Upload **`GPS_CW_L1_L5.md`** to view this description.")
 
 
 # Map Chamber selection to file prefix
