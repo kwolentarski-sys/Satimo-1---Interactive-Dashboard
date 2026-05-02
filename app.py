@@ -134,7 +134,7 @@ active_dataset_choice = ph_active_type.selectbox(
 st.sidebar.markdown("---") # Visual divider
 test_desc_choice = st.sidebar.selectbox(
     "**Test Descriptions:**",
-    ("🔵 None", "Pixel Phone S4 with Dipoles", "Yearly Dipoles", "Horns Monthly", "Phantom Wrist Dielectric Tracking", "LTE TRP", "LTE TIS", "Wideband Dipole Chamber Comparison", "Bluetooth BDR")
+    ("🔵 None", "Pixel Phone S4 with Dipoles", "Yearly Dipoles", "Horns Monthly", "Phantom Wrist Dielectric Tracking", "LTE TRP", "LTE TIS", "Wideband Dipole Chamber Comparison", "Bluetooth BDR", "Bluetooth EDR2")
 )
 
 # Render the specific description based on user selection by reading the Markdown file
@@ -194,6 +194,13 @@ elif test_desc_choice == "Bluetooth BDR":
             st.sidebar.info(md_file.read())
     except FileNotFoundError:
         st.sidebar.warning("Upload **`Bluetooth_BDR.md`** to view this description.")
+elif test_desc_choice == "Bluetooth EDR2":
+    try:
+        # Load the custom markdown file uploaded to GitHub
+        with open("Bluetooth_EDR2.md", "r", encoding="utf-8") as md_file:
+            st.sidebar.info(md_file.read())
+    except FileNotFoundError:
+        st.sidebar.warning("Upload **`Bluetooth_EDR2.md`** to view this description.")
 
 
 # Map Chamber selection to file prefix
