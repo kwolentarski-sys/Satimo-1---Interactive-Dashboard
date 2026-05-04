@@ -80,6 +80,9 @@ chamber_choice = ph_chamber.selectbox(
     index=1 # Defaults to Satimo 2 (64 Probe)
 )
 
+# Create a clean version of the chamber choice for the title (removes the probe count)
+display_title = chamber_choice.split(" (")[0]
+
 # Add the main title, Google logo, and dynamic subtitle tightly packed together
 st.markdown(
     f"""
@@ -87,7 +90,7 @@ st.markdown(
         <h1 style='font-size: 32px; margin: 0; padding: 0;'>San Diego Antenna Chambers</h1>
         <img src='https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg' style='height: 35px;' alt='Google'>
     </div>
-    <h2 style='font-size: 26px; color: #000000; margin-top: 0px; padding-top: 0px; margin-bottom: 20px;'>{chamber_choice} - Interactive Dashboard</h2>
+    <h2 style='font-size: 26px; color: #000000; margin-top: 0px; padding-top: 0px; margin-bottom: 20px;'>{display_title} - Interactive Dashboard</h2>
     """, 
     unsafe_allow_html=True
 )
@@ -1076,7 +1079,7 @@ elif active_dataset_choice == "LTE TIS":
                 mode='lines+markers',
                 name=f'<b>TIS (dBm) - {test_date}</b>',
                 text=df['Band Chan'],
-                hovertemplate="<b>%{text}</b><br>Freq: %{x} MHz<br>TIS: %{y:.2f} dBm<extra></extra>",
+                hovertemplate="<b>%{text}</b><br>Freq: %{text} MHz<br>TIS: %{y:.2f} dBm<extra></extra>",
                 line=dict(color='#0000ff'),
                 marker=dict(color='#0000ff', size=8)
             ))
