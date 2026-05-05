@@ -97,7 +97,7 @@ st.markdown(
 
 # Set dynamic options for Passive Validation based on the selected Chamber
 if chamber_choice == "Rohde & Schwarz (WPTC-M)":
-    passive_validation_options = ("🔵 None", "aGPS L1 TIS")
+    passive_validation_options = ("🔵 None",)
 else:
     passive_validation_options = ("🔵 None", "Yearly Dipoles", "Quarterly Dipoles", "Monthly Horns", "Wideband Dipole Chamber Comparison")
 
@@ -124,6 +124,15 @@ elif chamber_choice == "Satimo 2 (64 Probe)":
         "LTE TIS", 
         "Pixel Phone S4 with Dipoles"
     )
+elif chamber_choice == "Rohde & Schwarz (WPTC-M)":
+    active_validation_options = (
+        "🔵 None", 
+        "LTE TRP", 
+        "LTE TIS", 
+        "Pixel Phone S4 with Dipoles", 
+        "Phantom Wrist Dielectric Tracking",
+        "aGPS L1 TIS"
+    )
 else:
     active_validation_options = (
         "🔵 None", 
@@ -149,91 +158,78 @@ test_desc_choice = st.sidebar.selectbox(
 # Render the specific description based on user selection by reading the Markdown file
 if test_desc_choice == "Pixel Phone S4 with Dipoles":
     try:
-        # Load the custom markdown file uploaded to GitHub
         with open("Pixel_Phone_S4_with_Dipoles.md", "r", encoding="utf-8") as md_file:
             st.sidebar.info(md_file.read())
     except FileNotFoundError:
         st.sidebar.warning("Upload **`Pixel_Phone_S4_with_Dipoles.md`** to view this description.")
 elif test_desc_choice == "Yearly Dipoles":
     try:
-        # Load the custom markdown file uploaded to GitHub
         with open("Yearly_Dipoles.md", "r", encoding="utf-8") as md_file:
             st.sidebar.info(md_file.read())
     except FileNotFoundError:
         st.sidebar.warning("Upload **`Yearly_Dipoles.md`** to view this description.")
 elif test_desc_choice == "Horns Monthly":
     try:
-        # Load the custom markdown file uploaded to GitHub
         with open("Horns_Monthly.md", "r", encoding="utf-8") as md_file:
             st.sidebar.info(md_file.read())
     except FileNotFoundError:
         st.sidebar.warning("Upload **`Horns_Monthly.md`** to view this description.")
 elif test_desc_choice == "Phantom Wrist Dielectric Tracking":
     try:
-        # Load the custom markdown file uploaded to GitHub
         with open("Phantom_Wrist_Dielectric_Tracking.md", "r", encoding="utf-8") as md_file:
             st.sidebar.info(md_file.read())
     except FileNotFoundError:
         st.sidebar.warning("Upload **`Phantom_Wrist_Dielectric_Tracking.md`** to view this description.")
 elif test_desc_choice == "LTE TRP":
     try:
-        # Load the custom markdown file uploaded to GitHub
         with open("LTE_TRP.md", "r", encoding="utf-8") as md_file:
             st.sidebar.info(md_file.read())
     except FileNotFoundError:
         st.sidebar.warning("Upload **`LTE_TRP.md`** to view this description.")
 elif test_desc_choice == "LTE TIS":
     try:
-        # Load the custom markdown file uploaded to GitHub
         with open("LTE_TIS.md", "r", encoding="utf-8") as md_file:
             st.sidebar.info(md_file.read())
     except FileNotFoundError:
         st.sidebar.warning("Upload **`LTE_TIS.md`** to view this description.")
 elif test_desc_choice == "Wideband Dipole Chamber Comparison":
     try:
-        # Load the custom markdown file uploaded to GitHub
         with open("Wideband_Dipole_Chamber_Comparison.md", "r", encoding="utf-8") as md_file:
             st.sidebar.info(md_file.read())
     except FileNotFoundError:
         st.sidebar.warning("Upload **`Wideband_Dipole_Chamber_Comparison.md`** to view this description.")
 elif test_desc_choice == "Bluetooth BDR":
     try:
-        # Load the custom markdown file uploaded to GitHub
         with open("Bluetooth_BDR.md", "r", encoding="utf-8") as md_file:
             st.sidebar.info(md_file.read())
     except FileNotFoundError:
         st.sidebar.warning("Upload **`Bluetooth_BDR.md`** to view this description.")
 elif test_desc_choice == "Bluetooth EDR2":
     try:
-        # Load the custom markdown file uploaded to GitHub
         with open("Bluetooth_EDR2.md", "r", encoding="utf-8") as md_file:
             st.sidebar.info(md_file.read())
     except FileNotFoundError:
         st.sidebar.warning("Upload **`Bluetooth_EDR2.md`** to view this description.")
 elif test_desc_choice == "WiFi 2.4 GHz":
     try:
-        # Load the custom markdown file uploaded to GitHub
         with open("WiFi_2.4GHz.md", "r", encoding="utf-8") as md_file:
             st.sidebar.info(md_file.read())
     except FileNotFoundError:
         st.sidebar.warning("Upload **`WiFi_2.4GHz.md`** to view this description.")
 elif test_desc_choice == "WiFi 5 GHz":
     try:
-        # Load the custom markdown file uploaded to GitHub
         with open("WiFi_5GHz.md", "r", encoding="utf-8") as md_file:
             st.sidebar.info(md_file.read())
     except FileNotFoundError:
         st.sidebar.warning("Upload **`WiFi_5GHz.md`** to view this description.")
 elif test_desc_choice == "GPS CW L1 L5":
     try:
-        # Load the custom markdown file uploaded to GitHub
         with open("GPS_CW_L1_L5.md", "r", encoding="utf-8") as md_file:
             st.sidebar.info(md_file.read())
     except FileNotFoundError:
         st.sidebar.warning("Upload **`GPS_CW_L1_L5.md`** to view this description.")
 elif test_desc_choice == "aGPS L1 TIS":
     try:
-        # Load the custom markdown file uploaded to GitHub
         with open("aGPS_L1_TIS.md", "r", encoding="utf-8") as md_file:
             st.sidebar.info(md_file.read())
     except FileNotFoundError:
@@ -272,6 +268,8 @@ elif active_dataset_choice == "WiFi 5 GHz":
     target_file = f'{prefix}WiFi_5GHz_Quarterly.json'
 elif active_dataset_choice == "GPS CW L1 L5":
     target_file = f'{prefix}GPS_CW_L1_L5_Quarterly.json'
+elif active_dataset_choice == "aGPS L1 TIS":
+    target_file = f'{prefix}aGPS_L1_TIS.json'
 elif dataset_choice == "Yearly Dipoles":
     target_file = f'{prefix}Dipoles_Yearly.json'
 elif dataset_choice == "Quarterly Dipoles":
@@ -280,8 +278,6 @@ elif dataset_choice == "Monthly Horns":
     target_file = f'{prefix}Horns_Monthly.json'
 elif dataset_choice == "Wideband Dipole Chamber Comparison":
     target_file = 'Chambers_Wideband_Dipole_Comparison.json' # Global file
-elif dataset_choice == "aGPS L1 TIS":
-    target_file = f'{prefix}aGPS_L1_TIS.json'
 
 # Stop execution and prompt the user if both are "None"
 if not target_file:
@@ -309,7 +305,7 @@ try:
     raw_data = load_data(target_file)
 except FileNotFoundError:
     # Display a disabled "Select Antenna" menu while waiting for passive data to load
-    if dataset_choice in ["Yearly Dipoles", "Quarterly Dipoles", "Monthly Horns", "Wideband Dipole Chamber Comparison", "aGPS L1 TIS"] and active_dataset_choice == "🔵 None":
+    if dataset_choice in ["Yearly Dipoles", "Quarterly Dipoles", "Monthly Horns", "Wideband Dipole Chamber Comparison"] and active_dataset_choice == "🔵 None":
         ph_antenna.selectbox("**Select Antenna:**", ["Awaiting Data..."], disabled=True)
 
     if chamber_choice != "Satimo 2 (64 Probe)" and target_file not in known_files:
@@ -324,7 +320,67 @@ except json.JSONDecodeError:
 
 # --- ROUTING LOGIC BASED ON DATASET TYPE ---
 
-if active_dataset_choice == "GPS CW L1 L5":
+if active_dataset_choice == "aGPS L1 TIS":
+    # --- Logic for aGPS L1 TIS Table Data ---
+    
+    if isinstance(raw_data, dict):
+        device_name = raw_data.get("Device", "Unknown Device")
+        test_date = raw_data.get("Date", "N/A")
+        test_type = raw_data.get("Test_Type", "aGPS L1 (-130 dBm)")
+        measurements = raw_data.get("Measurements", [])
+        
+        # Dashboard Headers
+        st.markdown(f"<h3 style='color: #0000ff;'>Quarterly - Active Validation Measurements - {active_dataset_choice.replace('🔵 ', '')}</h3>", unsafe_allow_html=True)
+        st.markdown(f"<div style='font-size: 20px; line-height: 1.4; padding-bottom: 10px;'><b>Device:</b> {device_name}<br><b>Test:</b> {test_type}</div>", unsafe_allow_html=True)
+        
+        if measurements:
+            df_agps = pd.DataFrame(measurements)
+            
+            # Inject the date into the DataFrame so it displays inside the Plotly Table
+            if "Date" not in df_agps.columns:
+                df_agps.insert(0, "Date", test_date)
+            
+            # Build header values and cell values directly from the DataFrame
+            header_values = [f"<b>{col}</b>" for col in df_agps.columns]
+            cell_values = [df_agps[col] for col in df_agps.columns]
+            
+            # Create the stylish Plotly Table
+            fig_table = go.Figure(data=[go.Table(
+                header=dict(
+                    values=header_values,
+                    fill_color='#d9d9d9',
+                    line=dict(color='black', width=1),
+                    font=dict(color='#000000', size=16),
+                    align='center',
+                    height=40
+                ),
+                cells=dict(
+                    values=cell_values,
+                    fill_color='#e9f1ff',
+                    line=dict(color='black', width=1),
+                    font=dict(color='black', size=15),
+                    align='center',
+                    height=35
+                )
+            )])
+            
+            fig_table.update_layout(
+                title=dict(
+                    text=f"<b>aGPS L1 TIS - Validation Results</b>", 
+                    font=dict(size=20, color="#000000"),
+                    x=0.5,
+                    xanchor='center'
+                ),
+                margin=dict(l=20, r=20, t=50, b=20)
+            )
+            
+            st.plotly_chart(fig_table, use_container_width=True)
+        else:
+            st.warning("No measurements found in the file.")
+    else:
+        st.error(f"Error reading {active_dataset_choice} file structure. Please ensure it is a JSON Dictionary.")
+
+elif active_dataset_choice == "GPS CW L1 L5":
     # --- Logic for GPS CW L1 L5 Table Data ---
     
     if isinstance(raw_data, dict):
