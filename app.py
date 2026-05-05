@@ -95,10 +95,16 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+# Set dynamic options for Passive Validation based on the selected Chamber
+if chamber_choice == "Rohde & Schwarz (WPTC-M)":
+    passive_validation_options = ("🔵 None", "aGPS L1 TIS")
+else:
+    passive_validation_options = ("🔵 None", "Yearly Dipoles", "Quarterly Dipoles", "Monthly Horns", "Wideband Dipole Chamber Comparison")
+
 # 1. Passive Dataset Selection Toggle 
 dataset_choice = ph_passive_type.selectbox(
     "**Select Passive Validation Type:**",
-    ("🔵 None", "Yearly Dipoles", "Quarterly Dipoles", "Monthly Horns", "Wideband Dipole Chamber Comparison")
+    passive_validation_options
 )
 
 # Set dynamic options for Active Validation based on the selected Chamber
@@ -137,7 +143,7 @@ active_dataset_choice = ph_active_type.selectbox(
 st.sidebar.markdown("---") # Visual divider
 test_desc_choice = st.sidebar.selectbox(
     "**Test Descriptions:**",
-    ("🔵 None", "Pixel Phone S4 with Dipoles", "Yearly Dipoles", "Horns Monthly", "Phantom Wrist Dielectric Tracking", "LTE TRP", "LTE TIS", "Wideband Dipole Chamber Comparison", "Bluetooth BDR", "Bluetooth EDR2", "WiFi 2.4 GHz", "WiFi 5 GHz", "GPS CW L1 L5")
+    ("🔵 None", "Pixel Phone S4 with Dipoles", "Yearly Dipoles", "Horns Monthly", "Phantom Wrist Dielectric Tracking", "LTE TRP", "LTE TIS", "Wideband Dipole Chamber Comparison", "Bluetooth BDR", "Bluetooth EDR2", "WiFi 2.4 GHz", "WiFi 5 GHz", "GPS CW L1 L5", "aGPS L1 TIS")
 )
 
 # Render the specific description based on user selection by reading the Markdown file
@@ -225,6 +231,13 @@ elif test_desc_choice == "GPS CW L1 L5":
             st.sidebar.info(md_file.read())
     except FileNotFoundError:
         st.sidebar.warning("Upload **`GPS_CW_L1_L5.md`** to view this description.")
+elif test_desc_choice == "aGPS L1 TIS":
+    try:
+        # Load the custom markdown file uploaded to GitHub
+        with open("aGPS_L1_TIS.md", "r", encoding="utf-8") as md_file:
+            st.sidebar.info(md_file.read())
+    except FileNotFoundError:
+        st.sidebar.warning("Upload **`aGPS_L1_TIS.md`** to view this description.")
 
 
 # Map Chamber selection to file prefix
@@ -267,6 +280,8 @@ elif dataset_choice == "Monthly Horns":
     target_file = f'{prefix}Horns_Monthly.json'
 elif dataset_choice == "Wideband Dipole Chamber Comparison":
     target_file = 'Chambers_Wideband_Dipole_Comparison.json' # Global file
+elif dataset_choice == "aGPS L1 TIS":
+    target_file = f'{prefix}aGPS_L1_TIS.json'
 
 # Stop execution and prompt the user if both are "None"
 if not target_file:
@@ -285,7 +300,8 @@ known_files = [
     'Satimo3_Bluetooth_EDR2_Quarterly.json',
     'Satimo3_WiFi_2.4GHz_Quarterly.json',
     'Satimo3_WiFi_5GHz_Quarterly.json',
-    'Satimo3_GPS_CW_L1_L5_Quarterly.json'
+    'Satimo3_GPS_CW_L1_L5_Quarterly.json',
+    'RS_aGPS_L1_TIS.json'
 ]
 
 # Load the selected dataset with friendly fallback for missing files
@@ -293,7 +309,7 @@ try:
     raw_data = load_data(target_file)
 except FileNotFoundError:
     # Display a disabled "Select Antenna" menu while waiting for passive data to load
-    if dataset_choice in ["Yearly Dipoles", "Quarterly Dipoles", "Monthly Horns", "Wideband Dipole Chamber Comparison"] and active_dataset_choice == "🔵 None":
+    if dataset_choice in ["Yearly Dipoles", "Quarterly Dipoles", "Monthly Horns", "Wideband Dipole Chamber Comparison", "aGPS L1 TIS"] and active_dataset_choice == "🔵 None":
         ph_antenna.selectbox("**Select Antenna:**", ["Awaiting Data..."], disabled=True)
 
     if chamber_choice != "Satimo 2 (64 Probe)" and target_file not in known_files:
