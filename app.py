@@ -76,7 +76,7 @@ ph_active_range = st.sidebar.empty()
 # 0. Chamber Selection Toggle
 chamber_choice = ph_chamber.selectbox(
     "**Select Chamber:**",
-    ("Satimo 1 (24 Probe)", "Satimo 2 (64 Probe)", "Satimo 3 (24 Probe)", "Rohde & Schwarz"),
+    ("Satimo 1 (24 Probe)", "Satimo 2 (64 Probe)", "Satimo 3 (24 Probe)", "Rohde & Schwarz WPTC-M"),
     index=1 # Defaults to Satimo 2 (64 Probe)
 )
 
@@ -232,7 +232,7 @@ prefix_map = {
     "Satimo 1 (24 Probe)": "Satimo1_",
     "Satimo 2 (64 Probe)": "Satimo2_",
     "Satimo 3 (24 Probe)": "Satimo3_",
-    "Rohde & Schwarz": "RS_"
+    "Rohde & Schwarz WPTC-M": "RS_"
 }
 prefix = prefix_map.get(chamber_choice, "Satimo2_")
 
