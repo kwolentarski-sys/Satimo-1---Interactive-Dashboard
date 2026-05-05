@@ -127,7 +127,8 @@ elif chamber_choice == "Satimo 2 (64 Probe)":
 elif chamber_choice == "Rohde & Schwarz (WPTC-M)":
     active_validation_options = (
         "🔵 None", 
-        "aGPS L1 TIS"
+        "aGPS L1 TIS",
+        "aGPS L5 Pattern Only"
     )
 else:
     active_validation_options = (
@@ -148,7 +149,7 @@ active_dataset_choice = ph_active_type.selectbox(
 st.sidebar.markdown("---") # Visual divider
 test_desc_choice = st.sidebar.selectbox(
     "**Test Descriptions:**",
-    ("🔵 None", "Pixel Phone S4 with Dipoles", "Yearly Dipoles", "Horns Monthly", "Phantom Wrist Dielectric Tracking", "LTE TRP", "LTE TIS", "Wideband Dipole Chamber Comparison", "Bluetooth BDR", "Bluetooth EDR2", "WiFi 2.4 GHz", "WiFi 5 GHz", "GPS CW L1 L5", "aGPS L1 TIS")
+    ("🔵 None", "Pixel Phone S4 with Dipoles", "Yearly Dipoles", "Horns Monthly", "Phantom Wrist Dielectric Tracking", "LTE TRP", "LTE TIS", "Wideband Dipole Chamber Comparison", "Bluetooth BDR", "Bluetooth EDR2", "WiFi 2.4 GHz", "WiFi 5 GHz", "GPS CW L1 L5", "aGPS L1 TIS", "aGPS L5 Pattern Only")
 )
 
 # Render the specific description based on user selection by reading the Markdown file
@@ -230,6 +231,12 @@ elif test_desc_choice == "aGPS L1 TIS":
             st.sidebar.info(md_file.read())
     except FileNotFoundError:
         st.sidebar.warning("Upload **`aGPS_L1_TIS.md`** to view this description.")
+elif test_desc_choice == "aGPS L5 Pattern Only":
+    try:
+        with open("aGPS_L5_Pattern_Only.md", "r", encoding="utf-8") as md_file:
+            st.sidebar.info(md_file.read())
+    except FileNotFoundError:
+        st.sidebar.warning("Upload **`aGPS_L5_Pattern_Only.md`** to view this description.")
 
 
 # Map Chamber selection to file prefix
@@ -266,6 +273,8 @@ elif active_dataset_choice == "GPS CW L1 L5":
     target_file = f'{prefix}GPS_CW_L1_L5_Quarterly.json'
 elif active_dataset_choice == "aGPS L1 TIS":
     target_file = f'{prefix}aGPS_L1_TIS.json'
+elif active_dataset_choice == "aGPS L5 Pattern Only":
+    target_file = f'{prefix}aGPS_L5_Pattern_Only.json'
 elif dataset_choice == "Yearly Dipoles":
     target_file = f'{prefix}Dipoles_Yearly.json'
 elif dataset_choice == "Quarterly Dipoles":
@@ -293,7 +302,8 @@ known_files = [
     'Satimo3_WiFi_2.4GHz_Quarterly.json',
     'Satimo3_WiFi_5GHz_Quarterly.json',
     'Satimo3_GPS_CW_L1_L5_Quarterly.json',
-    'RS_aGPS_L1_TIS.json'
+    'RS_aGPS_L1_TIS.json',
+    'RS_aGPS_L5_Pattern_Only.json'
 ]
 
 # Load the selected dataset with friendly fallback for missing files
@@ -301,7 +311,7 @@ try:
     raw_data = load_data(target_file)
 except FileNotFoundError:
     # Display a disabled "Select Antenna" menu while waiting for passive data to load
-    if dataset_choice in ["Yearly Dipoles", "Quarterly Dipoles", "Monthly Horns", "Wideband Dipole Chamber Comparison", "aGPS L1 TIS"] and active_dataset_choice == "🔵 None":
+    if dataset_choice in ["Yearly Dipoles", "Quarterly Dipoles", "Monthly Horns", "Wideband Dipole Chamber Comparison"] and active_dataset_choice == "🔵 None":
         ph_antenna.selectbox("**Select Antenna:**", ["Awaiting Data..."], disabled=True)
 
     if chamber_choice != "Satimo 2 (64 Probe)" and target_file not in known_files:
@@ -316,13 +326,13 @@ except json.JSONDecodeError:
 
 # --- ROUTING LOGIC BASED ON DATASET TYPE ---
 
-if active_dataset_choice == "aGPS L1 TIS":
-    # --- Logic for aGPS L1 TIS Table Data ---
+if active_dataset_choice in ["aGPS L1 TIS", "aGPS L5 Pattern Only"]:
+    # --- Logic for aGPS L1 TIS & aGPS L5 Pattern Only Table Data ---
     
     if isinstance(raw_data, dict):
         device_name = raw_data.get("Device", "Unknown Device")
         test_date = raw_data.get("Date", "N/A")
-        test_type = raw_data.get("Test_Type", "aGPS L1 (-130 dBm)")
+        test_type = raw_data.get("Test_Type", "aGPS Data")
         measurements = raw_data.get("Measurements", [])
         
         # Dashboard Headers
@@ -362,7 +372,7 @@ if active_dataset_choice == "aGPS L1 TIS":
             
             fig_table.update_layout(
                 title=dict(
-                    text=f"<b>aGPS L1 TIS - Validation Results</b>", 
+                    text=f"<b>{active_dataset_choice} - Validation Results</b>", 
                     font=dict(size=20, color="#000000"),
                     x=0.5,
                     xanchor='center'
