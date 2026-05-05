@@ -1079,7 +1079,7 @@ elif active_dataset_choice == "LTE TIS":
                 mode='lines+markers',
                 name=f'<b>TIS (dBm) - {test_date}</b>',
                 text=df['Band Chan'],
-                hovertemplate="<b>%{text}</b><br>Freq: %{text} MHz<br>TIS: %{y:.2f} dBm<extra></extra>",
+                hovertemplate="<b>%{text}</b><br>Freq: %{x} MHz<br>TIS: %{y:.2f} dBm<extra></extra>",
                 line=dict(color='#0000ff'),
                 marker=dict(color='#0000ff', size=8)
             ))
@@ -1236,7 +1236,7 @@ elif dataset_choice == "Wideband Dipole Chamber Comparison":
         st.plotly_chart(fig, use_container_width=True)
 
 else:
-    # --- Standard Logic for Dipoles & Horns (Ref vs Measured) ---
+    # --- Standard Logic for Dipoles & Horns (Ref vs Measured vs Limits) ---
     
     data = []
     
@@ -1254,10 +1254,30 @@ else:
                 measurements = []
                 for row in dev_info.get("Data", []):
                     try:
+                        # Parse standard required elements
+                        freq = float(row.get("Frequency (MHz)", 0))
+                        
+                        # Reference Data (NIST)
+                        ref_val = row.get("Efficiency (dB)", float('nan'))
+                        ref = float(ref_val) if str(ref_val).strip() != "" else float('nan')
+                        
+                        # Measured Data (Handles both original "_3" format and updated "_Date" format)
+                        meas_val = row.get("Efficiency (dB)_Date", row.get("Efficiency (dB)_3", float('nan')))
+                        meas = float(meas_val) if str(meas_val).strip() != "" else float('nan')
+                        
+                        # Upper and Lower limits (only present in updated JSON formats)
+                        upper_val = row.get("Efficiency (dB)_Upper Limit", float('nan'))
+                        upper = float(upper_val) if str(upper_val).strip() != "" else float('nan')
+                        
+                        lower_val = row.get("Efficiency (dB)_Lower Limit", float('nan'))
+                        lower = float(lower_val) if str(lower_val).strip() != "" else float('nan')
+                        
                         measurements.append({
-                            "frequency_mhz": float(row.get("Frequency (MHz)", 0)),
-                            "efficiency_db_ref": float(row.get("Efficiency (dB)", 0)),
-                            "efficiency_db_measured": float(row.get("Efficiency (dB)_3", 0))
+                            "frequency_mhz": freq,
+                            "efficiency_db_ref": ref,
+                            "efficiency_db_measured": meas,
+                            "upper_limit": upper,
+                            "lower_limit": lower
                         })
                     except (ValueError, TypeError):
                         continue
@@ -1330,6 +1350,7 @@ else:
 
         fig = go.Figure()
 
+        # Add Reference Trace
         fig.add_trace(go.Scatter(
             x=df['frequency_mhz'], 
             y=df['efficiency_db_ref'],
@@ -1339,6 +1360,7 @@ else:
             marker=dict(color='#ff0000')
         ))
 
+        # Add Measured Trace
         fig.add_trace(go.Scatter(
             x=df['frequency_mhz'], 
             y=df['efficiency_db_measured'],
@@ -1347,6 +1369,26 @@ else:
             line=dict(color='#0000ff'),
             marker=dict(color='#0000ff')
         ))
+        
+        # Add Upper Limit Trace (if available in the data)
+        if 'upper_limit' in df.columns and df['upper_limit'].notna().any():
+            fig.add_trace(go.Scatter(
+                x=df['frequency_mhz'], 
+                y=df['upper_limit'],
+                mode='lines',
+                name='<b>Upper Limit (dB)</b>',
+                line=dict(dash='dot', color='#00aa00', width=2)
+            ))
+
+        # Add Lower Limit Trace (if available in the data)
+        if 'lower_limit' in df.columns and df['lower_limit'].notna().any():
+            fig.add_trace(go.Scatter(
+                x=df['frequency_mhz'], 
+                y=df['lower_limit'],
+                mode='lines',
+                name='<b>Lower Limit (dB)</b>',
+                line=dict(dash='dot', color='#00aa00', width=2)
+            ))
 
         fig.add_hline(y=0, line_width=3, line_color="black")
 
