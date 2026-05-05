@@ -127,10 +127,6 @@ elif chamber_choice == "Satimo 2 (64 Probe)":
 elif chamber_choice == "Rohde & Schwarz (WPTC-M)":
     active_validation_options = (
         "🔵 None", 
-        "LTE TRP", 
-        "LTE TIS", 
-        "Pixel Phone S4 with Dipoles", 
-        "Phantom Wrist Dielectric Tracking",
         "aGPS L1 TIS"
     )
 else:
@@ -305,7 +301,7 @@ try:
     raw_data = load_data(target_file)
 except FileNotFoundError:
     # Display a disabled "Select Antenna" menu while waiting for passive data to load
-    if dataset_choice in ["Yearly Dipoles", "Quarterly Dipoles", "Monthly Horns", "Wideband Dipole Chamber Comparison"] and active_dataset_choice == "🔵 None":
+    if dataset_choice in ["Yearly Dipoles", "Quarterly Dipoles", "Monthly Horns", "Wideband Dipole Chamber Comparison", "aGPS L1 TIS"] and active_dataset_choice == "🔵 None":
         ph_antenna.selectbox("**Select Antenna:**", ["Awaiting Data..."], disabled=True)
 
     if chamber_choice != "Satimo 2 (64 Probe)" and target_file not in known_files:
