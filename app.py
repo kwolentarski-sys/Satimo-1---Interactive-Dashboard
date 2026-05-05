@@ -311,7 +311,7 @@ try:
     raw_data = load_data(target_file)
 except FileNotFoundError:
     # Display a disabled "Select Antenna" menu while waiting for passive data to load
-    if dataset_choice in ["Yearly Dipoles", "Quarterly Dipoles", "Monthly Horns", "Wideband Dipole Chamber Comparison"] and active_dataset_choice == "🔵 None":
+    if dataset_choice in ["Yearly Dipoles", "Quarterly Dipoles", "Monthly Horns", "Wideband Dipole Chamber Comparison", "aGPS L1 TIS"] and active_dataset_choice == "🔵 None":
         ph_antenna.selectbox("**Select Antenna:**", ["Awaiting Data..."], disabled=True)
 
     if chamber_choice != "Satimo 2 (64 Probe)" and target_file not in known_files:
@@ -1455,7 +1455,7 @@ else:
                 y=df['upper_limit'],
                 mode='lines',
                 name='<b>Upper Limit (dB)</b>',
-                line=dict(dash='dot', color='#00aa00', width=2)
+                line=dict(dash='dot', color='#000000', width=2)
             ))
 
         # Add Lower Limit Trace (if available in the data)
@@ -1465,7 +1465,7 @@ else:
                 y=df['lower_limit'],
                 mode='lines',
                 name='<b>Lower Limit (dB)</b>',
-                line=dict(dash='dot', color='#00aa00', width=2)
+                line=dict(dash='dot', color='#000000', width=2)
             ))
 
         fig.add_hline(y=0, line_width=3, line_color="black")
