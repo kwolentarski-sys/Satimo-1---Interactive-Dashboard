@@ -1,0 +1,18 @@
+{
+  "Device": "Pixel Pro 7",
+  "IMEI": "359470646664229",
+  "Test_Type": "aGPS L5 (1176.45 MHz)",
+  "Frequency_Range": "Quarterly",
+  "Date": "01/16/26",
+  "Measurements": [
+    {
+      "Configuration": "FS",
+      "LTE Band": "4",
+      "BS Level": "-130",
+      "Positioning Protocol": "LPP over CP",
+      "SIB Configuration": "no SIB",
+      "Pattern Peak": "32.83",
+      "Avg C/No": "28.99"
+    }
+  ]
+}
